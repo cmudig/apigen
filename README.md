@@ -2,7 +2,7 @@
 API Generator from TypeScript
 
 Install ts-node
-Then run:
+then run:
 ```
 ts-node generator.ts
 ```
