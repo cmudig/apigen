@@ -1,0 +1,25 @@
+{
+  "name": "api_compilergen",
+  "version": "1.0.0",
+  "description": "A simple ts code generator",
+  "main": "generator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmudig/apigen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmudig/apigen/issues"
+  },
+  "homepage": "https://github.com/cmudig/apigen#readme",
+  "dependencies": {
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.13.0"
+  }
+}
