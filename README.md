@@ -4,9 +4,9 @@ API Generator from TypeScript
 Install ts-node
 then run:
 ```
-ts-node generator.ts
+ts-node generatorSimple.ts sourceFile.ts
 ```
-To test, run
+To test, run (currently wip)
 ```
 ts-node test.ts
 ```
