@@ -22,9 +22,6 @@ function addId(node: any) {
 }
 addId(sourceFile);
 
-// No need to save the source again.
-// delete sourceFile.text;
-
 const cache:any = [];
 const json = JSON.stringify(sourceFile, (key, value) => {
   // Discard the following.
@@ -49,19 +46,20 @@ const json = JSON.stringify(sourceFile, (key, value) => {
 //Parse the JSON to get the name of the type
 const obj = JSON.parse(json);
 const type_name = obj.statements[0].name.escapedText
+const type_primitive = obj.statements[0].type.kind
+const type_enum = 
 console.log(type_name);
 
+const block = ts.factory.createBlock([ts.factory.createReturnStatement(ts.factory.createIdentifier('arg'))]);
+
+//create the parameter
+const parameters = ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier("arg"), undefined, ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword));
+
 //TODO: create the member function
-// const function_node = ts.factory.createFunctionDeclaration()
+const methodNode = ts.factory.createMethodDeclaration([ts.factory.createToken(ts.SyntaxKind.PublicKeyword)], undefined, 'number', undefined, [], [parameters], undefined,block);
 
-//creating empty parameters to pass into classNode.TODO: change modifier to ExportKeyword
-const memberElements = <readonly ts.ClassElement[]>{};
-const modifier = <readonly ts.ModifierLike[]>{};
-
-const classNode = ts.factory.createClassDeclaration(modifier, type_name, undefined, undefined, memberElements);
-
-//to see the class AST
-console.log (classNode);
+//creating the class
+const classNode = ts.factory.createClassDeclaration([ts.factory.createToken(ts.SyntaxKind.ExportKeyword)], type_name, [], undefined, [methodNode]);
 
 //create a new sourceFile object for the new file.
 const generatedFile = ts.createSourceFile("generatedfile.ts", "", ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS);

@@ -37,6 +37,8 @@ ts.forEachChild(source, node => {
       // let symbol = checker.getSymbolAtLocation(node);
       // console.log(symbol?.getName());
       const type_name = node.name.escapedText;
+      console.log(ts.getModifiers(node));
+      // const export_word = ts.getModifiers(node);
       // console.log(syntaxToKind(source?.getChildren()[0].getChildren()[0][“type”][“kind”]));
       // const type = checker.getTypeAtLocation(node);
       // const typeName = checker.typeToString(type, node);
@@ -50,20 +52,20 @@ ts.forEachChild(source, node => {
    const memberElements = <readonly ts.ClassElement[]>{};
    const modifier = <readonly ts.ModifierLike[]>{};
   //  const modifier = 
-  const classNode = ts.factory.createClassDeclaration(modifier,type_name, undefined, undefined, memberElements);
+  // const classNode = ts.factory.createClassDeclaration(modifier,type_name, undefined, undefined, memberElements);
 
-  console.log (classNode);
+  // console.log (classNode);
 
 
 // //create a new SourceFile that we will use to take in the AST and generate a new file
 const generatedFile = ts.createSourceFile("generatedfile.ts", "", ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS);
 
 // //get the code text from the AST
-const result = printer.printNode(ts.EmitHint.Unspecified, classNode, generatedFile);
-console.log(result);
+// const result = printer.printNode(ts.EmitHint.Unspecified, classNode, generatedFile);
+// console.log(result);
 
 // //write to a new file
-fs.writeFileSync('generated-file.ts', result);
+// fs.writeFileSync('generated-file.ts', result);
 
 
 //TODO: search on these
