@@ -1,12 +1,8 @@
 
 // Inspiration for this script taken from StackOverflow: https://stackoverflow.com/a/20197641/26566
-// const fs = require('fs');
-// const ts = require('typescript');
+//Adapted from https://smack0007.github.io/blog/2021/convert-typescript-ast-to-json.html
 import ts from "typescript";
 import * as fs from 'fs';
-// import ts from "typescript";
-// import * as process from "./process"
-// const process = require('process');
 
 const source = fs.readFileSync(process.argv[2], 'utf-8');
 
@@ -16,24 +12,19 @@ const sourceFile = ts.createSourceFile(process.argv[2], source, ts.ScriptTarget.
 // the consuming application.
 let nextId = 0;
 function addId(node: any) {
-    nextId++;
-    node.id = nextId;
-    ts.forEachChild(node, addId);
+  nextId++;
+  node.id = nextId;
+  ts.forEachChild(node, addId);
 }
 addId(sourceFile);
 
-const cache:any = [];
+const cache: any = [];
 const json = JSON.stringify(sourceFile, (key, value) => {
   // Discard the following.
   if (key === 'flags' || key === 'transformFlags' || key === 'modifierFlagsCache') {
-      return;
+    return;
   }
-  
-  // Replace 'kind' with the string representation.
-  if (key === 'kind') {
-      value = ts.SyntaxKind[value];
-  }
-  
+
   if (typeof value === 'object' && value !== null) {
     // Duplicate reference found, discard key
     if (cache.includes(value)) return;
@@ -43,33 +34,32 @@ const json = JSON.stringify(sourceFile, (key, value) => {
   return value;
 });
 
-//Parse the JSON to get the name of the type
+//Parse the JSON to get the name of the type.
 const obj = JSON.parse(json);
-const type_name = obj.statements[0].name.escapedText
-const type_primitive = obj.statements[0].type.kind
-const type_enum = 
-console.log(type_name);
+const typeName = obj.statements[0].name.escapedText
+const typePrimitive = obj.statements[0].type.kind
 
 const block = ts.factory.createBlock([ts.factory.createReturnStatement(ts.factory.createIdentifier('arg'))]);
 
-//create the parameter
-const parameters = ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier("arg"), undefined, ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword));
+//Create the parameter.
+const parameters = ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier("arg"), undefined, ts.factory.createKeywordTypeNode(typePrimitive));
 
-//TODO: create the member function
-const methodNode = ts.factory.createMethodDeclaration([ts.factory.createToken(ts.SyntaxKind.PublicKeyword)], undefined, 'number', undefined, [], [parameters], undefined,block);
+//Create the member function.
+const methodNode = ts.factory.createMethodDeclaration([ts.factory.createToken(ts.SyntaxKind.PublicKeyword)], undefined, 'number', undefined, [], [parameters], undefined, block);
 
-//creating the class
-const classNode = ts.factory.createClassDeclaration([ts.factory.createToken(ts.SyntaxKind.ExportKeyword)], type_name, [], undefined, [methodNode]);
+//Creating the class.
+const classNode = ts.factory.createClassDeclaration([ts.factory.createToken(ts.SyntaxKind.ExportKeyword)], typeName, [], undefined, [methodNode]);
 
-//create a new sourceFile object for the new file.
+//Create a new sourceFile object for the new file.
 const generatedFile = ts.createSourceFile("generatedfile.ts", "", ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS);
 
-// create TS printer instance which gives us utilities to pretty print our final AST
+//Create TS printer instance which gives us utilities to pretty print our final AST.
 const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 
-//get the code text from the AST
+//Get the code text from the AST.
 const result = printer.printNode(ts.EmitHint.Unspecified, classNode, generatedFile);
+
 console.log(result);
 
-//write to a new file
+//Write to a new file.
 fs.writeFileSync('generated-file.ts', result);
