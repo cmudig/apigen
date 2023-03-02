@@ -1,3 +1,5 @@
+//messy playground file to check types etc
+
 import ts from "typescript";
 import * as fs from 'fs';
 // import NodeFactory from "typescript"

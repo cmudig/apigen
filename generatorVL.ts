@@ -34,8 +34,6 @@ const json = JSON.stringify(sourceFile, (key, value) => {
   return value;
 });
 
-console.info(json)
-
 //Parse the JSON to get the name of the type.
 const obj = JSON.parse(json);
 const typeName = obj.statements[0].name.escapedText
