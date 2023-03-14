@@ -51,21 +51,24 @@ const markParameters = ts.factory.createParameterDeclaration(undefined, undefine
   ts.factory.createStringLiteral(argString[0])),ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(argString[1])) ,ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(argString[2]))]));
 
 //Create the function statements
-const block = ts.factory.createBlock([ts.factory.createExpressionStatement(ts.factory.createCallExpression(ts.factory.createSuper(), [], [])), ts.factory.createReturnStatement(ts.factory.createIdentifier('arg'))]);
-
-ts.factory.createExpressionStatement(ts.factory.createCallExpression(ts.factory.createNewExpression(ts.factory.createUniqueName("init"), [], undefined), [], []));
+const constructorBlock = ts.factory.createBlock([ts.factory.createExpressionStatement(ts.factory.createCallExpression(ts.factory.createSuper(), [], [])), ]);
 
 //Use constructor factory method for the constructor
-const constructor = ts.factory.createConstructorDeclaration([], [markParameters], block);
+const constructor = ts.factory.createConstructorDeclaration([], [markParameters], constructorBlock);
 
-//Create the member function. TODO: modify for other methods to be added
-// const methodNode = ts.factory.createMethodDeclaration([], undefined, 'number', undefined, [], [markParameters], undefined, block);
+//TODO: change string parameter to encode types
+const encodeParameters = ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier("values"), undefined, ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
+
+const encodeBlock = ts.factory.createBlock([ts.factory.createReturnStatement(ts.factory.createIdentifier('values'))]);
+
+// Create the member function. TODO: modify for other methods to be added
+const encode = ts.factory.createMethodDeclaration([], undefined, 'encode', undefined, [], [encodeParameters], undefined, encodeBlock);
 
 //create heritage clause that extends the BaseObject
 const heritageClause = ts.factory.createHeritageClause(ts.SyntaxKind.ExtendsKeyword,[ts.factory.createExpressionWithTypeArguments(ts.factory.createIdentifier('BaseObject'), undefined)]);
 
 //Creating the class.
-const classNode = ts.factory.createClassDeclaration([ts.factory.createToken(ts.SyntaxKind.ExportKeyword)], markTypeName, [], [heritageClause], [constructor]);
+const classMark = ts.factory.createClassDeclaration([ts.factory.createToken(ts.SyntaxKind.ExportKeyword)], markTypeName, [], [heritageClause], [constructor, encode]);
 
 //Create a new sourceFile object for the new file.
 const generatedFile = ts.createSourceFile("generatedfile.ts", "", ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS);
@@ -74,7 +77,7 @@ const generatedFile = ts.createSourceFile("generatedfile.ts", "", ts.ScriptTarge
 const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 
 //Get the code text from the AST.
-const result = printer.printNode(ts.EmitHint.Unspecified, classNode, generatedFile);
+const result = printer.printNode(ts.EmitHint.Unspecified, classMark, generatedFile);
 console.log(result);
 
 //Write to a new file.

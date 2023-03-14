@@ -1,0 +1,8 @@
+class Mark extends BaseObject {
+
+    constructor(...args) {
+      super();
+      init(this);
+      args = args.map(_ => isString(_) ? {type: _} : _);
+      set(this, "mark", merge(0, get(this, "mark"), args));
+    }
