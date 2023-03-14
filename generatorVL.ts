@@ -1,4 +1,3 @@
-
 // Inspiration for this script taken from StackOverflow: https://stackoverflow.com/a/20197641/26566
 //Adapted from https://smack0007.github.io/blog/2021/convert-typescript-ast-to-json.html
 import ts from "typescript";
@@ -34,21 +33,39 @@ const json = JSON.stringify(sourceFile, (key, value) => {
   return value;
 });
 
-//Parse the JSON to get the name of the type.
+//Code for creating the Mark object
 const obj = JSON.parse(json);
-const typeName = obj.statements[0].name.escapedText
-const typePrimitive = obj.statements[0].type.kind
+const markTypeName = obj.statements[4].name.escapedText
+//TODO: use this for 
+const markTypePrimitive = obj.statements[4].type.kind 
 
-const block = ts.factory.createBlock([ts.factory.createReturnStatement(ts.factory.createIdentifier('arg'))]);
+//if the type is union, create a string by looping through types and adding |.
+let argString: string[] = [];
+for (let i = 0; i < 3; i++) {
+  let string = obj.statements[4].type.types[i].literal.text;
+  argString.push(string);
+}
+console.log(argString);
 
 //Create the parameter.
-const parameters = ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier("arg"), undefined, ts.factory.createKeywordTypeNode(typePrimitive));
+const markParameters = ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier("arg"), undefined, ts.factory.createUnionTypeNode([ts.factory.createLiteralTypeNode(
+  ts.factory.createStringLiteral(argString[0])),ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(argString[1])) ,ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(argString[2]))]));
 
-//Create the member function.
-const methodNode = ts.factory.createMethodDeclaration([ts.factory.createToken(ts.SyntaxKind.PublicKeyword)], undefined, 'number', undefined, [], [parameters], undefined, block);
+//Create the function statements
+const block = ts.factory.createBlock([ts.factory.createExpressionStatement(ts.factory.createCallExpression(ts.factory.createSuper(), [], [])), ts.factory.createReturnStatement(ts.factory.createIdentifier('arg'))]);
+
+ts.factory.createExpressionStatement(ts.factory.createCallExpression(ts.factory.createNewExpression(ts.factory.createUniqueName("init"), [], undefined), [], []));
+
+const constructor = ts.factory.createConstructorDeclaration([], [markParameters], block);
+
+//Create the member function. TODO: modify for other methods to be added
+// const methodNode = ts.factory.createMethodDeclaration([], undefined, 'constructor', undefined, [], [markParameters], undefined, block);
+
+//create heritage clause that extends the BaseObject
+const heritageClause = ts.factory.createHeritageClause(ts.SyntaxKind.ExtendsKeyword,[ts.factory.createExpressionWithTypeArguments(ts.factory.createIdentifier('BaseObject'), undefined)]);
 
 //Creating the class.
-const classNode = ts.factory.createClassDeclaration([ts.factory.createToken(ts.SyntaxKind.ExportKeyword)], typeName, [], undefined, [methodNode]);
+const classNode = ts.factory.createClassDeclaration([ts.factory.createToken(ts.SyntaxKind.ExportKeyword)], markTypeName, [], [heritageClause], [constructor]);
 
 //Create a new sourceFile object for the new file.
 const generatedFile = ts.createSourceFile("generatedfile.ts", "", ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS);
@@ -58,8 +75,7 @@ const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 
 //Get the code text from the AST.
 const result = printer.printNode(ts.EmitHint.Unspecified, classNode, generatedFile);
-
 console.log(result);
 
 //Write to a new file.
-fs.writeFileSync('generated-file.ts', result);
+fs.writeFileSync('generatedVLFile.ts', result);

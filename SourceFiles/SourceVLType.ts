@@ -6,6 +6,7 @@ interface FieldDef {
 type ValueDef<T> = {
   value: T
 }
+
 type PositionDef = FieldDef;
 type ColorDef = FieldDef | ValueDef<string>
 type Mark = "bar" | "area" | "line"
@@ -17,12 +18,13 @@ interface Encoding {
 }
 
 export type Spec = {
-    mark: Mark,
-    data: string,
+    mark: Mark
+    data: string
     encode: Encoding
 }
 
-  //test
+//test
+//populate internal representation of the object
 //   vl.mark('bar')
 //   .data("hello.csv")
 //   .encode(
@@ -30,5 +32,41 @@ export type Spec = {
 //     vl.y().field("bar").type("ordial"),
 //     vl.color().value("yellow")
 //   )
-
+ // this will return the final object
 //   vl.toObject()
+
+
+
+// function toObject(value) {
+//   if (isArray(value)) {
+//     return value.map(d => recurse(d));
+//   } else if (isObject(value)) {
+//     const data = value[Data] || value;
+//     return isArray(data)
+//       ? recurse(data)
+//       : Object.keys(data).reduce((_, k) => {
+//           _[k] = recurse(data[k]);
+//           return _;
+//         }, {});
+//   } else {
+//     return value;
+//   }
+// }
+
+// class Spec {//class vl
+
+//   function mark(value){
+  
+//   if (value == "bar" ||  "area" || "line") {
+//     this.mark = "bar";
+//   }
+    
+//   function encode
+//   function data
+//   X
+//   Y
+//   color
+
+// }
+
+//
