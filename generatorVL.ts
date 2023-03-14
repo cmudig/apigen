@@ -1,4 +1,3 @@
-// Inspiration for this script taken from StackOverflow: https://stackoverflow.com/a/20197641/26566
 //Adapted from https://smack0007.github.io/blog/2021/convert-typescript-ast-to-json.html
 import ts from "typescript";
 import * as fs from 'fs';
@@ -33,10 +32,10 @@ const json = JSON.stringify(sourceFile, (key, value) => {
   return value;
 });
 
-//Code for creating the Mark object
+//Code for creating the Mark object. TODO: put everything below in another file
 const obj = JSON.parse(json);
 const markTypeName = obj.statements[4].name.escapedText
-//TODO: use this for 
+//TODO: this extracts the union type. Use this information later for modularizing the generator.
 const markTypePrimitive = obj.statements[4].type.kind 
 
 //if the type is union, create a string by looping through types and adding |.
@@ -56,10 +55,11 @@ const block = ts.factory.createBlock([ts.factory.createExpressionStatement(ts.fa
 
 ts.factory.createExpressionStatement(ts.factory.createCallExpression(ts.factory.createNewExpression(ts.factory.createUniqueName("init"), [], undefined), [], []));
 
+//Use constructor factory method for the constructor
 const constructor = ts.factory.createConstructorDeclaration([], [markParameters], block);
 
 //Create the member function. TODO: modify for other methods to be added
-// const methodNode = ts.factory.createMethodDeclaration([], undefined, 'constructor', undefined, [], [markParameters], undefined, block);
+// const methodNode = ts.factory.createMethodDeclaration([], undefined, 'number', undefined, [], [markParameters], undefined, block);
 
 //create heritage clause that extends the BaseObject
 const heritageClause = ts.factory.createHeritageClause(ts.SyntaxKind.ExtendsKeyword,[ts.factory.createExpressionWithTypeArguments(ts.factory.createIdentifier('BaseObject'), undefined)]);
