@@ -6,3 +6,37 @@ class Mark extends BaseObject {
       args = args.map(_ => isString(_) ? {type: _} : _);
       set(this, "mark", merge(0, get(this, "mark"), args));
     }
+
+
+class FieldDef {
+private field: string
+private type: "quantitative | "ordinal"
+
+constructor(field:string, type: "quantitative" | "ordinal"){
+    this.field = field;
+    this.type = type;
+}
+}
+
+
+//Code for creating the Mark object. TODO: put everything below in another file
+// const FieldDefName = obj.statements[0].name.escapedText
+
+// const fieldDefStatement = obj.statements[0]
+// let fieldDefMembers: string[] = [];
+// for (let i = 0; i < 3; i++) {
+//   let string = fieldDefStatement.members[i].name.escapedText;
+//   argString.push(string);
+// }
+
+// console.log(fieldDefMembers);
+
+// const fieldDefParameters = [ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier(fieldDefMembers[1]), undefined, ts.factory.createUnionTypeNode([ts.factory.createLiteralTypeNode(
+//   ts.factory.createStringLiteral(fieldDefStatement.members[1].type.types[0].literal.text)),ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(fieldDefStatement.members[1].type.types[1].literal.text))])), ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier(fieldDefMembers[0]), undefined, ts.factory.createKeywordTypeNode(fieldDefStatement.members[0].type.kind))];
+
+// const constructorBlockFieldDef = ts.factory.createBlock([ts.factory.createExpressionStatement(ts.factory.createCallExpression(ts.factory.createSuper(), [], [])), ]);
+
+// const constructorFieldDef = ts.factory.createConstructorDeclaration([], [fieldDefParameters], constructorBlockFieldDef);
+
+// //Creating the Field def class object.
+// const classFieldDef = ts.factory.createClassDeclaration([ts.factory.createToken(ts.SyntaxKind.ExportKeyword)], FieldDefName, [], [], [constructorFieldDef]);

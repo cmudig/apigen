@@ -1,3 +1,5 @@
+import { LayerSpec } from "vega-lite/build/src/spec";
+
 interface FieldDef {
   field: string
   type: "quantitative" | "ordinal"
@@ -9,7 +11,7 @@ type ValueDef<T> = {
 
 type PositionDef = FieldDef;
 type ColorDef = FieldDef | ValueDef<string>
-type Mark = "bar" | "area" | "line"
+type Mark = "bar" | "area" | "line";
 
 interface Encoding {
   x?: PositionDef;
@@ -17,9 +19,14 @@ interface Encoding {
   color?: ColorDef;
 }
 
+interface LayerSpec {
+  layer: Spec[]
+}
+
 export type Spec = {
     mark: Mark
     data: string
     encode: Encoding
 }
-
+// recursive type commented out for now
+// | LayerSpec;

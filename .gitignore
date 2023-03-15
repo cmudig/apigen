@@ -1,1 +1,4 @@
 output.json
+node_modules/
+test_tsmorph.ts
+notes.txt

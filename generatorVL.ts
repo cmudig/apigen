@@ -54,7 +54,7 @@ const markParameters = ts.factory.createParameterDeclaration(undefined, undefine
 const constructorBlock = ts.factory.createBlock([ts.factory.createExpressionStatement(ts.factory.createCallExpression(ts.factory.createSuper(), [], [])), ]);
 
 //Use constructor factory method for the constructor
-const constructor = ts.factory.createConstructorDeclaration([], [markParameters], constructorBlock);
+const constructorMark = ts.factory.createConstructorDeclaration([], [markParameters], constructorBlock);
 
 //TODO: change string parameter to encode types
 const encodeParameters = ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier("values"), undefined, ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
@@ -68,7 +68,7 @@ const encode = ts.factory.createMethodDeclaration([], undefined, 'encode', undef
 const heritageClause = ts.factory.createHeritageClause(ts.SyntaxKind.ExtendsKeyword,[ts.factory.createExpressionWithTypeArguments(ts.factory.createIdentifier('BaseObject'), undefined)]);
 
 //Creating the class.
-const classMark = ts.factory.createClassDeclaration([ts.factory.createToken(ts.SyntaxKind.ExportKeyword)], markTypeName, [], [heritageClause], [constructor, encode]);
+const classMark = ts.factory.createClassDeclaration([ts.factory.createToken(ts.SyntaxKind.ExportKeyword)], markTypeName, [], [heritageClause], [constructorMark, encode]);
 
 //Create a new sourceFile object for the new file.
 const generatedFile = ts.createSourceFile("generatedfile.ts", "", ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS);
