@@ -3,7 +3,7 @@ import ts from "typescript";
 import * as fs from 'fs';
 import { parse } from "./parser"
 import { Project, SyntaxKind } from "ts-morph";
-import {emitter} from "./util"
+import {emitter, capitalize} from "./util"
 
 //Get the AST as a json that can be traversed
 const json = parse(process.argv[2])
@@ -14,29 +14,73 @@ const obj = JSON.parse(json);
 //Create a file and write the first essential line.
 let outputFile = "generatedVLClasses.ts"
 
-const emit = emitter('util.ts')
+const emit = emitter('__util__')
 
-//if the type is union, create a string by looping through types and adding |.TODO: replace this with ts morph
-let argString: string[] = [];
+//TODO: replace this with a programmatic function and possibly with ts morph
+let argsList: string[] = [];
 let len = obj.statements[4].type.types.length
 for (let i = 0; i < len; i++) {
   let string = obj.statements[4].type.types[i].literal.text;
-  argString.push(string);
+  argsList.push(string);
+}
+//TODO: eventually call this function while traversing over the AST
+function generateClass(name: string, kind: number, args: string[]){
+
+  const className = capitalize(name);
+
+  switch(kind){
+    case ts.SyntaxKind.TypeAliasDeclaration: {
+      emit.import(['BaseObject'], '__util__');
+      emit(`class ${className} extends BaseObject{`);
+      emit.indent();
+
+      let argString = `"${args[0]}" | "${args[1]}" | "${args[2]}"`;
+      generateConstructor(argString);
+      generateExportFunction(name, argString);  
+      break;
+    }
+
+    case ts.SyntaxKind.InterfaceDeclaration: {
+      emit.import(['BaseObject'], '__util__');
+      emit(`class ${className} extends BaseObject{`);
+      emit.indent();
+      let argString = ""
+      generateConstructor(argString);
+      generateExportFunction(name, argString);
+      break;
+    }
+  }
+
 }
 
-// console.log(argString);
-const markTypeName = obj.statements[4].name.escapedText
+function generateConstructor(args: string){
+  {
+    emit(`constructor(...args:  ${args})`).indent();
+    emit(`super();`);
 
+    // init data object
+    emit.import(['init', 'set', 'get', 'merge'], '__util__');
+    
+    emit(`init(this);`);
+    //TODO: understand logic for this part
+    // emit(`set(this, args, args});`);
 
-//TODO: this extracts the union type. Use this information later for modularizing the generator.
-const markTypePrimitive = obj.statements[4].type.kind //gives union type
+    emit('}').outdent().outdent();
+    emit('}');
+  }
 
-//To create a class, we need a 
-//constructor
-//args
-//super, if the obj extends a base class
-//init, -> when?
-// 
+}
 
-//Write to a new file.
+function generateExportFunction(name: string, argString:string){
+  emit(`export function ${name}(...args: ${argString}){`);
+  emit.indent();
+  emit(`return new ${capitalize(name)}(...args);`);
+  emit.outdent();
+  emit('}');
+}
+
+generateClass("Mark", ts.SyntaxKind.TypeAliasDeclaration, argsList);
+generateClass("FieldDef", ts.SyntaxKind.InterfaceDeclaration, []);
+
+//Write to the output file.
 fs.writeFileSync(outputFile, emit.code());

@@ -73,7 +73,7 @@ export function error(_: any) {
     };
   
     // TODO: come back
-    emit.import = (methods: string, file: string) => {
+    emit.import = (methods: string[], file: string) => {
       file = file || defaultFile;
       (Array.isArray(methods) ? methods : [methods])
         .forEach(m => (imports[file] || (imports[file] = {}))[m] = 1);
@@ -85,7 +85,7 @@ export function error(_: any) {
   
       const code = files.reduce((list, file) => {
         const methods = Object.keys(imports[file]).sort().join(', ');
-        (list as string[]).push(`import {${methods}} from './${file}`);
+        (list as string[]).push(`import {${methods}} from './${file}'`);
         return list;
       }, []);
   
