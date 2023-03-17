@@ -1,5 +1,3 @@
-import { LayerSpec } from "vega-lite/build/src/spec";
-
 interface FieldDef {
   field: string
   type: "quantitative" | "ordinal"

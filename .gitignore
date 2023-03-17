@@ -2,3 +2,6 @@ output.json
 node_modules/
 test_tsmorph.ts
 notes.txt
+package-lock.json
+tsconfig.json
+.vscode/

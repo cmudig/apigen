@@ -1,84 +1,42 @@
 //Adapted from https://smack0007.github.io/blog/2021/convert-typescript-ast-to-json.html
 import ts from "typescript";
 import * as fs from 'fs';
+import { parse } from "./parser"
+import { Project, SyntaxKind } from "ts-morph";
+import {emitter} from "./util"
 
-const source = fs.readFileSync(process.argv[2], 'utf-8');
+//Get the AST as a json that can be traversed
+const json = parse(process.argv[2])
 
-const sourceFile = ts.createSourceFile(process.argv[2], source, ts.ScriptTarget.Latest, true);
-
-// Add an ID to every node in the tree to make it easier to identify in
-// the consuming application.
-let nextId = 0;
-function addId(node: any) {
-  nextId++;
-  node.id = nextId;
-  ts.forEachChild(node, addId);
-}
-addId(sourceFile);
-
-const cache: any = [];
-const json = JSON.stringify(sourceFile, (key, value) => {
-  // Discard the following.
-  if (key === 'flags' || key === 'transformFlags' || key === 'modifierFlagsCache') {
-    return;
-  }
-
-  if (typeof value === 'object' && value !== null) {
-    // Duplicate reference found, discard key
-    if (cache.includes(value)) return;
-
-    cache.push(value);
-  }
-  return value;
-});
-
-//Code for creating the Mark object. TODO: put everything below in another file
+//Get the simplified version of the AST
 const obj = JSON.parse(json);
-const markTypeName = obj.statements[4].name.escapedText
-//TODO: this extracts the union type. Use this information later for modularizing the generator.
-const markTypePrimitive = obj.statements[4].type.kind 
 
-//if the type is union, create a string by looping through types and adding |.
+//Create a file and write the first essential line.
+let outputFile = "generatedVLClasses.ts"
+
+const emit = emitter('util.ts')
+
+//if the type is union, create a string by looping through types and adding |.TODO: replace this with ts morph
 let argString: string[] = [];
-for (let i = 0; i < 3; i++) {
+let len = obj.statements[4].type.types.length
+for (let i = 0; i < len; i++) {
   let string = obj.statements[4].type.types[i].literal.text;
   argString.push(string);
 }
-console.log(argString);
 
-//Create the parameter.
-const markParameters = ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier("arg"), undefined, ts.factory.createUnionTypeNode([ts.factory.createLiteralTypeNode(
-  ts.factory.createStringLiteral(argString[0])),ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(argString[1])) ,ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(argString[2]))]));
+// console.log(argString);
+const markTypeName = obj.statements[4].name.escapedText
 
-//Create the function statements
-const constructorBlock = ts.factory.createBlock([ts.factory.createExpressionStatement(ts.factory.createCallExpression(ts.factory.createSuper(), [], [])), ]);
 
-//Use constructor factory method for the constructor
-const constructorMark = ts.factory.createConstructorDeclaration([], [markParameters], constructorBlock);
+//TODO: this extracts the union type. Use this information later for modularizing the generator.
+const markTypePrimitive = obj.statements[4].type.kind //gives union type
 
-//TODO: change string parameter to encode types
-const encodeParameters = ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier("values"), undefined, ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
-
-const encodeBlock = ts.factory.createBlock([ts.factory.createReturnStatement(ts.factory.createIdentifier('values'))]);
-
-// Create the member function. TODO: modify for other methods to be added
-const encode = ts.factory.createMethodDeclaration([], undefined, 'encode', undefined, [], [encodeParameters], undefined, encodeBlock);
-
-//create heritage clause that extends the BaseObject
-const heritageClause = ts.factory.createHeritageClause(ts.SyntaxKind.ExtendsKeyword,[ts.factory.createExpressionWithTypeArguments(ts.factory.createIdentifier('BaseObject'), undefined)]);
-
-//Creating the class.
-const classMark = ts.factory.createClassDeclaration([ts.factory.createToken(ts.SyntaxKind.ExportKeyword)], markTypeName, [], [heritageClause], [constructorMark, encode]);
-
-//Create a new sourceFile object for the new file.
-const generatedFile = ts.createSourceFile("generatedfile.ts", "", ts.ScriptTarget.ESNext, false, ts.ScriptKind.TS);
-
-//Create TS printer instance which gives us utilities to pretty print our final AST.
-const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
-
-//Get the code text from the AST.
-const result = printer.printNode(ts.EmitHint.Unspecified, classMark, generatedFile);
-console.log(result);
+//To create a class, we need a 
+//constructor
+//args
+//super, if the obj extends a base class
+//init, -> when?
+// 
 
 //Write to a new file.
-fs.writeFileSync('generatedVLFile.ts', result);
+fs.writeFileSync(outputFile, emit.code());

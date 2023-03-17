@@ -20,6 +20,8 @@
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
-    "@types/node": "^18.13.0"
+    "@types/node": "^18.13.0",
+    "ts-morph": "^17.0.1",
+    "typescript": "^5.0.2"
   }
 }
