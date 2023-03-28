@@ -1,9 +1,12 @@
-//Adapted from https://smack0007.github.io/blog/2021/convert-typescript-ast-to-json.html
+
 import ts from "typescript";
 import * as fs from 'fs';
 import { parse } from "./parser"
-import { Project, SyntaxKind } from "ts-morph";
-import {emitter, capitalize} from "./util"
+import {ASTStatement} from "./internalRepresentation"
+import {generateClass, writeFile} from "./generateClass"
+
+//Create a file and write the first essential line.
+let outputFile = "generatedVLClasses.ts"
 
 //Get the AST as a json that can be traversed
 const json = parse(process.argv[2])
@@ -11,76 +14,49 @@ const json = parse(process.argv[2])
 //Get the simplified version of the AST
 const obj = JSON.parse(json);
 
-//Create a file and write the first essential line.
-let outputFile = "generatedVLClasses.ts"
-
-const emit = emitter('__util__')
-
+let i = 0;
 //TODO: replace this with a programmatic function and possibly with ts morph
 let argsList: string[] = [];
 let len = obj.statements[4].type.types.length
-for (let i = 0; i < len; i++) {
+for (i = 0; i < len; i++) {
   let string = obj.statements[4].type.types[i].literal.text;
   argsList.push(string);
 }
-//TODO: eventually call this function while traversing over the AST
-function generateClass(name: string, kind: number, args: string[]){
 
-  const className = capitalize(name);
+let jsonStatements = obj.statements;
+//main for loop
+let Statements: ASTStatement[] = [];
+for (i = 0; i<jsonStatements.length; i++){
 
-  switch(kind){
-    case ts.SyntaxKind.TypeAliasDeclaration: {
-      emit.import(['BaseObject'], '__util__');
-      emit(`class ${className} extends BaseObject{`);
-      emit.indent();
-
-      let argString = `"${args[0]}" | "${args[1]}" | "${args[2]}"`;
-      generateConstructor(argString);
-      generateExportFunction(name, argString);  
-      break;
-    }
-
-    case ts.SyntaxKind.InterfaceDeclaration: {
-      emit.import(['BaseObject'], '__util__');
-      emit(`class ${className} extends BaseObject{`);
-      emit.indent();
-      let argString = ""
-      generateConstructor(argString);
-      generateExportFunction(name, argString);
-      break;
-    }
+  let name = jsonStatements[i].name.escapedText
+  let kind = jsonStatements[i].kind
+  if ("type" in jsonStatements[i]){
+    let type = jsonStatements[i].type.kind //need to adjust for members //check for member 
+    const Statement = new ASTStatement(name, kind, type);
+    Statements.push(Statement);
   }
-
-}
-
-function generateConstructor(args: string){
-  {
-    emit(`constructor(...args:  ${args})`).indent();
-    emit(`super();`);
-
-    // init data object
-    emit.import(['init', 'set', 'get', 'merge'], '__util__');
-    
-    emit(`init(this);`);
-    //TODO: understand logic for this part
-    // emit(`set(this, args, args});`);
-
-    emit('}').outdent().outdent();
-    emit('}');
+  else if ("members" in jsonStatements[i]){
+    const members: Record<string, string> = {};
+    console.log(typeof(members));
+    let j = 0;
+    for (j = 0; j < jsonStatements[i].members.length; j++){
+     members[jsonStatements[i].members[j].name.escapedText] = jsonStatements[i].members[j].name.kind;
+    }
+    const Statement = new ASTStatement(name, kind, undefined, members);
+    Statements.push(Statement);
   }
-
+  // generateClass(Statement, argsList);
 }
+console.log(Statements);
+// generateClass("FieldDef", ts.SyntaxKind.InterfaceDeclaration, []);
+// writeFile(outputFile);
+//for statements in AST
+      //get statement.kind 
+          //if kind is type alias declaration, 
+              //determine whether a class needs to be created or a method needs to be added to the class
+              //if the method needs to be added, create the class first
+                    //determine which class it belongs to: how? by traversing the AST and getting the escaped text that matches it
+                    //how to traverse nested json to get text that matches yours.
+            
 
-function generateExportFunction(name: string, argString:string){
-  emit(`export function ${name}(...args: ${argString}){`);
-  emit.indent();
-  emit(`return new ${capitalize(name)}(...args);`);
-  emit.outdent();
-  emit('}');
-}
 
-generateClass("Mark", ts.SyntaxKind.TypeAliasDeclaration, argsList);
-generateClass("FieldDef", ts.SyntaxKind.InterfaceDeclaration, []);
-
-//Write to the output file.
-fs.writeFileSync(outputFile, emit.code());

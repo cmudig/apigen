@@ -1,3 +1,4 @@
+//Adapted from https://smack0007.github.io/blog/2021/convert-typescript-ast-to-json.html
 import ts from "typescript";
 import * as fs from 'fs';
 
@@ -29,7 +30,8 @@ export function parse(file: string){
         cache.push(value);
       }
       return value;
-    });
-    
+    }
+    );
+    // console.log(json);
     return json;
     }

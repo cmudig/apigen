@@ -105,6 +105,10 @@ export function error(_: any) {
     const c = _[i];
     return p + c.toUpperCase() + _.slice(++i);
   }
+
+  export function decapitalize(str: string): string {
+    return str.charAt(0).toLowerCase() + str.slice(1);
+  }
   
   export function uppercase(_: string) {
     return _.toUpperCase();

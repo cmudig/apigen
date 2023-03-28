@@ -13,12 +13,15 @@ export function generateClassMemberMethod(name: string, args: string[]){
     emit('}');
 }
 
-export function generateClass(statement: ASTStatement, args: string[]){
+export function generateClass(statement: ASTStatement, args: string[], obj: any){
 
     const className = capitalize(statement.name as string);
   
     switch(statement.kind){
       case ts.SyntaxKind.TypeAliasDeclaration: {
+        if(statement.name == "ValueDef" || statement.name == "PositionDef" || statement.name == "ColorDef"){
+          break;
+        }
         emit.import(['BaseObject'], '__util__');
         emit(`export class ${className} extends BaseObject{`);
         emit.indent();
@@ -32,12 +35,13 @@ export function generateClass(statement: ASTStatement, args: string[]){
       }
   
       case ts.SyntaxKind.InterfaceDeclaration: {
-        emit.import(['BaseObject'], '__util__');
-        emit(`export class ${className} extends BaseObject{`);
-        emit.indent();
-        let argString = ""
-        generateConstructor(argString);
-        generateExportFunction(className, argString);
+        if(statement.name == "FieldDef"){
+          break;
+        }
+
+        if(statement.name == "Encoding"){
+          obj.statements
+        }
         break;
       }
     }
