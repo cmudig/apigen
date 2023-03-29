@@ -12,10 +12,10 @@ export function generateClassMemberMethod(name: string, args: string[]){
     return functionText;
 }
 
-export function generateClass(statements: ASTStatement[], args: string[], obj: any){
+export function generateClass(statement: ASTStatement, args: string[]){
 
-  for (let i = 0; i < statements.length; i++){
-    const statement = statements[i];
+  // for (let i = 0; i < statements.length; i++){
+    // const statement = statements[i];
     const className = capitalize(statement.name as string);
 
     switch(statement.kind){
@@ -24,12 +24,13 @@ export function generateClass(statements: ASTStatement[], args: string[], obj: a
           
           break;
         }
-        emit.import(['BaseObject'], '__util__');
-        emit(`export class ${className} extends BaseObject{`);
+        // emit.import(['BaseObject'], '__util__');
+        // emit(`export class ${className} extends BaseObject{`);
+        emit(`export class ${className}{`);
         emit.indent();
         
         const argString: string = args.join(' | ');
-        generateConstructor(argString);
+        generateConstructor(argString, className);
         generateExportFunction(className, argString);  
         break;
       }
@@ -40,32 +41,35 @@ export function generateClass(statements: ASTStatement[], args: string[], obj: a
         }
 
         if(statement.name == "Encoding"){
-          obj.statements
+
+          //use the keys of the encoding interface to create an arg string
+          // argString = statement.members
+          // generateConstructor(argString, className);
         }
         break;
       }
     }
-  }
+  // }
 }
   
-export function generateConstructor(args: string){
+export function generateConstructor(args: string, name?:string | undefined){
 {
     if (args.length == 0){
         emit('constructor(){')
     } 
     else{
-    emit(`constructor(args:  "${args}"){`).indent();
+    emit(`constructor(private ${decapitalize(name)}:  "${args}"){`).indent();
     }
-    emit('super();');
+    // emit('super();');
     emit('}').outdent().outdent();
     emit('}');
 }
 }
 
 export function generateExportFunction(name: string, argString:string){
-emit(`export function ${decapitalize(name)}(args: "${argString}"){`);
+emit(`export function ${decapitalize(name)}(${decapitalize(name)} : "${argString}"){`);
 emit.indent();
-emit(`return new ${capitalize(name)}(args);`);
+emit(`return new ${capitalize(name)}(${decapitalize(name)});`);
 emit.outdent();
 emit('}');
 }

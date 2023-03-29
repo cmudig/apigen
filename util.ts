@@ -106,8 +106,14 @@ export function error(_: any) {
     return p + c.toUpperCase() + _.slice(++i);
   }
 
-  export function decapitalize(str: string): string {
-    return str.charAt(0).toLowerCase() + str.slice(1);
+  export function decapitalize(str: string | undefined): string {
+    if (str != undefined){
+      return str.charAt(0).toLowerCase() + str.slice(1);
+    }
+    else{
+      return "error";
+    }
+    
   }
   
   export function uppercase(_: string) {

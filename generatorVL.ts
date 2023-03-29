@@ -63,8 +63,8 @@ for (i = 0; i < jsonStatements.length; i++) {
 }
 // console.log(Statements[0].memberUnionTypes);
 // console.log(generateClassMemberMethod("fieldQ", []));
-// generateClass("FieldDef", ts.SyntaxKind.InterfaceDeclaration, []);
-// writeFile(outputFile);
+generateClass(Statements[4], argsList);
+writeFile(outputFile);
 //for statements in AST
       //get statement.kind
           //if kind is type alias declaration,
