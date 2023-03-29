@@ -10,8 +10,9 @@ export class ASTStatement {
     public kind: typeKind | undefined;
     public type: typeType | undefined;
     public members: Record<string, string> = {};
+    public memberUnionTypes: Record<string, string[]> = {};
 
-    constructor(name: string, kind: typeKind, type?: typeType | undefined, members?: Record<string, string> | undefined){
+    constructor(name: string, kind: typeKind, type?: typeType | undefined, members?: Record<string, string> | undefined, memberUnionTypes?: Record<string, string[]> | undefined){
         this.name = name;
         this.kind = kind;
         if(type != undefined){
@@ -19,6 +20,9 @@ export class ASTStatement {
         }
         if (members != undefined){
             this.members = members;
+        }
+        if (memberUnionTypes != undefined){
+            this.memberUnionTypes = memberUnionTypes;
         }
         
     }

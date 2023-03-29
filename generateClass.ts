@@ -8,27 +8,27 @@ const emit = emitter('utils')
 
 export function generateClassMemberMethod(name: string, args: string[]){
     const argString: string = args.join(', ');
-    emit(`${name}(${argString}){`);
-    emit.indent();
-    emit('}');
+    let functionText = `${name}(${argString}){}`;
+    return functionText;
 }
 
-export function generateClass(statement: ASTStatement, args: string[], obj: any){
+export function generateClass(statements: ASTStatement[], args: string[], obj: any){
 
+  for (let i = 0; i < statements.length; i++){
+    const statement = statements[i];
     const className = capitalize(statement.name as string);
-  
+
     switch(statement.kind){
       case ts.SyntaxKind.TypeAliasDeclaration: {
-        if(statement.name == "ValueDef" || statement.name == "PositionDef" || statement.name == "ColorDef"){
+        if(statement.name == "FieldDef"){
+          
           break;
         }
         emit.import(['BaseObject'], '__util__');
         emit(`export class ${className} extends BaseObject{`);
         emit.indent();
         
-        
         const argString: string = args.join(' | ');
-        // let argString = `"${args[0]}" | "${args[1]}" | "${args[2]}"`;
         generateConstructor(argString);
         generateExportFunction(className, argString);  
         break;
@@ -46,6 +46,7 @@ export function generateClass(statement: ASTStatement, args: string[], obj: any)
       }
     }
   }
+}
   
 export function generateConstructor(args: string){
 {
