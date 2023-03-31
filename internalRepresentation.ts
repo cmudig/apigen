@@ -5,14 +5,15 @@ export type typeComplex = ts.SyntaxKind.UnionType | ts.SyntaxKind.LiteralType;
 export type typeKind = ts.SyntaxKind.InterfaceDeclaration | ts.SyntaxKind.TypeAliasDeclaration;
 export type typeType = typePrimitive | typeComplex ;
 
-export class ASTStatement {
+export class ASTStatement { //TODO: rename
     public name: string | undefined;
-    public kind: typeKind | undefined;
+    public kind: typeKind | undefined; 
     public type: typeType | undefined;
     public members: Record<string, string> = {};
     public memberUnionTypes: Record<string, string[]> = {};
+    public args: string[] | undefined;
 
-    constructor(name: string, kind: typeKind, type?: typeType | undefined, members?: Record<string, string> | undefined, memberUnionTypes?: Record<string, string[]> | undefined){
+    constructor(name: string, kind: typeKind, type?: typeType | undefined, members?: Record<string, string> | undefined, memberUnionTypes?: Record<string, string[]> | undefined, args?:string[] | undefined){
         this.name = name;
         this.kind = kind;
         if(type != undefined){
@@ -23,6 +24,9 @@ export class ASTStatement {
         }
         if (memberUnionTypes != undefined){
             this.memberUnionTypes = memberUnionTypes;
+        }
+        if (args != undefined){
+            this.args = args;
         }
         
     }
