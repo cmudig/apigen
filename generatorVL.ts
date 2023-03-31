@@ -1,8 +1,4 @@
-
-import ts, { unescapeLeadingUnderscores } from "typescript";
-import * as fs from 'fs';
 import { parse, generateStatements } from "./parser"
-import { ASTStatement } from "./internalRepresentation"
 import {generateVLAPI, writeFile, generatetoSpec} from "./api"
 
 //Create a file and write the first essential line.
