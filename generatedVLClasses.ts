@@ -17,3 +17,7 @@ class Spec {
 export function spec(mark: Mark){
     return new Spec(mark);
   }
+
+export function toSpec(obj: any){
+      return JSON.stringify(obj);
+    }

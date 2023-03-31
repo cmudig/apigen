@@ -50,6 +50,12 @@ export function generateVLAPI(statement: ASTStatement) {
     }
   }
 
+export function generatetoSpec(){
+    emit(`export function toSpec(obj: any){
+      return JSON.stringify(obj);
+    }`);
+}
+
   //Write to the output file.
 export function writeFile(outputFile: string) {
     fs.writeFileSync(outputFile, emit.code());

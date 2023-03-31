@@ -1,6 +1,7 @@
 //Adapted from https://smack0007.github.io/blog/2021/convert-typescript-ast-to-json.html
 import ts from "typescript";
 import * as fs from 'fs';
+import { ASTStatement } from "./internalRepresentation";
 
 export function parse(file: string){
     const source = fs.readFileSync(file, 'utf-8');
@@ -35,3 +36,90 @@ export function parse(file: string){
     // console.log(json);
     return json;
     }
+
+    // main for loop (TODO: make this into its own function and move it to the parser)
+export function generateStatements(jsonStatements: any){
+  let Statements: ASTStatement[] = [];
+  for (let i = 0; i < jsonStatements.length; i++) {
+  
+    let name = jsonStatements[i].name.escapedText
+    let kind = jsonStatements[i].kind
+  
+    //for type alias declarations
+    if ("type" in jsonStatements[i]) {
+      let type = jsonStatements[i].type.kind //need to adjust for members //check for member 
+      if (type == ts.SyntaxKind.UnionType) {
+        let unionTypes: string[] = [];
+  
+        if ("types" in jsonStatements[i].type && "literal" in jsonStatements[i].type.types[0]) {
+          for (let k = 0; k < jsonStatements[i].type.types.length; k++) {
+            unionTypes.push(jsonStatements[i].type.types[k].literal.text);
+          }
+           // const Statement = new ASTStatement(name, kind, type, undefined, undefined, unionTypes);
+          // Statements.push(Statement);
+        }
+        if ("types" in jsonStatements[i].type && "typeName" in jsonStatements[i].type.types[0]) {
+          
+          for (let k = 0; k < jsonStatements[i].type.types.length; k++) {
+            unionTypes.push(jsonStatements[i].type.types[k].typeName.escapedText);
+          }
+          // const Statement = new ASTStatement(name, kind, type, undefined, undefined, unionTypes);
+          // Statements.push(Statement);
+        }
+        const Statement = new ASTStatement(name, kind, type, undefined, undefined, unionTypes);
+          Statements.push(Statement);
+      }
+      else if ("members" in jsonStatements[i].type){
+        const members: Record<string, string> = {};
+      let memberUnionTypes: Record<string, string[]> = {};
+      let j = 0;
+  
+      //members population
+      for (j = 0; j < jsonStatements[i].type.members.length; j++) {
+        members[jsonStatements[i].type.members[j].name.escapedText] = jsonStatements[i].type.members[j].name.kind;
+        if (jsonStatements[i].type.members[j].type.kind == ts.SyntaxKind.UnionType) {
+  
+          let unionTypes: string[] = [];
+  
+          for (let k = 0; k < jsonStatements[i].type.members[j].type.types.length; k++) {
+            unionTypes.push(jsonStatements[i].type.members[j].type.types[k].literal.text);
+          }
+          // console.log(unionTypes);
+          memberUnionTypes[jsonStatements[i].type.members[j].name.escapedText] = unionTypes;
+        }
+      }
+      const Statement = new ASTStatement(name, kind, undefined, members, memberUnionTypes);
+      Statements.push(Statement);
+  
+      }
+      else {
+        const Statement = new ASTStatement(name, kind, type);
+        Statements.push(Statement);
+      }
+    }
+  
+    //for interfaces
+    else if ("members" in jsonStatements[i]) {
+      const members: Record<string, string> = {};
+      let memberUnionTypes: Record<string, string[]> = {};
+      let j = 0;
+  
+      //members population
+      for (j = 0; j < jsonStatements[i].members.length; j++) {
+        members[jsonStatements[i].members[j].name.escapedText] = jsonStatements[i].members[j].name.kind;
+        if (jsonStatements[i].members[j].type.kind == ts.SyntaxKind.UnionType) {
+  
+          let unionTypes: string[] = [];
+  
+          for (let k = 0; k < jsonStatements[i].members[j].type.types.length; k++) {
+            unionTypes.push(jsonStatements[i].members[j].type.types[k].literal.text);
+          }
+          memberUnionTypes[jsonStatements[i].members[j].name.escapedText] = unionTypes;
+        }
+      }
+      const Statement = new ASTStatement(name, kind, undefined, members, memberUnionTypes);
+      Statements.push(Statement);
+    }
+  }
+  return Statements;
+  }
