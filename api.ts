@@ -52,8 +52,8 @@ export function generateVLAPI(statement: ASTStatement) {
 
 export function generatetoSpec(){
     emit(`export function toSpec(obj: any){
-      return JSON.stringify(obj);
-    }`);
+    return JSON.stringify(obj);\n}
+    `);
 }
 
   //Write to the output file.
