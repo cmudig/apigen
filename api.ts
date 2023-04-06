@@ -1,4 +1,4 @@
-import ts from "typescript";
+import * as ts from "typescript";
 import * as fs from 'fs';
 import { ASTStatement } from "./internalRepresentation"
 import { emitter, capitalize, decapitalize } from "./util"
@@ -48,7 +48,7 @@ export function generateVLAPI(statement: ASTStatement) {
         break;
       }
     }
-  }
+}
 
 export function generatetoSpec(){
     emit(`export function toSpec(obj: any){
@@ -59,4 +59,8 @@ export function generatetoSpec(){
   //Write to the output file.
 export function writeFile(outputFile: string) {
     fs.writeFileSync(outputFile, emit.code());
-  }
+}
+
+export function getEmitCode(): string {
+    return emit.code();
+}

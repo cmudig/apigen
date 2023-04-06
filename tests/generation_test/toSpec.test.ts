@@ -1,5 +1,8 @@
-import * as VL from "../generatedVLClasses";
+import * as VL from "../../generatedVLClasses";
 
+/**
+ * Test the generated file is working.
+ */
 describe('markSpec', () => {
 
     const spec = VL.spec(VL.mark("bar"));

@@ -14,6 +14,7 @@ export class ASTStatement { //TODO: rename
     public args: string[] | undefined;
 
     constructor(name: string, kind: typeKind, type?: typeType | undefined, members?: Record<string, string> | undefined, memberUnionTypes?: Record<string, string[]> | undefined, args?:string[] | undefined){
+        // console.log(name, kind, type, members, memberUnionTypes, args)
         this.name = name;
         this.kind = kind;
         if(type != undefined){
