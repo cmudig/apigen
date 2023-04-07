@@ -21,4 +21,3 @@ export function spec(mark: Mark){
 export function toSpec(obj: any){
     return JSON.stringify(obj);
 }
-    
