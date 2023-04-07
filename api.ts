@@ -1,4 +1,4 @@
-import ts from "typescript";
+import * as ts from "typescript";
 import * as fs from 'fs';
 import { ASTStatement } from "./internalRepresentation"
 import { emitter, capitalize, decapitalize } from "./util"
@@ -16,15 +16,15 @@ export function generateVLAPI(statement: ASTStatement) {
   switch (statement.kind) {
     case ts.SyntaxKind.TypeAliasDeclaration: {
 
-      if (statement.name == "ColorDef"){
-        break;
-      } 
-
-      if (statement.name == "PositionDef"){
+      if (statement.name == "ColorDef") {
         break;
       }
-      
-      if (statement.name == "ValueDef"){
+
+      if (statement.name == "PositionDef") {
+        break;
+      }
+
+      if (statement.name == "ValueDef") {
         break;
       }
 
@@ -50,9 +50,9 @@ export function generateVLAPI(statement: ASTStatement) {
 
     case ts.SyntaxKind.InterfaceDeclaration: {
 
-      if (statement.name == "LayerSpec"){
+      if (statement.name == "LayerSpec") {
         break;
-      } 
+      }
       if (statement.name == "FieldDef") {
 
         for (let [name, type] of Object.entries(statement.members)) {
@@ -92,4 +92,8 @@ export function generatetoSpec() {
 //Write to the output file.
 export function writeFile(outputFile: string) {
   fs.writeFileSync(outputFile, emit.code());
+}
+
+export function getEmitCode(): string {
+    return emit.code();
 }
