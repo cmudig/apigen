@@ -2,7 +2,7 @@ import { parse, generateStatements } from "./parser"
 import {generateVLAPI, writeFile, generatetoSpec} from "./api"
 
 //Create a file and write the first essential line.
-let outputFile = "generatedVLClasses.ts"
+let outputFile = "generate/generatedVLClasses.ts"
 
 //Get the AST as a json that can be traversed
 const json = parse(process.argv[2])
@@ -13,14 +13,10 @@ let jsonStatements = obj.statements;
 
 //Generate an internal representation
 const Statements = generateStatements(jsonStatements);
-// console.log(Statements);
 
-//generate Mark
-generateVLAPI(Statements[4]);
-
-//generate Spec
-generateVLAPI(Statements[7]);
-
+for (let i = 0; i < Statements.length; i++){
+    generateVLAPI(Statements[i]);
+}
 //generate the json spec
 generatetoSpec();
 writeFile(outputFile);

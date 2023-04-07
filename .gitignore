@@ -6,3 +6,6 @@ package-lock.json
 tsconfig.json
 .vscode/
 scratch/
+TYPESCRIPT_TEST.ts
+classes.ts
+SourceFiles/test.ts

@@ -47,13 +47,18 @@ export function error(_: any) {
     return `this.${name}` + (isInternal(name) ? '' : '()');
   }
   
-  export function emitter(defaultFile: string) {
+  export function emitter(defaultFile?: string) {
 
     interface importsType {
         [key: string] :any;
     }
-    const imports: importsType = {[defaultFile]: {}},
-          lines: string[] = [];
+    const imports: importsType = {};
+    if(defaultFile != undefined){
+      const imports: importsType = {[defaultFile]: {}};
+    }
+    
+
+    const lines: string[] = [];
   
     let prefix = '';
   
@@ -74,7 +79,10 @@ export function error(_: any) {
   
     // TODO: come back
     emit.import = (methods: string[], file: string) => {
+      if(defaultFile != undefined){
       file = file || defaultFile;
+      }
+
       (Array.isArray(methods) ? methods : [methods])
         .forEach(m => (imports[file] || (imports[file] = {}))[m] = 1);
       return emit;
