@@ -13,7 +13,6 @@ let jsonStatements = obj.statements;
 
 //Generate an internal representation
 const Statements = generateStatements(jsonStatements);
-// console.log(Statements);
 
 //generate Mark
 generateVLAPI(Statements[4]);

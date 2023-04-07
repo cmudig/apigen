@@ -1,4 +1,4 @@
-import * as VL from "/Users/srizvi/Documents/DIG/apigen/generatedVLClasses";
+import * as VL from "../generatedVLClasses";
 
 
 const spec = VL.spec(VL.mark("bar"));

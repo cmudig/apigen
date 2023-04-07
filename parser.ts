@@ -1,5 +1,5 @@
 //Adapted from https://smack0007.github.io/blog/2021/convert-typescript-ast-to-json.html
-import ts from "typescript";
+import * as ts from "typescript";
 import * as fs from 'fs';
 import { ASTStatement } from "./internalRepresentation";
 
@@ -76,7 +76,7 @@ export function generateStatements(jsonStatements: any){
   
       //members population
       for (j = 0; j < jsonStatements[i].type.members.length; j++) {
-        members[jsonStatements[i].type.members[j].name.escapedText] = jsonStatements[i].type.members[j].name.kind;
+        members[jsonStatements[i].type.members[j].name.escapedText] = (jsonStatements[i].type.members[j].name.kind).toString();
         if (jsonStatements[i].type.members[j].type.kind == ts.SyntaxKind.UnionType) {
   
           let unionTypes: string[] = [];
@@ -106,7 +106,7 @@ export function generateStatements(jsonStatements: any){
   
       //members population
       for (j = 0; j < jsonStatements[i].members.length; j++) {
-        members[jsonStatements[i].members[j].name.escapedText] = jsonStatements[i].members[j].name.kind;
+        members[jsonStatements[i].members[j].name.escapedText] = (jsonStatements[i].members[j].name.kind).toString();
         if (jsonStatements[i].members[j].type.kind == ts.SyntaxKind.UnionType) {
   
           let unionTypes: string[] = [];

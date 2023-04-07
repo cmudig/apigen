@@ -33,8 +33,7 @@ export function generateConstructor(constructorArgs: string, name?: string | und
 
 export function generateExportFunction(name: string, args: string) {
   return `export function ${decapitalize(name)}(${args}){
-    return new ${capitalize(name)}(${decapitalize(args.split(':')[0])});
-  }
+    return new ${capitalize(name)}(${decapitalize(args.split(':')[0])});\n}
 `;
 }
 
@@ -46,8 +45,7 @@ export function generateClass(name: string, args: string, methods: Method[]): st
   const arg = decapitalize(name);
   return `class ${name} {
     constructor(private ${args}) {}
-    ${methodStrings.join('\n\n')}
-  }
+    ${methodStrings.join('\n\n')}\n}
   `;
 }
 
