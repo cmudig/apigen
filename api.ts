@@ -6,6 +6,8 @@ import { generateExportFunction, generateClass, MethodArg, createArgString } fro
 const emit = emitter('')
 let fieldDefArgs: MethodArg[] = [];
 let primitiveArgs: MethodArg = {name: "", type:""};
+let valueDefArg: MethodArg = {name: "", type:""};
+let ColorDefArgs: MethodArg[] = [];
 export function generateVLAPI(statement: ASTStatement) {
 
   const className = capitalize(statement.name as string);
@@ -28,7 +30,14 @@ export function generateVLAPI(statement: ASTStatement) {
       }
 
       if (statement.name == "ColorDef") {
-        
+        //TODO: include string information in ASTStatement
+        ColorDefArgs = fieldDefArgs.slice();
+        valueDefArg.type = "string";
+        ColorDefArgs.push(valueDefArg);
+
+        for(const arg of ColorDefArgs){
+          arg.name = `${arg.name}?`;
+        }
         break;
       }
 
@@ -37,6 +46,7 @@ export function generateVLAPI(statement: ASTStatement) {
       }
 
       if (statement.name == "ValueDef") {
+        valueDefArg = {name: "value", keyword: "private", type: ""};
         break;
       }
 
@@ -64,8 +74,15 @@ export function generateVLAPI(statement: ASTStatement) {
 
         let encodingArgs: MethodArg[] = [];
         for (let [name, type] of Object.entries(statement.members)) {
-          emit(generateClass(capitalize(name), createArgString(fieldDefArgs, true), []));
-          emit(generateExportFunction(name, name, fieldDefArgs));
+          if(name == "color"){
+            emit(generateClass(capitalize(name), createArgString(ColorDefArgs, true), []));
+          emit(generateExportFunction(name, name, ColorDefArgs));
+          }
+          else{
+            emit(generateClass(capitalize(name), createArgString(fieldDefArgs, true), []));
+            emit(generateExportFunction(name, name, fieldDefArgs));
+          }
+          
           encodingArgs.push({ keyword: "private", name: `${name}?`, type: `${capitalize(name)}` });
         }
         emit(generateClass(statement.name, createArgString(encodingArgs, true), []));

@@ -10,7 +10,7 @@ const json = parse(process.argv[2])
 //Get the simplified version of the AST
 const obj = JSON.parse(json);
 let jsonStatements = obj.statements;
-console.log(json);
+// console.log(json);
 
 //Generate an internal representation
 const Statements = generateStatements(jsonStatements);

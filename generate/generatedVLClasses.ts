@@ -9,30 +9,30 @@ export function mark(type: "bar" | "area" | "line" | { type: "bar" | "area" | "l
   }
 
 class X {
-    constructor(private field: string, private type: "quantitative" | "ordinal") {}
+    constructor(private field?: string, private type?: "quantitative" | "ordinal") {}
     
   }
   
-export function x(field: string, type: "quantitative" | "ordinal"){
+export function x(field?: string, type?: "quantitative" | "ordinal"){
     return new X(field, type);
   }
 
 class Y {
-    constructor(private field: string, private type: "quantitative" | "ordinal") {}
+    constructor(private field?: string, private type?: "quantitative" | "ordinal") {}
     
   }
   
-export function y(field: string, type: "quantitative" | "ordinal"){
+export function y(field?: string, type?: "quantitative" | "ordinal"){
     return new Y(field, type);
   }
 
 class Color {
-    constructor(private field: string, private type: "quantitative" | "ordinal") {}
+    constructor(private field?: string, private type?: "quantitative" | "ordinal", private value?: string) {}
     
   }
   
-export function color(field: string, type: "quantitative" | "ordinal"){
-    return new Color(field, type);
+export function color(field?: string, type?: "quantitative" | "ordinal", value?: string){
+    return new Color(field, type, value);
   }
 
 class Encoding {
