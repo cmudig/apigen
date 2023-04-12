@@ -1,38 +1,38 @@
 
 class Mark {
-    constructor(private type: "bar" | "area" | "line") {}
+    constructor(private type: "bar" | "area" | "line" | { type: "bar" | "area" | "line"}) {}
     
   }
   
-export function mark(type: "bar" | "area" | "line"){
+export function mark(type: "bar" | "area" | "line" | { type: "bar" | "area" | "line"}){
     return new Mark(type);
   }
 
 class X {
-    constructor(private field: string, private type: "quantitative" | "ordinal") {}
+    constructor(private field?: string, private type?: "quantitative" | "ordinal") {}
     
   }
   
-export function x(field: string, type: "quantitative" | "ordinal"){
+export function x(field?: string, type?: "quantitative" | "ordinal"){
     return new X(field, type);
   }
 
 class Y {
-    constructor(private field: string, private type: "quantitative" | "ordinal") {}
+    constructor(private field?: string, private type?: "quantitative" | "ordinal") {}
     
   }
   
-export function y(field: string, type: "quantitative" | "ordinal"){
+export function y(field?: string, type?: "quantitative" | "ordinal"){
     return new Y(field, type);
   }
 
 class Color {
-    constructor(private field: string, private type: "quantitative" | "ordinal") {}
+    constructor(private field?: string, private type?: "quantitative" | "ordinal", private value?: string) {}
     
   }
   
-export function color(field: string, type: "quantitative" | "ordinal"){
-    return new Color(field, type);
+export function color(field?: string, type?: "quantitative" | "ordinal", value?: string){
+    return new Color(field, type, value);
   }
 
 class Encoding {
@@ -45,14 +45,17 @@ export function encode(x?: X, y?: Y, color?: Color){
   }
 
 class Spec {
-    constructor(private mark: Mark, private encode: Encoding) {}
+    constructor(private mark: Mark, private data: string, private encode: Encoding) {}
     
   }
   
-export function spec(mark: Mark, encode: Encoding){
-    return new Spec(mark, encode);
+export function spec(mark: Mark, data: string, encode: Encoding){
+    return new Spec(mark, data, encode);
   }
 
 export function toSpec(obj: any){
+      return obj;
+    }
+export function toJSON(obj: any){
       return JSON.stringify(obj);
     }
