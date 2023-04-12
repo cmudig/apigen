@@ -3,8 +3,8 @@ import * as fs from 'fs';
 import { ASTStatement } from "./internalRepresentation"
 import { emitter, capitalize, decapitalize } from "./util"
 import { generateExportFunction, generateClass, generateClassMemberMethod, MethodArg, createArgString } from "./generate";
-import { fieldDefs } from "vega-lite/build/src/encoding";
-import { encoding } from "./scratch/classes";
+// import { fieldDefs } from "vega-lite/build/src/encoding";
+// import { encoding } from "./scratch/classes";
 
 const emit = emitter('')
 let fieldDefArgs: MethodArg[] = [];

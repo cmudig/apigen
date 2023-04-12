@@ -98,7 +98,7 @@ export function error(_: any) {
       }, []);
   
       return (code as string[]).concat('', lines).join('\n');
-    }
+    };
   
     return emit;
   }

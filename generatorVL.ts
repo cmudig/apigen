@@ -20,7 +20,3 @@ for (let i = 0; i < Statements.length; i++){
 //generate the json spec
 generatetoSpec();
 writeFile(outputFile);
-
-
-
-

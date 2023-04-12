@@ -1,0 +1,13 @@
+
+class Mark {
+    constructor(private type: "bar" | "area" | "line") {}
+    
+  }
+  
+export function mark(type: "bar" | "area" | "line"){
+    return new Mark(type);
+  }
+
+export function toSpec(obj: any){
+      return JSON.stringify(obj);
+    }
