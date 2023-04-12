@@ -1,4 +1,4 @@
-import * as VL from "../../generatedVLClasses";
+import * as VL from "../../generate/generatedVLClasses";
 
 /**
  * Test the generated file is working.

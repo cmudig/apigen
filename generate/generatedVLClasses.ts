@@ -1,10 +1,10 @@
 
 class Mark {
-    constructor(private type: "bar" | "area" | "line") {}
+    constructor(private type: "bar" | "area" | "line" | { type: "bar" | "area" | "line"}) {}
     
   }
   
-export function mark(type: "bar" | "area" | "line"){
+export function mark(type: "bar" | "area" | "line" | { type: "bar" | "area" | "line"}){
     return new Mark(type);
   }
 
@@ -45,14 +45,17 @@ export function encode(x?: X, y?: Y, color?: Color){
   }
 
 class Spec {
-    constructor(private mark: Mark, private encode: Encoding) {}
+    constructor(private mark: Mark, private data: string, private encode: Encoding) {}
     
   }
   
-export function spec(mark: Mark, encode: Encoding){
-    return new Spec(mark, encode);
+export function spec(mark: Mark, data: string, encode: Encoding){
+    return new Spec(mark, data, encode);
   }
 
 export function toSpec(obj: any){
+      return obj;
+    }
+export function toJSON(obj: any){
       return JSON.stringify(obj);
     }
