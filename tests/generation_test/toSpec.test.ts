@@ -14,8 +14,8 @@ describe('markSpec', () => {
         expect(VL.toSpec(spec)).toEqual(expected);
     });
 
-    // it('test toSpec() MatchSnapShot', () => {
-    //     expect(VL.toSpec(spec)).toMatchSnapshot();
-    // });
+    it('test toSpec() MatchSnapShot', () => {
+        expect(VL.toSpec(spec)).toMatchSnapshot();
+    });
 
 });
