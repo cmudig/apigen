@@ -1,6 +1,6 @@
 import { parse, generateStatements } from "../parser";
 import { ASTStatement } from "../internalRepresentation";
-import {generateVLAPI, generatetoSpec, getEmitCode} from "../api";
+import { generateVLAPI, generatetoSpec, getEmitCode, writeFile } from "../api";
 import * as fs from 'fs';
 
 /**
@@ -24,5 +24,6 @@ export function validateOutput (inputFile: string, expectedOutputFile: string) :
     generatetoSpec();
     expect(getEmitCode()).toMatchSnapshot();
     const expectedOutput = fs.readFileSync(expectedOutputFile, 'utf-8')
+    writeFile("./output.ts")
     expect(getEmitCode()).toEqual(expectedOutput);
 }

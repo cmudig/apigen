@@ -1,7 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VLType test Output should be same as expected 1`] = `
-"
 class Mark {
     constructor(private type:  | { type: }) {}
     
@@ -58,5 +55,4 @@ export function spec(mark: Mark, data: string, encode: Encoding){
 
 export function toSpec(obj: any){
       return obj;
-    }"
-`;
+    }
