@@ -1,5 +1,7 @@
-import { parseFile } from "../utils";
-import {generateVLAPI, generatetoSpec, getEmitCode} from "../../api"
+import { parseFile, validateOutput } from "../utils";
+import { generateVLAPI, generatetoSpec, getEmitCode } from "../../api"
+import * as fs from 'fs';
+import exp from "constants";
 
 /**
  * Test the generated file is the same as expected.
@@ -7,19 +9,15 @@ import {generateVLAPI, generatetoSpec, getEmitCode} from "../../api"
 describe("VLType test", () => {
 
     it("Output should be same as expected", () => {
-        const Statements = parseFile("tests/generation_test/test_files/complexType.ts");
-        generateVLAPI(Statements[4]);
-        generateVLAPI(Statements[7]);
-        generatetoSpec();
-        // console.log(getEmitCode());
-        expect(1).toBe(1);
+        const input_file_path = "tests/generation_test/test_files";
+        const expected_file_path = "tests/generation_test/expected_generated_files";
+        // const input_file = `${input_file_path}/enumType.ts`
+        // const expected_file = `${expected_file_path}/enumType.txt`
+        validateOutput(input_file_path + "/complexType.ts", expected_file_path + "/complexType.ts");
+
+
+        // TODO: clear the emit code and support multiple files
+        // validateOutput("tests/generation_test/test_files/complexType.ts", "tests/generation_test/expected_generated_files/complexType.txt");
     });
 
-    it("Output should be same as expected", () => {
-        const Statements = parseFile("tests/generation_test/test_files/type.ts");
-        generateVLAPI(Statements[0]);
-        generatetoSpec();
-        // console.log(getEmitCode());
-        expect(1).toBe(1);
-    });
 });

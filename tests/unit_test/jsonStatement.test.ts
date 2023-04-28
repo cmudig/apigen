@@ -5,7 +5,7 @@ import * as ts from "typescript";
  * Test the parse function
  */
 describe("jsonStatement test", () => {
-    const testFile = "SourceFiles/SourceVLType.ts"
+    const testFile = "tests/unit_test/test_files/complexType.ts"
     const json = parse(testFile)
     const obj = JSON.parse(json);
     let jsonStatements = obj.statements;
@@ -25,8 +25,13 @@ describe("jsonStatement test", () => {
         expect(jsonStatements[7].kind).toBe(ts.SyntaxKind.TypeAliasDeclaration);
     });
 
+    for (let i = 0; i < jsonStatements.length; i++){
+        console.log(jsonStatements[i].members);
+    }
+
     it("Right number of members", () => {
         expect(jsonStatements[0].members).toHaveLength(2);
+        expect(jsonStatements[5].members).toHaveLength(3);
         expect(jsonStatements[6].members).toHaveLength(1);
     });
 });

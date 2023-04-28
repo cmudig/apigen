@@ -1,42 +1,46 @@
-import { emitter, capitalize, decapitalize } from "./util"
-import { ASTStatement } from "./internalRepresentation"
-import ts, { classicNameResolver } from "typescript";
-
-import { Project, Statement, SyntaxKind } from "ts-morph";
-
+import { emitter, capitalize, decapitalize, isString } from "./util"
 const emit = emitter('utils')
 
 interface Method {
   name: string;
-  args: string;
+  args: MethodArg[];
   body: string;
 }
 
-//not used yet
-export function generateClassMemberMethod(name: string, args: string, body: string): string {
-  return `${name}(${args}) {\n${body}\n}`;
+export interface MethodArg {
+  keyword?: string;
+  name: string;
+  type: string;
 }
-//not used currently
-export function generateConstructor(constructorArgs: string, name?: string | undefined) {
-  {
-    if (constructorArgs.length == 0) {
-      emit('constructor(){')
-    }
-    else {
-      emit(`constructor(private ${decapitalize(name)}:  "${constructorArgs}"){`).indent();
-    }
-    // emit('super();');
-    emit('}').outdent().outdent();
-    emit('}');
+
+//convert methodArgs to a string
+export function createArgString(methodArgs: MethodArg[],keywords: boolean): string{
+  let result = "";
+  if (keywords){
+    return methodArgs.map(arg => `${arg.keyword? `${arg.keyword}` : ""} ${arg.name}: ${arg.type}`).join(", ");
+  }
+  else{
+    return methodArgs.map(arg => `${arg.name}: ${arg.type}`).join(", ");
   }
 }
 
-export function generateExportFunction(name: string, args: string) {
-  return `export function ${decapitalize(name)}(${args}){
-    return new ${capitalize(name)}(${decapitalize(args.split(':')[0])});\n}
-`;
+//not used yet
+export function generateClassMemberMethod(name: string, args: MethodArg[], body: string): string {
+  return `${name}(${createArgString(args,true)}) {\n${body}\n}`;
 }
 
+export function generateExportFunction(functionName: string, objName: string, args: MethodArg[]) {
+  let exportargs: string[] = args.map(arg => arg.name);
+  if (exportargs[0].slice(-1) === '?'){
+    exportargs = exportargs.map(arg => arg.slice(0,-1));
+  }
+  
+  return `export function ${decapitalize(functionName)}(${createArgString(args, false)}){
+    return new ${capitalize(objName)}(${exportargs.join(", ")});
+  }
+`;
+}
+//Takes in args as string
 export function generateClass(name: string, args: string, methods: Method[]): string {
   const methodStrings = methods.map((method) => {
     return `${method.name}(${method.args}) {${method.body}}`;
@@ -44,8 +48,8 @@ export function generateClass(name: string, args: string, methods: Method[]): st
 
   const arg = decapitalize(name);
   return `class ${name} {
-    constructor(private ${args}) {}
-    ${methodStrings.join('\n\n')}\n}
+    constructor(${args}) {}
+    ${methodStrings.join('\n\n')}
+  }
   `;
 }
-

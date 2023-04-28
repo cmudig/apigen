@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`markSpec test toSpec() MatchSnapShot 1`] = `"{"mark":{"type":"bar"}}"`;
+exports[`markSpec test toSpec() MatchSnapShot 1`] = `"{"mark":{"type":"bar"},"encode":{}}"`;

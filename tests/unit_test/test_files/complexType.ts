@@ -9,10 +9,7 @@ type ValueDef<T> = {
 
 type PositionDef = FieldDef;
 type ColorDef = FieldDef | ValueDef<string>
-type PrimitiveMark = "bar" | "area" | "line";
-type Mark = PrimitiveMark | {
-  type: PrimitiveMark
-}
+type Mark = "bar" | "area" | "line";
 
 interface Encoding {
   x?: PositionDef;
