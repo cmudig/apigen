@@ -37,13 +37,14 @@ export function parse(file: string) {
   return json;
 }
 
-// main for loop (TODO: make this into its own function and move it to the parser)
 export function generateStatements(jsonStatements: any) {
   let Statements: ASTStatement[] = [];
+  
   for (let i = 0; i < jsonStatements.length; i++) {
 
     let name = jsonStatements[i].name.escapedText
     let kind = jsonStatements[i].kind
+    let children: string[] = [];
 
     //for type alias declarations
     if ("type" in jsonStatements[i]) {
@@ -54,6 +55,7 @@ export function generateStatements(jsonStatements: any) {
         if ("types" in jsonStatements[i].type && "literal" in jsonStatements[i].type.types[0]) {
           for (let k = 0; k < jsonStatements[i].type.types.length; k++) {
             unionTypes.push(jsonStatements[i].type.types[k].literal.text);
+            children.push(jsonStatements[i].type.types[k].literal.text);
           }
         }
         if ("types" in jsonStatements[i].type && "typeName" in jsonStatements[i].type.types[0]) {
@@ -64,11 +66,12 @@ export function generateStatements(jsonStatements: any) {
             }
             else{
               unionTypes.push(jsonStatements[i].type.types[k].typeName.escapedText);
+              children.push(jsonStatements[i].type.types[k].typeName.escapedText);
             }
           }
         }
         //TODO: add logic to keep track of the type from ValueDef used in ColorDef
-        const Statement = new ASTStatement(name, kind, type, undefined, undefined, unionTypes);
+        const Statement = new ASTStatement(name, kind, type, undefined, undefined, unionTypes, children);
         Statements.push(Statement);
       }
       else if ("members" in jsonStatements[i].type) {
@@ -79,6 +82,15 @@ export function generateStatements(jsonStatements: any) {
         //members population
         for (j = 0; j < jsonStatements[i].type.members.length; j++) {
           members[jsonStatements[i].type.members[j].name.escapedText] = (jsonStatements[i].type.members[j].name.kind).toString();
+          
+          if (jsonStatements[i].type.members[j].type.typeName){
+            children.push(jsonStatements[i].type.members[j].type.typeName.escapedText);
+          }
+           //TODO: include kind to primitive type conversion
+          else{
+            children.push(jsonStatements[i].type.members[j].type.kind);
+          }
+          
           if (jsonStatements[i].type.members[j].type.kind == ts.SyntaxKind.UnionType) {
 
             let unionTypes: string[] = [];
@@ -90,12 +102,14 @@ export function generateStatements(jsonStatements: any) {
             memberUnionTypes[jsonStatements[i].type.members[j].name.escapedText] = unionTypes;
           }
         }
-        const Statement = new ASTStatement(name, kind, undefined, members, memberUnionTypes);
+        const Statement = new ASTStatement(name, kind, undefined, members, memberUnionTypes, undefined, children);
         Statements.push(Statement);
 
       }
       else {
-        const Statement = new ASTStatement(name, kind, type);
+        children.push(jsonStatements[i].type.typeName.escapedText)
+        const Statement = new ASTStatement(name, kind, type, undefined, undefined, undefined, children);
+        
         Statements.push(Statement);
       }
     }
@@ -109,6 +123,15 @@ export function generateStatements(jsonStatements: any) {
       //members population
       for (j = 0; j < jsonStatements[i].members.length; j++) {
         members[jsonStatements[i].members[j].name.escapedText] = (jsonStatements[i].members[j].name.kind).toString();
+
+        if("type" in jsonStatements[i].members[j] && "typeName" in jsonStatements[i].members[j].type){
+          children.push(jsonStatements[i].members[j].type.typeName.escapedText);
+        }
+        //TODO: add syntax kind conversion
+        else{
+          children.push(jsonStatements[i].members[j].type.kind);
+        }
+        
         if (jsonStatements[i].members[j].type.kind == ts.SyntaxKind.UnionType) {
 
           let unionTypes: string[] = [];
@@ -119,7 +142,7 @@ export function generateStatements(jsonStatements: any) {
           memberUnionTypes[jsonStatements[i].members[j].name.escapedText] = unionTypes;
         }
       }
-      const Statement = new ASTStatement(name, kind, undefined, members, memberUnionTypes);
+      const Statement = new ASTStatement(name, kind, undefined, members, memberUnionTypes, undefined,children);
       Statements.push(Statement);
     }
   }
