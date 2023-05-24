@@ -36,8 +36,7 @@ export function generateExportFunction(functionName: string, objName: string, ar
   }
   
   return `export function ${decapitalize(functionName)}(${createArgString(args, false)}){
-    return new ${capitalize(objName)}(${exportargs.join(", ")});
-  }
+    return new ${capitalize(objName)}(${exportargs.join(", ")});\n}
 `;
 }
 //Takes in args as string
@@ -49,7 +48,6 @@ export function generateClass(name: string, args: string, methods: Method[]): st
   const arg = decapitalize(name);
   return `class ${name} {
     constructor(${args}) {}
-    ${methodStrings.join('\n\n')}
-  }
+    ${methodStrings.join('\n\n')}\n}
   `;
 }
