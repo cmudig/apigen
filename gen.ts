@@ -78,20 +78,20 @@ function typeGeneration(node: ts.Node) {
                 console.log(`export function spec(${methodArgs}){\n\treturn new ${node.name.text}(${passArgs});\n}\n`);
             }
         } else if (ts.isTypeNode(node.type)){
-            console.log(`class ${node.name.text} {\n\tconstructor(type: ${node.type.getText()}) {}\n}\n`);
+            const argType = node.type.getText().replace(/[\r\n]/g, " ");
+            console.log(`class ${node.name.text} {\n\tconstructor(type: ${argType}) {}\n}\n`);
+            if(node.name.text === "Mark") {
+                const methodName = "mark";
+                console.log(`export function ${methodName}(type: ${argType}){\n\treturn new ${node.name.text}(type);\n}\n`);
+            }
         }
     }
 }
 
 // generate toSpec() and toJSON()
 function specGeneration(){
-    console.log(`export function toSpec(obj: any){
-        return obj;
-    }
-
-    export function toJSON(obj: any){
-        return JSON.stringify(obj);
-    }`)
+    console.log(`export function toSpec(obj: any){\n\treturn obj;\n}\n`);
+    console.log(`export function toJSON(obj: any){\n\treturn JSON.stringify(obj);\n}`);
 }
 
 // get arguments from the node members
@@ -109,6 +109,6 @@ function getArgs(members: ts.NodeArray<ts.TypeElement>): string[] {
             const propertyName = member.name?.getText();
             return `${propertyName}`;
         }
-    }).join(', ');        
+    }).join(', '); 
     return [constructorArgs, methodArgs, passArgs];
 }
