@@ -1,28 +1,20 @@
 import * as ts from "typescript";
-import * as fs from 'fs';
-import { type } from "os";
 
-// const file = process.argv[2];
-// const sourceFiles = process.argv.slice(2);
-// const file = "SourceFiles/SourceVLType.ts";
+// create typechecker
 const sourceFiles = ["SourceFiles/SourceVLType.ts"];
-
-// const source = fs.readFileSync(file, 'utf-8');
-// const sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true);
 let program = ts.createProgram(sourceFiles, {
     target: ts.ScriptTarget.ES5,
     module: ts.ModuleKind.CommonJS
 });
 let checker = program.getTypeChecker();
-
-// Visit every sourceFile in the program
+// visit every sourceFile in the program
 for (const sourceFile of program.getSourceFiles()) {
     if (!sourceFile.isDeclarationFile) {
-        // Walk the tree to search for classes
         ts.forEachChild(sourceFile, visit);
     }
 }
 
+// visit each node in the sourceFile
 function visit(node: ts.Node) {
     if(ts.isInterfaceDeclaration(node)){
         interfaceGeneration(node);
@@ -34,25 +26,7 @@ function visit(node: ts.Node) {
 }
 specGeneration();
 
-
-function getArgs(members: ts.NodeArray<ts.TypeElement>): string[] {
-    const constructorArgs = members.map(member => {
-        if(ts.isPropertySignature(member)){
-            const propertyName = member.name?.getText();
-            const optionalMarker = member.questionToken ? '?' : '';
-            return `private ${propertyName}${optionalMarker}: ${member.type?.getText()}`;
-        }
-    }).join(', ');
-    const methodArgs = constructorArgs.replace(/private /g, '');
-    const passArgs = members.map(member => {
-        if(ts.isPropertySignature(member)){
-            const propertyName = member.name?.getText();
-            return `${propertyName}`;
-        }
-    }).join(', ');        
-    return [constructorArgs, methodArgs, passArgs];
-}
-
+// generate class for interface
 function interfaceGeneration(node: ts.Node) {
     if(ts.isInterfaceDeclaration(node)){
         let symbol = checker.getSymbolAtLocation(node.name);
@@ -84,6 +58,7 @@ function interfaceGeneration(node: ts.Node) {
     }
 }
 
+// generate class for type
 function typeGeneration(node: ts.Node) {
     if(ts.isTypeAliasDeclaration(node)){
         if(ts.isTypeLiteralNode(node.type)){
@@ -108,8 +83,8 @@ function typeGeneration(node: ts.Node) {
     }
 }
 
+// generate toSpec() and toJSON()
 function specGeneration(){
-    // toSpec and toJSON
     console.log(`export function toSpec(obj: any){
         return obj;
     }
@@ -117,4 +92,23 @@ function specGeneration(){
     export function toJSON(obj: any){
         return JSON.stringify(obj);
     }`)
+}
+
+// get arguments from the node members
+function getArgs(members: ts.NodeArray<ts.TypeElement>): string[] {
+    const constructorArgs = members.map(member => {
+        if(ts.isPropertySignature(member)){
+            const propertyName = member.name?.getText();
+            const optionalMarker = member.questionToken ? '?' : '';
+            return `private ${propertyName}${optionalMarker}: ${member.type?.getText()}`;
+        }
+    }).join(', ');
+    const methodArgs = constructorArgs.replace(/private /g, '');
+    const passArgs = members.map(member => {
+        if(ts.isPropertySignature(member)){
+            const propertyName = member.name?.getText();
+            return `${propertyName}`;
+        }
+    }).join(', ');        
+    return [constructorArgs, methodArgs, passArgs];
 }
