@@ -1,1 +1,0 @@
-type Mark = "bar" | "area" | "line";

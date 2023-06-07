@@ -95,12 +95,14 @@ export function generateVLAPI(statement: ASTStatement) {
 
 export function generatetoJSON() {
   emit(`export function toJSON(obj: any){
-      return JSON.stringify(obj);\n}`);
+      return JSON.stringify(obj);
+    }`);
 }
 
 export function generatetoSpec() {
   emit(`export function toSpec(obj: any){
-      return obj;\n}\n`);
+      return obj;
+    }`);
 }
 
 //Write to the output file.
