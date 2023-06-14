@@ -177,6 +177,17 @@ export function generateNewStatements(file: string) {
       Statements.push(createNewInterfaceStatement(node));
     }
     if(ts.isTypeAliasDeclaration(node)){
+      // try on type checker
+      // let symbol = checker.getSymbolAtLocation(node.name);
+      // const dec = node as ts.TypeAliasDeclaration;
+      // const type = checker.getTypeAtLocation(node.name)
+      // console.log(node.name.getText(), checker.typeToString(type));
+      // for (const prop of type.getProperties()) {
+      //   console.log("##")
+      //   const name = prop.getName();
+      //   const type = checker.getTypeOfSymbolAtLocation(prop, node.name);
+      //   console.log(name, checker.typeToString(type));
+      // }
       Statements.push(createNewTypeStatement(node));
     }
     ts.forEachChild(node, visit);
@@ -196,16 +207,13 @@ function createNewInterfaceStatement(node: ts.Node): ASTStatement {
         let memberName: string = `${member.name?.getText()}${member.questionToken? "?" : ""}`;
         let memberType: string = member.type? member.type.getText() : "undefined";
         if (member.type?.kind == ts.SyntaxKind.TypeReference){
-          // find the type of the type reference
-          // QUESTION: should I get the exact type of the member or get it later?
-          // maybe I should get the exact type of the member after the whole traverse is over
-          if(member.type){
-            checker.getTypeAtLocation(member.type).getSymbol()?.getDeclarations()?.forEach((declaration) => {
-              if(ts.isInterfaceDeclaration(declaration)){
-                children.push(declaration.name.getText());
-              }
-            });
-          }
+          // if(member.type){
+          //   checker.getTypeAtLocation(member.type).getSymbol()?.getDeclarations()?.forEach((declaration) => {
+          //     if(ts.isInterfaceDeclaration(declaration)){
+          //       children.push(declaration.name.getText());
+          //     }
+          //   });
+          // }
         } else {        
           members[memberName] = memberType;
         }
