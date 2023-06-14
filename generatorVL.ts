@@ -1,11 +1,13 @@
-import { parse, generateStatements, generateNewStatements } from "./parser"
+import { parse, generateStatements } from "./parser"
 import * as api from "./api"
+import { generateNewStatements } from "./newparser"
 
 //Create a file and write the first essential line.
 let outputFile = "generate/generatedVLClasses.ts"
 
 if (process.argv[3] === "new"){
-    generateNewStatements(process.argv[2]);
+    const Statements = generateNewStatements(process.argv[2]);
+    console.log(Statements);
 } else {
     //Get the AST as a json that can be traversed
     const json = parse(process.argv[2])

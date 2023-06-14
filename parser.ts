@@ -164,7 +164,7 @@ export function generateStatements(jsonStatements: any) {
   return Statements;
 }
 
-export function generateNewStatements(file: string) {
+export function generateNewStatements(file: string): ASTStatement[] {
   let Statements: ASTStatement[] = [];
   const source = fs.readFileSync(file, 'utf-8');
   const sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true);
@@ -177,17 +177,6 @@ export function generateNewStatements(file: string) {
       Statements.push(createNewInterfaceStatement(node));
     }
     if(ts.isTypeAliasDeclaration(node)){
-      // try on type checker
-      // let symbol = checker.getSymbolAtLocation(node.name);
-      // const dec = node as ts.TypeAliasDeclaration;
-      // const type = checker.getTypeAtLocation(node.name)
-      // console.log(node.name.getText(), checker.typeToString(type));
-      // for (const prop of type.getProperties()) {
-      //   console.log("##")
-      //   const name = prop.getName();
-      //   const type = checker.getTypeOfSymbolAtLocation(prop, node.name);
-      //   console.log(name, checker.typeToString(type));
-      // }
       Statements.push(createNewTypeStatement(node));
     }
     ts.forEachChild(node, visit);
@@ -207,18 +196,16 @@ function createNewInterfaceStatement(node: ts.Node): ASTStatement {
         let memberName: string = `${member.name?.getText()}${member.questionToken? "?" : ""}`;
         let memberType: string = member.type? member.type.getText() : "undefined";
         if (member.type?.kind == ts.SyntaxKind.TypeReference){
-          // if(member.type){
-          //   checker.getTypeAtLocation(member.type).getSymbol()?.getDeclarations()?.forEach((declaration) => {
-          //     if(ts.isInterfaceDeclaration(declaration)){
-          //       children.push(declaration.name.getText());
-          //     }
-          //   });
-          // }
-        } else {        
-          members[memberName] = memberType;
-        }
+          // TODO: add children if the type is a type reference, may use typechecker.
+          children.push(member.type.getText());
+        }     
+        members[memberName] = memberType;
       }
     });
+    // TODO: judge if it is a generic interface
+    if (name === "ValueDef") {
+      return new ASTStatement(name, 261, undefined, members, undefined, undefined, children, true);
+    }
     return new ASTStatement(name, 261, undefined, members, undefined, undefined, children);
   } else {
     throw new Error("Node is not an interface declaration");
@@ -232,10 +219,21 @@ function createNewTypeStatement(node: ts.Node): ASTStatement {
     const members: Record<string, string> = {};
     if(ts.isTypeLiteralNode(node.type)){
       node.type.members.forEach((member) => {
-
+        if(ts.isPropertySignature(member)){
+          let memberName: string = `${member.name?.getText()}${member.questionToken? "?" : ""}`;
+          let memberType: string = member.type? member.type.getText() : "undefined";
+          members[memberName] = memberType;
+        }
+        if (member.kind == ts.SyntaxKind.TypeReference){
+          // TODO: add children if the type is a type reference, may use typechecker.
+          children.push(member.getText());
+        } 
       });
     } else if (ts.isTypeNode(node.type)){
-
+      members[name] = node.type.getText();
+      if(node.type.kind == ts.SyntaxKind.TypeReference){
+        children.push(node.type.getText());
+      }
     }
     return new ASTStatement(name, 262, undefined, members, undefined, undefined, children);
   } else {
