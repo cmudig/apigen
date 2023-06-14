@@ -9,12 +9,13 @@ export class ASTStatement { //TODO: rename
     public name: string | undefined;
     public kind: typeKind | undefined; 
     public type: typeType | undefined;
+    public isGeneric: boolean = false;
     public members: Record<string, string> = {};
     public memberUnionTypes: Record<string, string[]> = {};
     public args: string[] | undefined;
     public children: string[] | undefined;
 
-    constructor(name: string, kind: typeKind, type?: typeType | undefined, members?: Record<string, string> | undefined, memberUnionTypes?: Record<string, string[]> | undefined, args?:string[] | undefined, children?: string[] | undefined){
+    constructor(name: string, kind: typeKind|undefined, type?: typeType | undefined, members?: Record<string, string> | undefined, memberUnionTypes?: Record<string, string[]> | undefined, args?:string[] | undefined, children?: string[] | undefined){
         this.name = name;
         this.kind = kind;
         

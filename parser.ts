@@ -3,6 +3,13 @@ import * as ts from "typescript";
 import * as fs from 'fs';
 import { ASTStatement } from "./internalRepresentation";
 
+const sourceFiles = ["SourceFiles/SourceVLType.ts"];
+let program = ts.createProgram(sourceFiles, {
+    target: ts.ScriptTarget.ES5,
+    module: ts.ModuleKind.CommonJS
+});
+let checker = program.getTypeChecker();
+
 export function parse(file: string) {
   const source = fs.readFileSync(file, 'utf-8');
   const sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true);
@@ -112,6 +119,7 @@ export function generateStatements(jsonStatements: any) {
         
         Statements.push(Statement);
       }
+      console.log(name, kind, type, children);
     }
 
     //for interfaces
@@ -123,9 +131,14 @@ export function generateStatements(jsonStatements: any) {
       //members population
       for (j = 0; j < jsonStatements[i].members.length; j++) {
         members[jsonStatements[i].members[j].name.escapedText] = (jsonStatements[i].members[j].name.kind).toString();
-
+        // having inner type
         if("type" in jsonStatements[i].members[j] && "typeName" in jsonStatements[i].members[j].type){
           children.push(jsonStatements[i].members[j].type.typeName.escapedText);
+          // console.log("############");
+          // console.log(jsonStatements[i].members[j]);
+          // console.log(jsonStatements[i].members[j].type.typeName.escapedText);
+          // console.log("############");
+
         }
         //TODO: add syntax kind conversion
         else{
@@ -144,7 +157,80 @@ export function generateStatements(jsonStatements: any) {
       }
       const Statement = new ASTStatement(name, kind, undefined, members, memberUnionTypes, undefined,children);
       Statements.push(Statement);
+      console.log(name, kind, members, memberUnionTypes, children);
+
     }
   }
   return Statements;
+}
+
+export function generateNewStatements(file: string) {
+  let Statements: ASTStatement[] = [];
+  const source = fs.readFileSync(file, 'utf-8');
+  const sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true);
+
+  ts.forEachChild(sourceFile, visit);
+
+  // visit each node in the sourceFile
+  function visit(node: ts.Node) {
+    if(ts.isInterfaceDeclaration(node)){
+      Statements.push(createNewInterfaceStatement(node));
+    }
+    if(ts.isTypeAliasDeclaration(node)){
+      Statements.push(createNewTypeStatement(node));
+    }
+    ts.forEachChild(node, visit);
+  }
+
+  return Statements;
+}
+
+function createNewInterfaceStatement(node: ts.Node): ASTStatement {
+  if(ts.isInterfaceDeclaration(node)){
+    let symbol = checker.getSymbolAtLocation(node.name);
+    let name = node.name.text;
+    let children: string[] = [];
+    const members: Record<string, string> = {};
+    node.members.forEach((member) => {
+      if(ts.isPropertySignature(member)){
+        let memberName: string = `${member.name?.getText()}${member.questionToken? "?" : ""}`;
+        let memberType: string = member.type? member.type.getText() : "undefined";
+        if (member.type?.kind == ts.SyntaxKind.TypeReference){
+          // find the type of the type reference
+          // QUESTION: should I get the exact type of the member or get it later?
+          // maybe I should get the exact type of the member after the whole traverse is over
+          if(member.type){
+            checker.getTypeAtLocation(member.type).getSymbol()?.getDeclarations()?.forEach((declaration) => {
+              if(ts.isInterfaceDeclaration(declaration)){
+                children.push(declaration.name.getText());
+              }
+            });
+          }
+        } else {        
+          members[memberName] = memberType;
+        }
+      }
+    });
+    return new ASTStatement(name, 261, undefined, members, undefined, undefined, children);
+  } else {
+    throw new Error("Node is not an interface declaration");
+  }
+}
+
+function createNewTypeStatement(node: ts.Node): ASTStatement {
+  if(ts.isTypeAliasDeclaration(node)){
+    let name = node.name.text;
+    let children: string[] = [];
+    const members: Record<string, string> = {};
+    if(ts.isTypeLiteralNode(node.type)){
+      node.type.members.forEach((member) => {
+
+      });
+    } else if (ts.isTypeNode(node.type)){
+
+    }
+    return new ASTStatement(name, 262, undefined, members, undefined, undefined, children);
+  } else {
+    throw new Error("Node is not an interface declaration");
+  }
 }

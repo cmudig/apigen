@@ -1,38 +1,40 @@
+import * as ts from "typescript";
+
 export function error(_: any) {
-    throw new Error(_);
-  }
-  
-  export function isArray(_: any) {
-    return Array.isArray(_);
-  }
-  
-  export function isObject(_: any) {
-    return _ === Object(_);
-  }
-  
-  export function isString(_: any) {
-    return typeof _ === 'string';
-  }
-  
-  export function isInternal(_: any) {
-    return isString(_) && _.startsWith('_');
-  }
-  
-  export function hasOwnProperty(obj: any, property: any) {
-    return Object.prototype.hasOwnProperty.call(obj, property);
-  }
-  
-  export function reduce(input: any, value: any, key: any) {
-    const items = Array.isArray(input)
-      ? input
-      : Object.keys(input);
-  
-    return items.reduce((api: any, item: any) => {
-      const k = key ? key(item) : item;
-      api[k] = value(item);
-      return api;
-    }, {});
-  }
+  throw new Error(_);
+}
+
+export function isArray(_: any) {
+  return Array.isArray(_);
+}
+
+export function isObject(_: any) {
+  return _ === Object(_);
+}
+
+export function isString(_: any) {
+  return typeof _ === 'string';
+}
+
+export function isInternal(_: any) {
+  return isString(_) && _.startsWith('_');
+}
+
+export function hasOwnProperty(obj: any, property: any) {
+  return Object.prototype.hasOwnProperty.call(obj, property);
+}
+
+export function reduce(input: any, value: any, key: any) {
+  const items = Array.isArray(input)
+    ? input
+    : Object.keys(input);
+
+  return items.reduce((api: any, item: any) => {
+    const k = key ? key(item) : item;
+    api[k] = value(item);
+    return api;
+  }, {});
+}
   
 //   export function stringValue(_: any) {
 //     return Array.isArray(_) ? '[' + _.map(stringValue) + ']'
@@ -43,96 +45,115 @@ export function error(_: any) {
 //       : _;
 //   }
   
-  export function getProperty(name: string) {
-    return `this.${name}` + (isInternal(name) ? '' : '()');
+export function getProperty(name: string) {
+  return `this.${name}` + (isInternal(name) ? '' : '()');
+}
+
+export function emitter(defaultFile?: string) {
+
+  interface importsType {
+      [key: string] :any;
+  }
+  const imports: importsType = {};
+  if(defaultFile != undefined){
+    const imports: importsType = {[defaultFile]: {}};
   }
   
-  export function emitter(defaultFile?: string) {
 
-    interface importsType {
-        [key: string] :any;
-    }
-    const imports: importsType = {};
-    if(defaultFile != undefined){
-      const imports: importsType = {[defaultFile]: {}};
-    }
-    
+  const lines: string[] = [];
 
-    const lines: string[] = [];
-  
-    let prefix = '';
-  
-    const emit = (s: string) => {
-      lines.push(s ? (prefix + s) : '');
-      return emit;
-    };
-  
-    emit.indent = () => {
-      prefix = prefix + '  ';
-      return emit;
-    };
-  
-    emit.outdent = () => {
-      prefix = prefix.slice(0, prefix.length - 2);
-      return emit;
-    };
-  
-    // TODO: come back
-    emit.import = (methods: string[], file: string) => {
-      if(defaultFile != undefined){
-      file = file || defaultFile;
-      }
+  let prefix = '';
 
-      (Array.isArray(methods) ? methods : [methods])
-        .forEach(m => (imports[file] || (imports[file] = {}))[m] = 1);
-      return emit;
-    };
-  
-    emit.code = () => {
-      const files = Object.keys(imports);
-  
-      const code = files.reduce((list, file) => {
-        const methods = Object.keys(imports[file]).sort().join(', ');
-        (list as string[]).push(`import {${methods}} from './${file}'`);
-        return list;
-      }, []);
-  
-      return (code as string[]).concat('', lines).join('\n');
-    }
-  
+  const emit = (s: string) => {
+    lines.push(s ? (prefix + s) : '');
     return emit;
-  }
-  
-  export function article(_: string) {
-    return _ && _.match(/^[aeiou]/i) ? 'an' : 'a';
-  }
-  
-  export function capitalize(_: string) {
-    let i = 0;
-    const p = _[i] === '_' ? (++i, '_') : '';
-    const c = _[i];
-    return p + c.toUpperCase() + _.slice(++i);
+  };
+
+  emit.indent = () => {
+    prefix = prefix + '  ';
+    return emit;
+  };
+
+  emit.outdent = () => {
+    prefix = prefix.slice(0, prefix.length - 2);
+    return emit;
+  };
+
+  // TODO: come back
+  emit.import = (methods: string[], file: string) => {
+    if(defaultFile != undefined){
+    file = file || defaultFile;
+    }
+
+    (Array.isArray(methods) ? methods : [methods])
+      .forEach(m => (imports[file] || (imports[file] = {}))[m] = 1);
+    return emit;
+  };
+
+  emit.code = () => {
+    const files = Object.keys(imports);
+
+    const code = files.reduce((list, file) => {
+      const methods = Object.keys(imports[file]).sort().join(', ');
+      (list as string[]).push(`import {${methods}} from './${file}'`);
+      return list;
+    }, []);
+
+    return (code as string[]).concat('', lines).join('\n');
   }
 
-  export function decapitalize(str: string | undefined): string {
-    if (str != undefined){
-      return str.charAt(0).toLowerCase() + str.slice(1);
-    }
-    else{
-      return "error";
-    }
-    
+  return emit;
+}
+
+export function article(_: string) {
+  return _ && _.match(/^[aeiou]/i) ? 'an' : 'a';
+}
+
+export function capitalize(_: string) {
+  let i = 0;
+  const p = _[i] === '_' ? (++i, '_') : '';
+  const c = _[i];
+  return p + c.toUpperCase() + _.slice(++i);
+}
+
+export function decapitalize(str: string | undefined): string {
+  if (str != undefined){
+    return str.charAt(0).toLowerCase() + str.slice(1);
+  }
+  else{
+    return "error";
   }
   
-  export function uppercase(_: string) {
-    return _.toUpperCase();
-  }
+}
+
+export function uppercase(_: string) {
+  return _.toUpperCase();
+}
+
+export function code(_:string) {
+  return `<code>${_}</code>`;
+}
+
+export function link(_:string) {
+  return `[${_}](${_})`;
+}
   
-  export function code(_:string) {
-    return `<code>${_}</code>`;
-  }
-  
-  export function link(_:string) {
-    return `[${_}](${_})`;
-  }
-  
+
+// get arguments from the node members
+export function getArgs(members: ts.NodeArray<ts.TypeElement>): string[] {
+  const constructorArgs = members.map(member => {
+      if(ts.isPropertySignature(member)){
+          const propertyName = member.name?.getText();
+          const optionalMarker = member.questionToken ? '?' : '';
+          return `private ${propertyName}${optionalMarker}: ${member.type?.getText()}`;
+      }
+  }).join(', ');
+  const methodArgs = constructorArgs.replace(/private /g, '');
+  const passArgs = members.map(member => {
+      if(ts.isPropertySignature(member)){
+          const propertyName = member.name?.getText();
+          return `${propertyName}`;
+      }
+  }).join(', '); 
+  return [constructorArgs, methodArgs, passArgs];
+}
