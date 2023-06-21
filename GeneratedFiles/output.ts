@@ -9,7 +9,7 @@ class Spec extends BaseObject{
   
     mark(value: Mark) {
         if (arguments.length) {
-        const obj = copy(this);
+            const obj = copy(this);
             set(obj, "mark", value);
             return obj;
         } else {
