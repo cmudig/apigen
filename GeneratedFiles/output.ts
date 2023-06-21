@@ -1,65 +1,24 @@
-import { BaseObject, copy, get, init, set } from '/Users/lvlanlan/Desktop/github_clone/apigen-try/util';
+import { BaseObject, copy, get, init, set, merge, raw, assign, isArray, isIterable, isString } from '/Users/lvlanlan/Desktop/github_clone/apigen-try/util';
 
-// from here are generated code
 class Spec extends BaseObject{
-  constructor(private mark_arg: Mark, private data_arg: Data, private encode_arg: Encoding) {
-    super();
-    init(this);
-    set(this, "mark", mark_arg);
-    set(this, "data", data_arg);
-    set(this, "encoding", encode_arg);
-  }
-  
-  mark(value: Mark) {
-    if (arguments.length) {
-      const obj = copy(this);
-      set(obj, "mark", value);
-      return obj;
-    } else {
-      return get(this, "mark");
-    }
-  }
 
-  data(value: string) {
-    if (arguments.length) {
-        const obj = copy(this);
-        set(obj, "data", value);
-        return obj;
-    } else {
-        return get(this, "data");
-    }
-  }
-
-  encode(value: Encoding) {
-    if (arguments.length) {
-        const obj = copy(this);
-        set(obj, "encoding", value);
-        return obj;
-    } else {
-        return get(this, "encoding");
-    }
-  }
-}
-
-export function spec(mark: Mark, data: Data, encode: Encoding){
-  return new Spec(mark, data, encode);
-}
-
-class Mark extends BaseObject {
-    constructor(private type: PrimitiveMark | { type: PrimitiveMark }) {
+    constructor() {
         super();
         init(this);
-        if (typeof type === "string") {
-            set(this, "type", type);
-        } else if (typeof type === "object") {
-            set(this, "type", type.type);
+    }
+  
+    mark(value: Mark) {
+        if (arguments.length) {
+        const obj = copy(this);
+            set(obj, "mark", value);
+            return obj;
         } else {
-            throw new Error("Invalid type for mark");
+            return get(this, "mark");
         }
     }
 
-    data(value:string) {
-        if (value !== undefined) {
+    data(value: string) {
+        if (arguments.length) {
             const obj = copy(this);
             set(obj, "data", value);
             return obj;
@@ -69,13 +28,58 @@ class Mark extends BaseObject {
     }
 
     encode(value: Encoding) {
-        if (value !== undefined) {
+        if (arguments.length) {
             const obj = copy(this);
             set(obj, "encoding", value);
             return obj;
         } else {
             return get(this, "encoding");
         }
+    }
+}
+
+export function spec(){
+    return new Spec();
+}
+
+class Mark extends BaseObject {
+    constructor(private type: PrimitiveMark | { type: PrimitiveMark }) {
+        super();
+        init(this);
+        var setType = type;
+        if (typeof type === "string") {
+            setType = { "type": type };
+        } else if (typeof type === "object") {
+            set(this, "type", type.type);
+        } else {
+            throw new Error("Invalid type for mark");
+        }
+        set(this, "mark", merge(0, get(this, "mark"), setType));
+    }
+
+    data(value: string) {
+        if (value !== undefined) {
+            const obj = copy(this);
+            var setValue = isArray(value) ? {values: raw(value)} : isIterable(value) ? {values: raw(value)} : isString(value) ? {url: value} : value;
+            set(obj, "data", setValue);
+            return obj;
+        } else {
+            return get(this, "data");
+        }
+    }
+
+    encode(x?: X, y?: Y, color?: Color) {
+        var vals: any[] = [];
+        if (x != undefined) { vals.push(x); }
+        if (y != undefined) { vals.push(y); }
+        if (color != undefined) { vals.push(color); }
+
+        const obj = copy(this);
+        const valEncoding = get(this, "encoding");
+        if (valEncoding) vals = [valEncoding].concat(vals);
+
+        set(obj, "encoding", merge(1, vals));
+        return obj;
     }
 }
 
@@ -98,7 +102,7 @@ export function data(value: string) {
 }
 
 class Encoding extends BaseObject {
-    constructor(private x?: X, private y?: Y, private color?: Color) {
+    constructor(private _x?: X, private _y?: Y, private _color?: Color) {
         super();
         init(this);
         if(x !== undefined) set(this, "x", x);
@@ -107,38 +111,82 @@ class Encoding extends BaseObject {
     }
 }
 
-export function encode(x?: X, y?: Y, color?: Color) {
+export function encoding(x?: X, y?: Y, color?: Color) {
     return new Encoding(x, y, color);
 }
 
 class X extends BaseObject {
-    constructor(private field: string, private type: "quantitative" | "ordinal") {
+    constructor() {
         super();
         init(this);
-        if(field !== undefined) set(this, "field", field);
-        if(type !== undefined) set(this, "type", type);
+    }
+
+    field(value: string) {
+        if (value.length) {
+            const obj = copy(this);
+            set(obj, "field", value);
+            return obj;
+        } else {
+            return get(this, "field");
+        }
+    }
+
+    type(value: "quantitative" | "ordinal") {
+        if (value.length) {
+            const obj = copy(this);
+            set(obj, "type", value);
+            return obj;
+        } else {
+            return get(this, "type");
+        }
+    }
+
+    toObject(flag: number = 0) {
+        return flag ? {x: super.toObject()} : super.toObject();
     }
 }
 
-export function x (field: string, type: "quantitative" | "ordinal") {
-    return new X(field, type);
+export function x () {
+    return new X();
 }
 
 class Y extends BaseObject {
-    constructor(private field: string, private type: "quantitative" | "ordinal") {
+    constructor() {
         super();
         init(this);
-        if(field !== undefined) set(this, "field", field);
-        if(type !== undefined) set(this, "type", type);
+    }
+
+    field(value: string) {
+        if (value.length) {
+            const obj = copy(this);
+            set(obj, "field", value);
+            return obj;
+        } else {
+            return get(this, "field");
+        }
+    }
+
+    type(value: "quantitative" | "ordinal") {
+        if (value.length) {
+            const obj = copy(this);
+            set(obj, "type", value);
+            return obj;
+        } else {
+            return get(this, "type");
+        }
+    }
+
+    toObject(flag: number = 0) {
+        return flag ? {y: super.toObject()} : super.toObject();
     }
 }
 
-export function y (field: string, type: "quantitative" | "ordinal") {
-    return new Y(field, type);
+export function y () {
+    return new Y();
 }
 
 class Color extends BaseObject {
-    constructor(private field_arg?: { field: string, type: "quantitative" | "ordinal" }, private value_arg?: string) {
+    constructor() {
         super();
         init(this);
     }
@@ -163,23 +211,34 @@ class Color extends BaseObject {
             return get(this, "value");
         }
     }
+
+    toObject(flag: number = 0) {
+        return flag ? {color: super.toObject()} : super.toObject();
+    }
 }
 
-export function color(fieldObject?: { field: string, type: "quantitative" | "ordinal" }, value?: string) {
-    return new Color(fieldObject, value);
+export function color() {
+    return new Color();
+}
+
+function createSpec(self: BaseObject) {
+    if (self !== undefined) {
+        return self.toObject();
+    }
 }
 
 export function toSpec(obj: any){
-    return obj;
+    return createSpec(obj);
 }
 
 export function toJSON(obj: BaseObject){
-    var jsonString = JSON.stringify(obj);
-    jsonString = jsonString.replace("_arg", "");
-    return JSON.stringify(obj);
+    return JSON.stringify(createSpec(obj));
 }
 
-const VLspec = spec(mark("line"), data("example.csv"), encode(x("meters", "quantitative")));
+// const VLspec = spec(mark("line"), data("example.csv"), encode(x("meters", "quantitative"), y("year", "quantitative"), color().value("green")));
 // const VLspec = mark("bar").data("example.csv").encode(x("meters", "quantitative"), y("meters", "quantitative"), color().value("color"));
+const VLspec = mark("bar").data("example.csv").encode(x().field("meters").type("quantitative"), y().field("year").type("quantitative"), color().value("green"));
+// const VLspec = x().field("meters").type("quantitative");
+// const VLspec = mark("bar").data("example.csv");
 console.log(toSpec(VLspec));
-console.log(toJSON(VLspec));
+// console.log(toJSON(VLspec));
