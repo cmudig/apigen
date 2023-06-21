@@ -1,25 +1,23 @@
-import { parse, generateNewStatements } from "./parser"
-import * as api from "./api"
+import { parse } from "./parser"
+import { generateNewStatements } from "./newparser"
+import * as api from "./new-api"
 
 //Create a file and write the first essential line.
 let outputFile = "generate/generatedVLClasses.ts"
 
-//Get the AST as a json that can be traversed
-const json = parse(process.argv[2])
-
-//Get the simplified version of the AST
-const obj = JSON.parse(json);
-let jsonStatements = obj.statements;
-// console.log(json);
-
 //Generate an internal representation
-const Statements = generateNewStatements(jsonStatements);
+const Statements = generateNewStatements(process.argv[2]);
 // console.log(Statements);
 
+var statementNameIndexMap = new Map<string, number>();
 for (let i = 0; i < Statements.length; i++){
-    api.generateVLAPI(Statements[i]);
+    statementNameIndexMap.set(Statements[i].name, i);
 }
+
+api.generateUtilImport();
+api.generateVLAPI(Statements, statementNameIndexMap);
 //generate the json spec
 api.generatetoSpec();
 api.generatetoJSON();
+// console.log(api.getEmitCode());
 api.writeFile(outputFile);

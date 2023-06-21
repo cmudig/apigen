@@ -6,15 +6,17 @@ export type typeKind = ts.SyntaxKind.InterfaceDeclaration | ts.SyntaxKind.TypeAl
 export type typeType = typePrimitive | typeComplex ;
 
 export class ASTStatement {
-    public name: string | undefined;
-    public kind: typeKind | undefined; 
-    public type: typeType | undefined;
+    public node: ts.Node;
+    public name: string;
+    public kind?: typeKind; 
+    public type?: typeType;
     public isGeneric: boolean = false;
-    public members: Record<string, string> = {};
-    public args: string[] | undefined;
-    public children: string[] | undefined;
+    public members: {"name": string, "type": string}[] = [];
+    public args?: string[];
+    public children?: string[];
 
-    constructor(name: string, kind: typeKind|undefined, type?: typeType | undefined, members?: Record<string, string> | undefined, args?:string[] | undefined, children?: string[] | undefined, isGeneric?: boolean){
+    constructor(node: ts.Node, name: string, kind: typeKind, type?: typeType, members?: {"name": string, "type": string}[], args?: string[], children?: string[], isGeneric?: boolean){
+        this.node = node;
         this.name = name;
         this.kind = kind;
         
@@ -33,6 +35,5 @@ export class ASTStatement {
         if (isGeneric != undefined) {
             this.isGeneric = isGeneric;
         }
-        
     }
 }
