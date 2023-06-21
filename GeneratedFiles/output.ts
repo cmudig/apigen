@@ -50,7 +50,7 @@ class Mark extends BaseObject {
         if (typeof type === "string") {
             setType = { "type": type };
         } else if (typeof type === "object") {
-            set(this, "type", type.type);
+            setType = { "type": type.type };
         } else {
             throw new Error("Invalid type for mark");
         }

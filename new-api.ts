@@ -8,7 +8,6 @@ function emitClass (className: string, consArg: string, consSpec: string) {
     emit(`class ${className} extends BaseObject {`);
     emit(`\tconstructor(${consArg}){\n\t\tsuper();\n\t\tinit(this);`);
     emit(`\t\t${consSpec}`);
-    emit(`\t}\n`);
 }
 
 function emitClassEnd () {
@@ -53,6 +52,7 @@ export function generateVLAPI(statements: ASTStatement[], statementNameIndexMap:
     if (index !== undefined){
         const specSmt = statements[index];
         emitClass("Spec", "", "");
+        emitMethodEnd();
         specSmt.members.forEach(member => {
             emitMethod(member.name, [{"name": "value", "type": member.type}]);
             emitSpecMethod(member.name);
@@ -62,13 +62,37 @@ export function generateVLAPI(statements: ASTStatement[], statementNameIndexMap:
         emitExportFunction("spec", "Spec", []);
         // create spec member classes
         specSmt.members.forEach(member => {
-            if (member.name === "data"){
-                emitClass("Data", "private value: string", `if(value !== undefined) set(this, "data", value);`);
-                emitClassEnd();
-                emitExportFunction("data", "Data", [{"name": "value", "type": "string"}]);
+            const memberIndex = statementNameIndexMap.get(capitalize(member.name));
+            if (memberIndex !== undefined){
+                const memberSmt = statements[memberIndex];
+                console.log(memberSmt);
             } else {
-
+                emitClass(capitalize(member.name), `private value: ${member.type}`, `if(value !== undefined) set(this, "data", value);`);
+                emitMethodEnd();
+                emitClassEnd();
+                emitExportFunction(member.name, capitalize(member.name), [{"name": "value", "type": member.type}]);
             }
+            // check children
+            // if (member.name === "data"){
+            //     emitClass("Data", "private value: string", `if(value !== undefined) set(this, "data", value);`);
+            //     emitMethodEnd();
+            //     emitClassEnd();
+            //     emitExportFunction("data", "Data", [{"name": "value", "type": "string"}]);
+            // } else if (member.name === "mark") {
+            //     emitClass(capitalize(member.name), "private type: PrimitiveMark | { type: PrimitiveMark }", "");
+            //     emit(`\t\tvar setType = type`);
+            //     emit(`\t\tif (isString(type)) {`);
+            //     emit(`\t\t\tsetType = { "type": type }`);
+            //     emit(`\t\t} else if (typeof type === "object"){`);
+            //     emit(`\t\t\tsetType = { "type": type.type };`);
+            //     emit(`\t\t\t\}`);
+            //     emit(`\t\tset(this, "mark", merge(0, get(this, "mark"), setType))`);
+            //     emitMethodEnd();
+            //     emitClassEnd();
+            //     emitExportFunction(member.name, capitalize(member.name), [{"name": "type", "type": "PrimitiveMark | { type: PrimitiveMark }"}]);
+            // } else if (member.name === "encode") {
+
+            // }
         });
     }
 
