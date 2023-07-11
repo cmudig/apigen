@@ -1,0 +1,115 @@
+TopLevelSpec
+############### TopLevelUnitSpec<Field> ###############
+####### TopLevelUnitSpec<Field> #######
+- TopLevelUnitSpec<Field>
+-- GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, TopLevelParameter>
+-- ResolveMixins
+-- GenericCompositionLayout
+-- FrameMixins<any>
+-- TopLevelProperties<any>
+-- { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-- DataMixins
+####### Field #######
+- Field
+-- string
+-- RepeatRef
+############### TopLevelFacetSpec ###############
+####### TopLevelFacetSpec #######
+- TopLevelFacetSpec
+-- GenericFacetSpec<UnitSpecWithFrame<Field>, LayerSpec<Field>, Field>
+-- TopLevelProperties<any>
+-- { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-- DataMixins
+############### TopLevel<LayerSpec<Field>> ###############
+####### TopLevel<LayerSpec<Field>> #######
+- TopLevel<LayerSpec<Field>>
+-- LayerSpec<Field>
+-- TopLevelProperties<any>
+-- { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+####### LayerSpec<Field> #######
+- LayerSpec<Field>
+####### Field #######
+- Field
+-- string
+-- RepeatRef
+############### TopLevel<RepeatSpec> ###############
+####### TopLevel<RepeatSpec> #######
+- TopLevel<RepeatSpec>
+-- NonLayerRepeatSpec & TopLevelProperties<any> & { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<...>; }
+--- NonLayerRepeatSpec
+--- TopLevelProperties<any>
+--- { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-- LayerRepeatSpec & TopLevelProperties<any> & { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+--- LayerRepeatSpec
+--- TopLevelProperties<any>
+--- { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+####### RepeatSpec #######
+- RepeatSpec
+-- NonLayerRepeatSpec
+-- LayerRepeatSpec
+############### TopLevel<GenericConcatSpec<NonNormalizedSpec>> ###############
+####### TopLevel<GenericConcatSpec<NonNormalizedSpec>> #######
+- TopLevel<GenericConcatSpec<NonNormalizedSpec>>
+-- GenericConcatSpec<NonNormalizedSpec>
+-- TopLevelProperties<any>
+-- { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+####### GenericConcatSpec<NonNormalizedSpec> #######
+- GenericConcatSpec<NonNormalizedSpec>
+####### NonNormalizedSpec #######
+- NonNormalizedSpec
+-- NonLayerRepeatSpec
+-- LayerRepeatSpec
+-- FacetedUnitSpec<Field>
+--- GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, SelectionParameter<SelectionType>>
+--- ResolveMixins
+--- GenericCompositionLayout
+--- FrameMixins<any>
+-- LayerSpec<Field>
+-- GenericFacetSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, Field>
+-- GenericConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+-- GenericVConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+-- GenericHConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+############### TopLevel<GenericVConcatSpec<NonNormalizedSpec>> ###############
+####### TopLevel<GenericVConcatSpec<NonNormalizedSpec>> #######
+- TopLevel<GenericVConcatSpec<NonNormalizedSpec>>
+-- GenericVConcatSpec<NonNormalizedSpec>
+-- TopLevelProperties<any>
+-- { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+####### GenericVConcatSpec<NonNormalizedSpec> #######
+- GenericVConcatSpec<NonNormalizedSpec>
+####### NonNormalizedSpec #######
+- NonNormalizedSpec
+-- NonLayerRepeatSpec
+-- LayerRepeatSpec
+-- FacetedUnitSpec<Field>
+--- GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, SelectionParameter<SelectionType>>
+--- ResolveMixins
+--- GenericCompositionLayout
+--- FrameMixins<any>
+-- LayerSpec<Field>
+-- GenericFacetSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, Field>
+-- GenericConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+-- GenericVConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+-- GenericHConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+############### TopLevel<GenericHConcatSpec<NonNormalizedSpec>> ###############
+####### TopLevel<GenericHConcatSpec<NonNormalizedSpec>> #######
+- TopLevel<GenericHConcatSpec<NonNormalizedSpec>>
+-- GenericHConcatSpec<NonNormalizedSpec>
+-- TopLevelProperties<any>
+-- { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+####### GenericHConcatSpec<NonNormalizedSpec> #######
+- GenericHConcatSpec<NonNormalizedSpec>
+####### NonNormalizedSpec #######
+- NonNormalizedSpec
+-- NonLayerRepeatSpec
+-- LayerRepeatSpec
+-- FacetedUnitSpec<Field>
+--- GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, SelectionParameter<SelectionType>>
+--- ResolveMixins
+--- GenericCompositionLayout
+--- FrameMixins<any>
+-- LayerSpec<Field>
+-- GenericFacetSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, Field>
+-- GenericConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+-- GenericVConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+-- GenericHConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
