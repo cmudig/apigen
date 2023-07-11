@@ -73,16 +73,18 @@ for (const statement of sourceFile.statements) {
             break;
         case ts.SyntaxKind.TypeAliasDeclaration:
             if(ts.isTypeAliasDeclaration(statement)) {
+                // begin from TopLevelSpec
                 if(statement.name.getText() === "TopLevelSpec") {
                     console.log(statement.name.getText());
                     const symbol = checker.getSymbolAtLocation(statement.name);
                     const typeSymbol = checker.getSymbolAtLocation(statement.type!);
-                    if(ts.isUnionTypeNode(statement.type) || ts.isIntersectionTypeNode(statement.type)) {
+                    if(ts.isUnionTypeNode(statement.type)) {
                         const types = statement.type.types;
                         for(const type of types) {
                             if(ts.isTypeReferenceNode(type)) {
                                 console.log("###############", type.getText(),"###############");
-                                // findType(type);
+                                // one is to get types, the other is to get the properties
+                                findType(type);
                                 findProperties(type);
                             }
                         }
@@ -102,19 +104,21 @@ for (const statement of sourceFile.statements) {
     }
 }
 
+// traverse the type
 function findType(node: ts.Node) {
     if (ts.isTypeNode(node) && ts.isTypeReferenceNode(node)) {
         const symbol = checker.getSymbolAtLocation(node.typeName);
         if (symbol) {
-            // const type = checker.getDeclaredTypeOfSymbol(symbol);
             const type = checker.getTypeAtLocation(node);
             console.log("#######", checker.typeToString(type), "#######");
+            // recursively find the real type
             findBottomType(type, 1);
         }
     }
     ts.forEachChild(node, findType);
 }
 
+// recurse to find the bottom type
 function findBottomType(type: ts.Type, depth: number) {
     const prefix:string = new Array(depth).fill("-").join("");
     if(type.isUnion() || type.isIntersection()) {
@@ -129,17 +133,17 @@ function findBottomType(type: ts.Type, depth: number) {
         //     console.log(prefix, typeParameter.symbol.name);
         // });
     } else {
-        //TODO: "type.resolvedTypeArguments" have inherietance information, but can't access it
+        // TODO: "type.resolvedTypeArguments" have inherietance information, but can't access it
         // this may be helpful: https://stackoverflow.com/questions/53596095/typescript-compiler-api-accessing-resolved-type-of-this-parameter
         console.log(prefix, checker.typeToString(type));
     }
 }
 
+// traverse the properties
 function findProperties(node: ts.Node) {
     if (ts.isTypeNode(node) && ts.isTypeReferenceNode(node)) {
         const symbol = checker.getSymbolAtLocation(node.typeName);
         if (symbol) {
-            // const type = checker.getDeclaredTypeOfSymbol(symbol);
             const type = checker.getTypeAtLocation(node);
             console.log("#######", checker.typeToString(type), "#######");
             const properties = type.getProperties();
@@ -147,7 +151,6 @@ function findProperties(node: ts.Node) {
                 console.log("###", property.name, "###",);
                 const propertyType = checker.getTypeOfSymbolAtLocation(property, property.valueDeclaration!);
                 if(propertyType){
-                    // findBottomProperty(propertyType, 1);
                     if(propertyType.isUnion() || propertyType.isIntersection()) {
                         const types = propertyType.types;
                         console.log(checker.typeToString(propertyType));
@@ -163,6 +166,7 @@ function findProperties(node: ts.Node) {
     ts.forEachChild(node, findProperties);
 }
 
+// recurse to find the property of each type
 function findBottomProperty(type: ts.Type, depth: number) {
     const prefix:string = new Array(depth).fill("-").join("");
     // console.log(prefix, "@type", checker.typeToString(type));
