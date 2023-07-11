@@ -1,0 +1,534 @@
+TopLevelSpec
+############### TopLevelUnitSpec<Field> ###############
+####### TopLevelUnitSpec<Field> #######
+### mark ###
+AnyMark
+"boxplot"
+"errorbar"
+"errorband"
+BoxPlotDef
+ErrorBarDef
+ErrorBandDef
+"arc"
+"area"
+"bar"
+"image"
+"line"
+"point"
+"rect"
+"rule"
+"text"
+"tick"
+"trail"
+"circle"
+"square"
+"geoshape"
+MarkDef<"arc" | "area" | "bar" | "image" | "line" | "point" | "rect" | "rule" | "text" | "tick" | "trail" | "circle" | "square" | "geoshape", any>
+### encoding ###
+FacetedCompositeEncoding<Field>
+Encoding<Field>
+ErrorExtraEncoding<Field>
+EncodingFacetMapping<Field, any>
+### projection ###
+### params ###
+### title ###
+### name ###
+### description ###
+### data ###
+### transform ###
+### resolve ###
+### align ###
+### center ###
+boolean | RowCol<boolean>
+false
+true
+RowCol<boolean>
+### spacing ###
+number | RowCol<number>
+number
+RowCol<number>
+### bounds ###
+"full" | "flush"
+"full"
+"flush"
+### view ###
+### width ###
+number | "container" | Step
+number
+"container"
+Step
+### height ###
+number | "container" | Step
+number
+"container"
+Step
+### background ###
+### padding ###
+### autosize ###
+AutosizeType | AutoSizeParams
+"pad"
+"none"
+"fit"
+"fit-x"
+"fit-y"
+AutoSizeParams
+### $schema ###
+### config ###
+### datasets ###
+### usermeta ###
+####### Field #######
+### toString ###
+### valueOf ###
+### repeat ###
+############### TopLevelFacetSpec ###############
+####### TopLevelFacetSpec #######
+### facet ###
+FacetFieldDef<Field, any> | FacetMapping<Field, FacetFieldDef<Field, any>>
+FacetFieldDef<Field, any>
+FacetMapping<Field, FacetFieldDef<Field, any>>
+### spec ###
+UnitSpecWithFrame<Field> | LayerSpec<Field>
+UnitSpecWithFrame<Field>
+LayerSpec<Field>
+### title ###
+### name ###
+### description ###
+### data ###
+### transform ###
+### align ###
+### center ###
+boolean | RowCol<boolean>
+false
+true
+RowCol<boolean>
+### spacing ###
+number | RowCol<number>
+number
+RowCol<number>
+### bounds ###
+"full" | "flush"
+"full"
+"flush"
+### columns ###
+### resolve ###
+### background ###
+### padding ###
+### autosize ###
+AutosizeType | AutoSizeParams
+"pad"
+"none"
+"fit"
+"fit-x"
+"fit-y"
+AutoSizeParams
+### params ###
+### $schema ###
+### config ###
+### datasets ###
+### usermeta ###
+############### TopLevel<LayerSpec<Field>> ###############
+####### TopLevel<LayerSpec<Field>> #######
+### layer ###
+### encoding ###
+SharedCompositeEncoding<Field>
+PartialIndex<Omit<CompositeEncoding<Field>, "detail" | "order" | "tooltip">>
+Pick<Encoding<Field>, "detail" | "order" | "tooltip">
+### projection ###
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### view ###
+### width ###
+number | "container" | Step
+number
+"container"
+Step
+### height ###
+number | "container" | Step
+number
+"container"
+Step
+### resolve ###
+### background ###
+### padding ###
+### autosize ###
+AutosizeType | AutoSizeParams
+"pad"
+"none"
+"fit"
+"fit-x"
+"fit-y"
+AutoSizeParams
+### params ###
+### $schema ###
+### config ###
+### datasets ###
+### usermeta ###
+####### LayerSpec<Field> #######
+### layer ###
+### encoding ###
+SharedCompositeEncoding<Field>
+PartialIndex<Omit<CompositeEncoding<Field>, "detail" | "order" | "tooltip">>
+Pick<Encoding<Field>, "detail" | "order" | "tooltip">
+### projection ###
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### view ###
+### width ###
+number | "container" | Step
+number
+"container"
+Step
+### height ###
+number | "container" | Step
+number
+"container"
+Step
+### resolve ###
+####### Field #######
+### toString ###
+### valueOf ###
+### repeat ###
+############### TopLevel<RepeatSpec> ###############
+####### TopLevel<RepeatSpec> #######
+### repeat ###
+### spec ###
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### align ###
+### center ###
+boolean | RowCol<boolean>
+false
+true
+RowCol<boolean>
+### spacing ###
+number | RowCol<number>
+number
+RowCol<number>
+### bounds ###
+"full" | "flush"
+"full"
+"flush"
+### columns ###
+### resolve ###
+### background ###
+### padding ###
+### autosize ###
+AutosizeType | AutoSizeParams
+"pad"
+"none"
+"fit"
+"fit-x"
+"fit-y"
+AutoSizeParams
+### params ###
+### $schema ###
+### config ###
+### datasets ###
+### usermeta ###
+####### RepeatSpec #######
+### repeat ###
+### spec ###
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### align ###
+### center ###
+boolean | RowCol<boolean>
+false
+true
+RowCol<boolean>
+### spacing ###
+number | RowCol<number>
+number
+RowCol<number>
+### bounds ###
+"full" | "flush"
+"full"
+"flush"
+### columns ###
+### resolve ###
+############### TopLevel<GenericConcatSpec<NonNormalizedSpec>> ###############
+####### TopLevel<GenericConcatSpec<NonNormalizedSpec>> #######
+### concat ###
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### align ###
+### center ###
+boolean | RowCol<boolean>
+false
+true
+RowCol<boolean>
+### spacing ###
+number | RowCol<number>
+number
+RowCol<number>
+### bounds ###
+"full" | "flush"
+"full"
+"flush"
+### columns ###
+### resolve ###
+### background ###
+### padding ###
+### autosize ###
+AutosizeType | AutoSizeParams
+"pad"
+"none"
+"fit"
+"fit-x"
+"fit-y"
+AutoSizeParams
+### params ###
+### $schema ###
+### config ###
+### datasets ###
+### usermeta ###
+####### GenericConcatSpec<NonNormalizedSpec> #######
+### concat ###
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### align ###
+### center ###
+boolean | RowCol<boolean>
+false
+true
+RowCol<boolean>
+### spacing ###
+number | RowCol<number>
+number
+RowCol<number>
+### bounds ###
+"full" | "flush"
+"full"
+"flush"
+### columns ###
+### resolve ###
+####### NonNormalizedSpec #######
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### resolve ###
+############### TopLevel<GenericVConcatSpec<NonNormalizedSpec>> ###############
+####### TopLevel<GenericVConcatSpec<NonNormalizedSpec>> #######
+### vconcat ###
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### center ###
+boolean
+false
+true
+### spacing ###
+### bounds ###
+"full" | "flush"
+"full"
+"flush"
+### resolve ###
+### background ###
+### padding ###
+### autosize ###
+AutosizeType | AutoSizeParams
+"pad"
+"none"
+"fit"
+"fit-x"
+"fit-y"
+AutoSizeParams
+### params ###
+### $schema ###
+### config ###
+### datasets ###
+### usermeta ###
+####### GenericVConcatSpec<NonNormalizedSpec> #######
+### vconcat ###
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### center ###
+boolean
+false
+true
+### spacing ###
+### bounds ###
+"full" | "flush"
+"full"
+"flush"
+### resolve ###
+####### NonNormalizedSpec #######
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### resolve ###
+############### TopLevel<GenericHConcatSpec<NonNormalizedSpec>> ###############
+####### TopLevel<GenericHConcatSpec<NonNormalizedSpec>> #######
+### hconcat ###
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### center ###
+boolean
+false
+true
+### spacing ###
+### bounds ###
+"full" | "flush"
+"full"
+"flush"
+### resolve ###
+### background ###
+### padding ###
+### autosize ###
+AutosizeType | AutoSizeParams
+"pad"
+"none"
+"fit"
+"fit-x"
+"fit-y"
+AutoSizeParams
+### params ###
+### $schema ###
+### config ###
+### datasets ###
+### usermeta ###
+####### GenericHConcatSpec<NonNormalizedSpec> #######
+### hconcat ###
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### center ###
+boolean
+false
+true
+### spacing ###
+### bounds ###
+"full" | "flush"
+"full"
+"flush"
+### resolve ###
+####### NonNormalizedSpec #######
+### title ###
+### name ###
+### description ###
+### data ###
+Data
+UrlData
+InlineData
+NamedData
+SequenceGenerator
+SphereGenerator
+GraticuleGenerator
+### transform ###
+### resolve ###
