@@ -1,0 +1,1883 @@
+TopLevelSpec
+############### TopLevelUnitSpec<Field> ###############
+import {BaseObject, copy, get, init, isString, merge, set} from './__util__';
+
+class Mark extends BaseObject {
+
+  constructor(...args) {
+    super();
+    init(this);
+    args = args.map(_ => isString(_) ? {type: _} : _);
+    set(this, "mark", merge(0, get(this, "mark"), args));
+  }
+
+  align(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "align", value);
+      return obj;
+    } else {
+      return get(this, "align");
+    }
+  }
+
+  autosize(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "autosize", value);
+      return obj;
+    } else {
+      return get(this, "autosize");
+    }
+  }
+
+  background(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "background", value);
+      return obj;
+    } else {
+      return get(this, "background");
+    }
+  }
+
+  bounds(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "bounds", value);
+      return obj;
+    } else {
+      return get(this, "bounds");
+    }
+  }
+
+  center(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "center", value);
+      return obj;
+    } else {
+      return get(this, "center");
+    }
+  }
+
+  config(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "config", value);
+      return obj;
+    } else {
+      return get(this, "config");
+    }
+  }
+
+  data(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "data", value);
+      return obj;
+    } else {
+      return get(this, "data");
+    }
+  }
+
+  datasets(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "datasets", value);
+      return obj;
+    } else {
+      return get(this, "datasets");
+    }
+  }
+
+  description(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "description", value);
+      return obj;
+    } else {
+      return get(this, "description");
+    }
+  }
+
+  encoding(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "encoding", value);
+      return obj;
+    } else {
+      return get(this, "encoding");
+    }
+  }
+
+  height(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "height", value);
+      return obj;
+    } else {
+      return get(this, "height");
+    }
+  }
+
+  mark(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "mark", value);
+      return obj;
+    } else {
+      return get(this, "mark");
+    }
+  }
+
+  name(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "name", value);
+      return obj;
+    } else {
+      return get(this, "name");
+    }
+  }
+
+  padding(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "padding", value);
+      return obj;
+    } else {
+      return get(this, "padding");
+    }
+  }
+
+  params(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "params", value);
+      return obj;
+    } else {
+      return get(this, "params");
+    }
+  }
+
+  projection(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "projection", value);
+      return obj;
+    } else {
+      return get(this, "projection");
+    }
+  }
+
+  resolve(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "resolve", value);
+      return obj;
+    } else {
+      return get(this, "resolve");
+    }
+  }
+
+  spacing(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "spacing", value);
+      return obj;
+    } else {
+      return get(this, "spacing");
+    }
+  }
+
+  title(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "title", value);
+      return obj;
+    } else {
+      return get(this, "title");
+    }
+  }
+
+  transform(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "transform", value);
+      return obj;
+    } else {
+      return get(this, "transform");
+    }
+  }
+
+  usermeta(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "usermeta", value);
+      return obj;
+    } else {
+      return get(this, "usermeta");
+    }
+  }
+
+  view(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "view", value);
+      return obj;
+    } else {
+      return get(this, "view");
+    }
+  }
+
+  width(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "width", value);
+      return obj;
+    } else {
+      return get(this, "width");
+    }
+  }
+
+}
+
+export function mark(...args) {
+  return new Mark(...args);
+}
+- TopLevelUnitSpec<Field>
+-@property: $schema
+-@@propertyType: string
+-@property: align
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: background
+-@@propertyType: any
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: center
+-@@propertyType: boolean | RowCol<boolean>
+-@property: config
+-@@propertyType: Config<any>
+-@property: data
+-@@propertyType: Data
+-@property: datasets
+-@@propertyType: Datasets
+-@property: description
+-@@propertyType: string
+-@property: encoding
+-@@propertyType: FacetedCompositeEncoding<Field>
+-@property: height
+-@@propertyType: number | "container" | Step
+-@property: mark
+-@@propertyType: AnyMark
+-@property: name
+-@@propertyType: string
+-@property: padding
+-@@propertyType: any
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: projection
+-@@propertyType: Projection<ExprRef>
+-@property: resolve
+-@@propertyType: Resolve
+-@property: spacing
+-@@propertyType: number | RowCol<number>
+-@property: title
+-@@propertyType: any
+-@property: transform
+-@@propertyType: Transform[]
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-@property: view
+-@@propertyType: ViewBackground<any>
+-@property: width
+-@@propertyType: number | "container" | Step
+-findFromType: TopLevelUnitSpec<Field>
+--findFromType: GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, TopLevelParameter>
+--@@property mark
+--@@propertyType: string
+--@@property encoding
+--@@propertyType: string
+--@@property projection
+--@@propertyType: string
+--@@property params
+--@@propertyType: string
+--@@property title
+--@@propertyType: string
+--@@property name
+--@@propertyType: string
+--@@property description
+--@@propertyType: string
+--@@property data
+--@@propertyType: string
+--@@property transform
+--@@propertyType: string
+--findFromType: ResolveMixins
+--@@property resolve
+--@@propertyType: string
+--findFromType: GenericCompositionLayout
+--@@property align
+--@@propertyType: string
+--@@property center
+--@@propertyType: string
+--@@property spacing
+--@@propertyType: string
+--@@property bounds
+--@@propertyType: string
+--findFromType: FrameMixins<any>
+--@@property view
+--@@propertyType: string
+--@@property width
+--@@propertyType: string
+--@@property height
+--@@propertyType: string
+--findFromType: TopLevelProperties<any>
+--@@property background
+--@@propertyType: string
+--@@property padding
+--@@propertyType: string
+--@@property autosize
+--@@propertyType: string
+--@@property params
+--@@propertyType: string
+--findFromType: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+--@@property $schema
+--@@propertyType: string
+--@@property config
+--@@propertyType: string
+--@@property datasets
+--@@propertyType: string
+--@@property usermeta
+--@@propertyType: string
+--findFromType: DataMixins
+--@@property data
+--@@propertyType: string
+-- Field
+--@property: toString
+--@@propertyType: (() => string) | (() => string)
+--@property: valueOf
+--@@propertyType: (() => string) | (() => Object)
+--@property: repeat
+--@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+--findFromType: Field
+---findFromType: string
+---findFromType: RepeatRef
+---@@property repeat
+---@@propertyType: string
+############### TopLevelFacetSpec ###############
+- TopLevelFacetSpec
+-@property: facet
+-@@propertyType: FacetFieldDef<Field, any> | FacetMapping<Field, FacetFieldDef<Field, any>>
+-@property: spec
+-@@propertyType: UnitSpecWithFrame<Field> | LayerSpec<Field>
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: align
+-@@propertyType: any
+-@property: center
+-@@propertyType: boolean | RowCol<boolean>
+-@property: spacing
+-@@propertyType: number | RowCol<number>
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: columns
+-@@propertyType: number
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-findFromType: TopLevelFacetSpec
+--findFromType: GenericFacetSpec<UnitSpecWithFrame<Field>, LayerSpec<Field>, Field>
+--@@property facet
+--@@propertyType: string
+--@@property spec
+--@@propertyType: string
+--@@property title
+--@@propertyType: string
+--@@property name
+--@@propertyType: string
+--@@property description
+--@@propertyType: string
+--@@property data
+--@@propertyType: string
+--@@property transform
+--@@propertyType: string
+--@@property align
+--@@propertyType: string
+--@@property center
+--@@propertyType: string
+--@@property spacing
+--@@propertyType: string
+--@@property bounds
+--@@propertyType: string
+--@@property columns
+--@@propertyType: string
+--@@property resolve
+--@@propertyType: string
+--findFromType: TopLevelProperties<any>
+--@@property background
+--@@propertyType: string
+--@@property padding
+--@@propertyType: string
+--@@property autosize
+--@@propertyType: string
+--@@property params
+--@@propertyType: string
+--findFromType: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+--@@property $schema
+--@@propertyType: string
+--@@property config
+--@@propertyType: string
+--@@property datasets
+--@@propertyType: string
+--@@property usermeta
+--@@propertyType: string
+--findFromType: DataMixins
+--@@property data
+--@@propertyType: string
+############### TopLevel<LayerSpec<Field>> ###############
+- TopLevel<LayerSpec<Field>>
+-@property: layer
+-@@propertyType: (LayerSpec<Field> | UnitSpec<Field>)[]
+-@property: encoding
+-@@propertyType: SharedCompositeEncoding<Field>
+-@property: projection
+-@@propertyType: Projection<ExprRef>
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: view
+-@@propertyType: ViewBackground<any>
+-@property: width
+-@@propertyType: number | "container" | Step
+-@property: height
+-@@propertyType: number | "container" | Step
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-findFromType: TopLevel<LayerSpec<Field>>
+--findFromType: LayerSpec<Field>
+--@@property layer
+--@@propertyType: string
+--@@property encoding
+--@@propertyType: string
+--@@property projection
+--@@propertyType: string
+--@@property title
+--@@propertyType: string
+--@@property name
+--@@propertyType: string
+--@@property description
+--@@propertyType: string
+--@@property data
+--@@propertyType: string
+--@@property transform
+--@@propertyType: string
+--@@property view
+--@@propertyType: string
+--@@property width
+--@@propertyType: string
+--@@property height
+--@@propertyType: string
+--@@property resolve
+--@@propertyType: string
+--findFromType: TopLevelProperties<any>
+--@@property background
+--@@propertyType: string
+--@@property padding
+--@@propertyType: string
+--@@property autosize
+--@@propertyType: string
+--@@property params
+--@@propertyType: string
+--findFromType: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+--@@property $schema
+--@@propertyType: string
+--@@property config
+--@@propertyType: string
+--@@property datasets
+--@@propertyType: string
+--@@property usermeta
+--@@propertyType: string
+-- LayerSpec<Field>
+--@property: layer
+--@@propertyType: (LayerSpec<Field> | UnitSpec<Field>)[]
+--@property: encoding
+--@@propertyType: SharedCompositeEncoding<Field>
+--@property: projection
+--@@propertyType: Projection<ExprRef>
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: view
+--@@propertyType: ViewBackground<any>
+--@property: width
+--@@propertyType: number | "container" | Step
+--@property: height
+--@@propertyType: number | "container" | Step
+--@property: resolve
+--@@propertyType: Resolve
+--findFromType: LayerSpec<Field>
+--@@property layer
+--@@propertyType: string
+--@@property encoding
+--@@propertyType: string
+--@@property projection
+--@@propertyType: string
+--@@property title
+--@@propertyType: string
+--@@property name
+--@@propertyType: string
+--@@property description
+--@@propertyType: string
+--@@property data
+--@@propertyType: string
+--@@property transform
+--@@propertyType: string
+--@@property view
+--@@propertyType: string
+--@@property width
+--@@propertyType: string
+--@@property height
+--@@propertyType: string
+--@@property resolve
+--@@propertyType: string
+--- Field
+---@property: toString
+---@@propertyType: (() => string) | (() => string)
+---@property: valueOf
+---@@propertyType: (() => string) | (() => Object)
+---@property: repeat
+---@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+---findFromType: Field
+----findFromType: string
+----findFromType: RepeatRef
+----@@property repeat
+----@@propertyType: string
+############### TopLevel<RepeatSpec> ###############
+- TopLevel<RepeatSpec>
+-@property: repeat
+-@@propertyType: string[] | RepeatMapping | LayerRepeatMapping
+-@property: spec
+-@@propertyType: UnitSpecWithFrame<Field> | LayerSpec<Field> | NonNormalizedSpec
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: align
+-@@propertyType: any
+-@property: center
+-@@propertyType: boolean | RowCol<boolean>
+-@property: spacing
+-@@propertyType: number | RowCol<number>
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: columns
+-@@propertyType: number
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-findFromType: TopLevel<RepeatSpec>
+--findFromType: NonLayerRepeatSpec & TopLevelProperties<any> & { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<...>; }
+---findFromType: NonLayerRepeatSpec
+---@@property repeat
+---@@propertyType: string
+---@@property spec
+---@@propertyType: string
+---@@property title
+---@@propertyType: string
+---@@property name
+---@@propertyType: string
+---@@property description
+---@@propertyType: string
+---@@property data
+---@@propertyType: string
+---@@property transform
+---@@propertyType: string
+---@@property align
+---@@propertyType: string
+---@@property center
+---@@propertyType: string
+---@@property spacing
+---@@propertyType: string
+---@@property bounds
+---@@propertyType: string
+---@@property columns
+---@@propertyType: string
+---@@property resolve
+---@@propertyType: string
+---findFromType: TopLevelProperties<any>
+---@@property background
+---@@propertyType: string
+---@@property padding
+---@@propertyType: string
+---@@property autosize
+---@@propertyType: string
+---@@property params
+---@@propertyType: string
+---findFromType: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+---@@property $schema
+---@@propertyType: string
+---@@property config
+---@@propertyType: string
+---@@property datasets
+---@@propertyType: string
+---@@property usermeta
+---@@propertyType: string
+--findFromType: LayerRepeatSpec & TopLevelProperties<any> & { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+---findFromType: LayerRepeatSpec
+---@@property repeat
+---@@propertyType: string
+---@@property spec
+---@@propertyType: string
+---@@property title
+---@@propertyType: string
+---@@property name
+---@@propertyType: string
+---@@property description
+---@@propertyType: string
+---@@property data
+---@@propertyType: string
+---@@property transform
+---@@propertyType: string
+---@@property align
+---@@propertyType: string
+---@@property center
+---@@propertyType: string
+---@@property spacing
+---@@propertyType: string
+---@@property bounds
+---@@propertyType: string
+---@@property columns
+---@@propertyType: string
+---@@property resolve
+---@@propertyType: string
+---findFromType: TopLevelProperties<any>
+---@@property background
+---@@propertyType: string
+---@@property padding
+---@@propertyType: string
+---@@property autosize
+---@@propertyType: string
+---@@property params
+---@@propertyType: string
+---findFromType: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+---@@property $schema
+---@@propertyType: string
+---@@property config
+---@@propertyType: string
+---@@property datasets
+---@@propertyType: string
+---@@property usermeta
+---@@propertyType: string
+-- RepeatSpec
+--@property: repeat
+--@@propertyType: string[] | RepeatMapping | LayerRepeatMapping
+--@property: spec
+--@@propertyType: UnitSpecWithFrame<Field> | LayerSpec<Field> | NonNormalizedSpec
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: align
+--@@propertyType: any
+--@property: center
+--@@propertyType: boolean | RowCol<boolean>
+--@property: spacing
+--@@propertyType: number | RowCol<number>
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: columns
+--@@propertyType: number
+--@property: resolve
+--@@propertyType: Resolve
+--findFromType: RepeatSpec
+---findFromType: NonLayerRepeatSpec
+---@@property repeat
+---@@propertyType: string
+---@@property spec
+---@@propertyType: string
+---@@property title
+---@@propertyType: string
+---@@property name
+---@@propertyType: string
+---@@property description
+---@@propertyType: string
+---@@property data
+---@@propertyType: string
+---@@property transform
+---@@propertyType: string
+---@@property align
+---@@propertyType: string
+---@@property center
+---@@propertyType: string
+---@@property spacing
+---@@propertyType: string
+---@@property bounds
+---@@propertyType: string
+---@@property columns
+---@@propertyType: string
+---@@property resolve
+---@@propertyType: string
+---findFromType: LayerRepeatSpec
+---@@property repeat
+---@@propertyType: string
+---@@property spec
+---@@propertyType: string
+---@@property title
+---@@propertyType: string
+---@@property name
+---@@propertyType: string
+---@@property description
+---@@propertyType: string
+---@@property data
+---@@propertyType: string
+---@@property transform
+---@@propertyType: string
+---@@property align
+---@@propertyType: string
+---@@property center
+---@@propertyType: string
+---@@property spacing
+---@@propertyType: string
+---@@property bounds
+---@@propertyType: string
+---@@property columns
+---@@propertyType: string
+---@@property resolve
+---@@propertyType: string
+############### TopLevel<GenericConcatSpec<NonNormalizedSpec>> ###############
+- TopLevel<GenericConcatSpec<NonNormalizedSpec>>
+-@property: concat
+-@@propertyType: NonNormalizedSpec[]
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: align
+-@@propertyType: any
+-@property: center
+-@@propertyType: boolean | RowCol<boolean>
+-@property: spacing
+-@@propertyType: number | RowCol<number>
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: columns
+-@@propertyType: number
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-findFromType: TopLevel<GenericConcatSpec<NonNormalizedSpec>>
+--findFromType: GenericConcatSpec<NonNormalizedSpec>
+--@@property concat
+--@@propertyType: string
+--@@property title
+--@@propertyType: string
+--@@property name
+--@@propertyType: string
+--@@property description
+--@@propertyType: string
+--@@property data
+--@@propertyType: string
+--@@property transform
+--@@propertyType: string
+--@@property align
+--@@propertyType: string
+--@@property center
+--@@propertyType: string
+--@@property spacing
+--@@propertyType: string
+--@@property bounds
+--@@propertyType: string
+--@@property columns
+--@@propertyType: string
+--@@property resolve
+--@@propertyType: string
+--findFromType: TopLevelProperties<any>
+--@@property background
+--@@propertyType: string
+--@@property padding
+--@@propertyType: string
+--@@property autosize
+--@@propertyType: string
+--@@property params
+--@@propertyType: string
+--findFromType: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+--@@property $schema
+--@@propertyType: string
+--@@property config
+--@@propertyType: string
+--@@property datasets
+--@@propertyType: string
+--@@property usermeta
+--@@propertyType: string
+-- GenericConcatSpec<NonNormalizedSpec>
+--@property: concat
+--@@propertyType: NonNormalizedSpec[]
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: align
+--@@propertyType: any
+--@property: center
+--@@propertyType: boolean | RowCol<boolean>
+--@property: spacing
+--@@propertyType: number | RowCol<number>
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: columns
+--@@propertyType: number
+--@property: resolve
+--@@propertyType: Resolve
+--findFromType: GenericConcatSpec<NonNormalizedSpec>
+--@@property concat
+--@@propertyType: string
+--@@property title
+--@@propertyType: string
+--@@property name
+--@@propertyType: string
+--@@property description
+--@@propertyType: string
+--@@property data
+--@@propertyType: string
+--@@property transform
+--@@propertyType: string
+--@@property align
+--@@propertyType: string
+--@@property center
+--@@propertyType: string
+--@@property spacing
+--@@propertyType: string
+--@@property bounds
+--@@propertyType: string
+--@@property columns
+--@@propertyType: string
+--@@property resolve
+--@@propertyType: string
+--- NonNormalizedSpec
+---@property: title
+---@@propertyType: any
+---@property: name
+---@@propertyType: string
+---@property: description
+---@@propertyType: string
+---@property: data
+---@@propertyType: Data
+---@property: transform
+---@@propertyType: Transform[]
+---@property: resolve
+---@@propertyType: Resolve
+---findFromType: NonNormalizedSpec
+----findFromType: NonLayerRepeatSpec
+----@@property repeat
+----@@propertyType: string
+----@@property spec
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: LayerRepeatSpec
+----@@property repeat
+----@@propertyType: string
+----@@property spec
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: FacetedUnitSpec<Field>
+-----findFromType: GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, SelectionParameter<SelectionType>>
+-----@@property mark
+-----@@propertyType: string
+-----@@property encoding
+-----@@propertyType: string
+-----@@property projection
+-----@@propertyType: string
+-----@@property params
+-----@@propertyType: string
+-----@@property title
+-----@@propertyType: string
+-----@@property name
+-----@@propertyType: string
+-----@@property description
+-----@@propertyType: string
+-----@@property data
+-----@@propertyType: string
+-----@@property transform
+-----@@propertyType: string
+-----findFromType: ResolveMixins
+-----@@property resolve
+-----@@propertyType: string
+-----findFromType: GenericCompositionLayout
+-----@@property align
+-----@@propertyType: string
+-----@@property center
+-----@@propertyType: string
+-----@@property spacing
+-----@@propertyType: string
+-----@@property bounds
+-----@@propertyType: string
+-----findFromType: FrameMixins<any>
+-----@@property view
+-----@@propertyType: string
+-----@@property width
+-----@@propertyType: string
+-----@@property height
+-----@@propertyType: string
+----findFromType: LayerSpec<Field>
+----@@property layer
+----@@propertyType: string
+----@@property encoding
+----@@propertyType: string
+----@@property projection
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property view
+----@@propertyType: string
+----@@property width
+----@@propertyType: string
+----@@property height
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericFacetSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, Field>
+----@@property facet
+----@@propertyType: string
+----@@property spec
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+----@@property concat
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericVConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+----@@property vconcat
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericHConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+----@@property hconcat
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+############### TopLevel<GenericVConcatSpec<NonNormalizedSpec>> ###############
+- TopLevel<GenericVConcatSpec<NonNormalizedSpec>>
+-@property: vconcat
+-@@propertyType: NonNormalizedSpec[]
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: center
+-@@propertyType: boolean
+-@property: spacing
+-@@propertyType: number
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-findFromType: TopLevel<GenericVConcatSpec<NonNormalizedSpec>>
+--findFromType: GenericVConcatSpec<NonNormalizedSpec>
+--@@property vconcat
+--@@propertyType: string
+--@@property title
+--@@propertyType: string
+--@@property name
+--@@propertyType: string
+--@@property description
+--@@propertyType: string
+--@@property data
+--@@propertyType: string
+--@@property transform
+--@@propertyType: string
+--@@property center
+--@@propertyType: string
+--@@property spacing
+--@@propertyType: string
+--@@property bounds
+--@@propertyType: string
+--@@property resolve
+--@@propertyType: string
+--findFromType: TopLevelProperties<any>
+--@@property background
+--@@propertyType: string
+--@@property padding
+--@@propertyType: string
+--@@property autosize
+--@@propertyType: string
+--@@property params
+--@@propertyType: string
+--findFromType: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+--@@property $schema
+--@@propertyType: string
+--@@property config
+--@@propertyType: string
+--@@property datasets
+--@@propertyType: string
+--@@property usermeta
+--@@propertyType: string
+-- GenericVConcatSpec<NonNormalizedSpec>
+--@property: vconcat
+--@@propertyType: NonNormalizedSpec[]
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: center
+--@@propertyType: boolean
+--@property: spacing
+--@@propertyType: number
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: resolve
+--@@propertyType: Resolve
+--findFromType: GenericVConcatSpec<NonNormalizedSpec>
+--@@property vconcat
+--@@propertyType: string
+--@@property title
+--@@propertyType: string
+--@@property name
+--@@propertyType: string
+--@@property description
+--@@propertyType: string
+--@@property data
+--@@propertyType: string
+--@@property transform
+--@@propertyType: string
+--@@property center
+--@@propertyType: string
+--@@property spacing
+--@@propertyType: string
+--@@property bounds
+--@@propertyType: string
+--@@property resolve
+--@@propertyType: string
+--- NonNormalizedSpec
+---@property: title
+---@@propertyType: any
+---@property: name
+---@@propertyType: string
+---@property: description
+---@@propertyType: string
+---@property: data
+---@@propertyType: Data
+---@property: transform
+---@@propertyType: Transform[]
+---@property: resolve
+---@@propertyType: Resolve
+---findFromType: NonNormalizedSpec
+----findFromType: NonLayerRepeatSpec
+----@@property repeat
+----@@propertyType: string
+----@@property spec
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: LayerRepeatSpec
+----@@property repeat
+----@@propertyType: string
+----@@property spec
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: FacetedUnitSpec<Field>
+-----findFromType: GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, SelectionParameter<SelectionType>>
+-----@@property mark
+-----@@propertyType: string
+-----@@property encoding
+-----@@propertyType: string
+-----@@property projection
+-----@@propertyType: string
+-----@@property params
+-----@@propertyType: string
+-----@@property title
+-----@@propertyType: string
+-----@@property name
+-----@@propertyType: string
+-----@@property description
+-----@@propertyType: string
+-----@@property data
+-----@@propertyType: string
+-----@@property transform
+-----@@propertyType: string
+-----findFromType: ResolveMixins
+-----@@property resolve
+-----@@propertyType: string
+-----findFromType: GenericCompositionLayout
+-----@@property align
+-----@@propertyType: string
+-----@@property center
+-----@@propertyType: string
+-----@@property spacing
+-----@@propertyType: string
+-----@@property bounds
+-----@@propertyType: string
+-----findFromType: FrameMixins<any>
+-----@@property view
+-----@@propertyType: string
+-----@@property width
+-----@@propertyType: string
+-----@@property height
+-----@@propertyType: string
+----findFromType: LayerSpec<Field>
+----@@property layer
+----@@propertyType: string
+----@@property encoding
+----@@propertyType: string
+----@@property projection
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property view
+----@@propertyType: string
+----@@property width
+----@@propertyType: string
+----@@property height
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericFacetSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, Field>
+----@@property facet
+----@@propertyType: string
+----@@property spec
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+----@@property concat
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericVConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+----@@property vconcat
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericHConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+----@@property hconcat
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+############### TopLevel<GenericHConcatSpec<NonNormalizedSpec>> ###############
+- TopLevel<GenericHConcatSpec<NonNormalizedSpec>>
+-@property: hconcat
+-@@propertyType: NonNormalizedSpec[]
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: center
+-@@propertyType: boolean
+-@property: spacing
+-@@propertyType: number
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-findFromType: TopLevel<GenericHConcatSpec<NonNormalizedSpec>>
+--findFromType: GenericHConcatSpec<NonNormalizedSpec>
+--@@property hconcat
+--@@propertyType: string
+--@@property title
+--@@propertyType: string
+--@@property name
+--@@propertyType: string
+--@@property description
+--@@propertyType: string
+--@@property data
+--@@propertyType: string
+--@@property transform
+--@@propertyType: string
+--@@property center
+--@@propertyType: string
+--@@property spacing
+--@@propertyType: string
+--@@property bounds
+--@@propertyType: string
+--@@property resolve
+--@@propertyType: string
+--findFromType: TopLevelProperties<any>
+--@@property background
+--@@propertyType: string
+--@@property padding
+--@@propertyType: string
+--@@property autosize
+--@@propertyType: string
+--@@property params
+--@@propertyType: string
+--findFromType: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+--@@property $schema
+--@@propertyType: string
+--@@property config
+--@@propertyType: string
+--@@property datasets
+--@@propertyType: string
+--@@property usermeta
+--@@propertyType: string
+-- GenericHConcatSpec<NonNormalizedSpec>
+--@property: hconcat
+--@@propertyType: NonNormalizedSpec[]
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: center
+--@@propertyType: boolean
+--@property: spacing
+--@@propertyType: number
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: resolve
+--@@propertyType: Resolve
+--findFromType: GenericHConcatSpec<NonNormalizedSpec>
+--@@property hconcat
+--@@propertyType: string
+--@@property title
+--@@propertyType: string
+--@@property name
+--@@propertyType: string
+--@@property description
+--@@propertyType: string
+--@@property data
+--@@propertyType: string
+--@@property transform
+--@@propertyType: string
+--@@property center
+--@@propertyType: string
+--@@property spacing
+--@@propertyType: string
+--@@property bounds
+--@@propertyType: string
+--@@property resolve
+--@@propertyType: string
+--- NonNormalizedSpec
+---@property: title
+---@@propertyType: any
+---@property: name
+---@@propertyType: string
+---@property: description
+---@@propertyType: string
+---@property: data
+---@@propertyType: Data
+---@property: transform
+---@@propertyType: Transform[]
+---@property: resolve
+---@@propertyType: Resolve
+---findFromType: NonNormalizedSpec
+----findFromType: NonLayerRepeatSpec
+----@@property repeat
+----@@propertyType: string
+----@@property spec
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: LayerRepeatSpec
+----@@property repeat
+----@@propertyType: string
+----@@property spec
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: FacetedUnitSpec<Field>
+-----findFromType: GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, SelectionParameter<SelectionType>>
+-----@@property mark
+-----@@propertyType: string
+-----@@property encoding
+-----@@propertyType: string
+-----@@property projection
+-----@@propertyType: string
+-----@@property params
+-----@@propertyType: string
+-----@@property title
+-----@@propertyType: string
+-----@@property name
+-----@@propertyType: string
+-----@@property description
+-----@@propertyType: string
+-----@@property data
+-----@@propertyType: string
+-----@@property transform
+-----@@propertyType: string
+-----findFromType: ResolveMixins
+-----@@property resolve
+-----@@propertyType: string
+-----findFromType: GenericCompositionLayout
+-----@@property align
+-----@@propertyType: string
+-----@@property center
+-----@@propertyType: string
+-----@@property spacing
+-----@@propertyType: string
+-----@@property bounds
+-----@@propertyType: string
+-----findFromType: FrameMixins<any>
+-----@@property view
+-----@@propertyType: string
+-----@@property width
+-----@@propertyType: string
+-----@@property height
+-----@@propertyType: string
+----findFromType: LayerSpec<Field>
+----@@property layer
+----@@propertyType: string
+----@@property encoding
+----@@propertyType: string
+----@@property projection
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property view
+----@@propertyType: string
+----@@property width
+----@@propertyType: string
+----@@property height
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericFacetSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, Field>
+----@@property facet
+----@@propertyType: string
+----@@property spec
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+----@@property concat
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property align
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property columns
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericVConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+----@@property vconcat
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string
+----findFromType: GenericHConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+----@@property hconcat
+----@@propertyType: string
+----@@property title
+----@@propertyType: string
+----@@property name
+----@@propertyType: string
+----@@property description
+----@@propertyType: string
+----@@property data
+----@@propertyType: string
+----@@property transform
+----@@propertyType: string
+----@@property center
+----@@propertyType: string
+----@@property spacing
+----@@propertyType: string
+----@@property bounds
+----@@propertyType: string
+----@@property resolve
+----@@propertyType: string

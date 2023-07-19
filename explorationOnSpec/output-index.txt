@@ -1,0 +1,2475 @@
+TopLevelSpec
+############### TopLevelUnitSpec<Field> ###############
+import {BaseObject, copy, get, init, isString, merge, set} from './__util__';
+
+class Mark extends BaseObject {
+
+  constructor(...args) {
+    super();
+    init(this);
+    args = args.map(_ => isString(_) ? {type: _} : _);
+    set(this, "mark", merge(0, get(this, "mark"), args));
+  }
+
+  align(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "align", value);
+      return obj;
+    } else {
+      return get(this, "align");
+    }
+  }
+
+  autosize(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "autosize", value);
+      return obj;
+    } else {
+      return get(this, "autosize");
+    }
+  }
+
+  background(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "background", value);
+      return obj;
+    } else {
+      return get(this, "background");
+    }
+  }
+
+  bounds(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "bounds", value);
+      return obj;
+    } else {
+      return get(this, "bounds");
+    }
+  }
+
+  center(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "center", value);
+      return obj;
+    } else {
+      return get(this, "center");
+    }
+  }
+
+  config(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "config", value);
+      return obj;
+    } else {
+      return get(this, "config");
+    }
+  }
+
+  data(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "data", value);
+      return obj;
+    } else {
+      return get(this, "data");
+    }
+  }
+
+  datasets(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "datasets", value);
+      return obj;
+    } else {
+      return get(this, "datasets");
+    }
+  }
+
+  description(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "description", value);
+      return obj;
+    } else {
+      return get(this, "description");
+    }
+  }
+
+  encoding(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "encoding", value);
+      return obj;
+    } else {
+      return get(this, "encoding");
+    }
+  }
+
+  height(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "height", value);
+      return obj;
+    } else {
+      return get(this, "height");
+    }
+  }
+
+  mark(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "mark", value);
+      return obj;
+    } else {
+      return get(this, "mark");
+    }
+  }
+
+  name(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "name", value);
+      return obj;
+    } else {
+      return get(this, "name");
+    }
+  }
+
+  padding(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "padding", value);
+      return obj;
+    } else {
+      return get(this, "padding");
+    }
+  }
+
+  params(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "params", value);
+      return obj;
+    } else {
+      return get(this, "params");
+    }
+  }
+
+  projection(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "projection", value);
+      return obj;
+    } else {
+      return get(this, "projection");
+    }
+  }
+
+  resolve(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "resolve", value);
+      return obj;
+    } else {
+      return get(this, "resolve");
+    }
+  }
+
+  spacing(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "spacing", value);
+      return obj;
+    } else {
+      return get(this, "spacing");
+    }
+  }
+
+  title(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "title", value);
+      return obj;
+    } else {
+      return get(this, "title");
+    }
+  }
+
+  transform(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "transform", value);
+      return obj;
+    } else {
+      return get(this, "transform");
+    }
+  }
+
+  usermeta(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "usermeta", value);
+      return obj;
+    } else {
+      return get(this, "usermeta");
+    }
+  }
+
+  view(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "view", value);
+      return obj;
+    } else {
+      return get(this, "view");
+    }
+  }
+
+  width(value) {
+    if (arguments.length) {
+      const obj = copy(this);
+      set(obj, "width", value);
+      return obj;
+    } else {
+      return get(this, "width");
+    }
+  }
+
+}
+
+export function mark(...args) {
+  return new Mark(...args);
+}
+- TopLevelUnitSpec<Field>
+-@property: $schema
+-@@propertyType: string
+-@property: align
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: background
+-@@propertyType: any
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: center
+-@@propertyType: boolean | RowCol<boolean>
+-@property: config
+-@@propertyType: Config<any>
+-@property: data
+-@@propertyType: Data
+-@property: datasets
+-@@propertyType: Datasets
+-@property: description
+-@@propertyType: string
+-@property: encoding
+-@@propertyType: FacetedCompositeEncoding<Field>
+-@property: height
+-@@propertyType: number | "container" | Step
+-@property: mark
+-@@propertyType: AnyMark
+-@property: name
+-@@propertyType: string
+-@property: padding
+-@@propertyType: any
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: projection
+-@@propertyType: Projection<ExprRef>
+-@property: resolve
+-@@propertyType: Resolve
+-@property: spacing
+-@@propertyType: number | RowCol<number>
+-@property: title
+-@@propertyType: any
+-@property: transform
+-@@propertyType: Transform[]
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-@property: view
+-@@propertyType: ViewBackground<any>
+-@property: width
+-@@propertyType: number | "container" | Step
+-@type: GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, TopLevelParameter>
+-@@property mark
+-@@property encoding
+-@@property projection
+-@@property params
+-@@property title
+-@@property name
+-@@property description
+-@@property data
+-@@property transform
+-- GenericUnitSpec<FacetedCompositeEncoding<F>, AnyMark, P>
+--@property: mark
+--@@propertyType: AnyMark
+--@property: encoding
+--@@propertyType: FacetedCompositeEncoding<F>
+--@property: projection
+--@@propertyType: Projection<ExprRef>
+--@property: params
+--@@propertyType: P[]
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--- FacetedCompositeEncoding<F>
+---@property: x
+---@@propertyType: PositionDef<F>
+---@property: y
+---@@propertyType: PositionDef<F>
+---@property: xOffset
+---@@propertyType: OffsetDef<F>
+---@property: yOffset
+---@@propertyType: OffsetDef<F>
+---@property: x2
+---@@propertyType: Position2Def<F>
+---@property: y2
+---@@propertyType: Position2Def<F>
+---@property: longitude
+---@@propertyType: LatLongDef<F>
+---@property: latitude
+---@@propertyType: LatLongDef<F>
+---@property: longitude2
+---@@propertyType: Position2Def<F>
+---@property: latitude2
+---@@propertyType: Position2Def<F>
+---@property: theta
+---@@propertyType: PolarDef<F>
+---@property: theta2
+---@@propertyType: Position2Def<F>
+---@property: radius
+---@@propertyType: PolarDef<F>
+---@property: radius2
+---@@propertyType: Position2Def<F>
+---@property: color
+---@@propertyType: ColorDef<F>
+---@property: fill
+---@@propertyType: ColorDef<F>
+---@property: stroke
+---@@propertyType: ColorDef<F>
+---@property: opacity
+---@@propertyType: NumericMarkPropDef<F>
+---@property: fillOpacity
+---@@propertyType: NumericMarkPropDef<F>
+---@property: strokeOpacity
+---@@propertyType: NumericMarkPropDef<F>
+---@property: strokeWidth
+---@@propertyType: NumericMarkPropDef<F>
+---@property: strokeDash
+---@@propertyType: NumericArrayMarkPropDef<F>
+---@property: size
+---@@propertyType: NumericMarkPropDef<F>
+---@property: angle
+---@@propertyType: NumericMarkPropDef<F>
+---@property: shape
+---@@propertyType: ShapeDef<F>
+---@property: detail
+---@@propertyType: FieldDefWithoutScale<F> | FieldDefWithoutScale<F>[]
+---@property: key
+---@@propertyType: FieldDefWithoutScale<F>
+---@property: text
+---@@propertyType: TextDef<F>
+---@property: tooltip
+---@@propertyType: StringFieldDefWithCondition<F> | StringValueDefWithCondition<F> | StringFieldDef<F>[]
+---@property: href
+---@@propertyType: StringFieldDefWithCondition<F> | StringValueDefWithCondition<F>
+---@property: url
+---@@propertyType: StringFieldDefWithCondition<F> | StringValueDefWithCondition<F>
+---@property: description
+---@@propertyType: StringFieldDefWithCondition<F> | StringValueDefWithCondition<F>
+---@property: order
+---@@propertyType: OrderOnlyDef | OrderValueDef | OrderFieldDef<F> | OrderFieldDef<F>[]
+---@property: xError
+---@@propertyType: ValueDef<number> | SecondaryFieldDef<F>
+---@property: xError2
+---@@propertyType: ValueDef<number> | SecondaryFieldDef<F>
+---@property: yError
+---@@propertyType: ValueDef<number> | SecondaryFieldDef<F>
+---@property: yError2
+---@@propertyType: ValueDef<number> | SecondaryFieldDef<F>
+---@property: facet
+---@@propertyType: FacetEncodingFieldDef<F, any>
+---@property: row
+---@@propertyType: RowColumnEncodingFieldDef<F, any>
+---@property: column
+---@@propertyType: RowColumnEncodingFieldDef<F, any>
+---@type: Encoding<F>
+---@@property x
+---@@property y
+---@@property xOffset
+---@@property yOffset
+---@@property x2
+---@@property y2
+---@@property longitude
+---@@property latitude
+---@@property longitude2
+---@@property latitude2
+---@@property theta
+---@@property theta2
+---@@property radius
+---@@property radius2
+---@@property color
+---@@property fill
+---@@property stroke
+---@@property opacity
+---@@property fillOpacity
+---@@property strokeOpacity
+---@@property strokeWidth
+---@@property strokeDash
+---@@property size
+---@@property angle
+---@@property shape
+---@@property detail
+---@@property key
+---@@property text
+---@@property tooltip
+---@@property href
+---@@property url
+---@@property description
+---@@property order
+---@type: ErrorExtraEncoding<F>
+---@@property xError
+---@@property xError2
+---@@property yError
+---@@property yError2
+---@type: EncodingFacetMapping<F, any>
+---@@property facet
+---@@property row
+---@@property column
+---- EncodingFacetMapping<F, any>
+----@property: facet
+----@@propertyType: FacetEncodingFieldDef<F, any>
+----@property: row
+----@@propertyType: RowColumnEncodingFieldDef<F, any>
+----@property: column
+----@@propertyType: RowColumnEncodingFieldDef<F, any>
+----- F
+-----@property: toString
+-----@@propertyType: (() => string) | (() => string)
+-----@property: valueOf
+-----@@propertyType: (() => string) | (() => Object)
+-----@property: repeat
+-----@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+---- F
+----@property: toString
+----@@propertyType: (() => string) | (() => string)
+----@property: valueOf
+----@@propertyType: (() => string) | (() => Object)
+----@property: repeat
+----@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+--- AnyMark
+---@property: toString
+---@@propertyType: (() => string) | (() => string)
+---@property: valueOf
+---@@propertyType: (() => string) | (() => Object)
+---@type: "boxplot"
+---@literal: boxplot
+---@type: "errorbar"
+---@literal: errorbar
+---@type: "errorband"
+---@literal: errorband
+---@type: BoxPlotDef
+---@subTypes: GenericMarkDef<"boxplot">
+---@subTypes: ColorMixins<any>
+---@subTypes: { opacity?: number; clip?: boolean; }
+---@subTypes: BoxPlotConfig
+---@subTypes: MarkInvalidMixins
+---@subTypes: { type: "boxplot"; orient?: Orientation; }
+---@type: ErrorBarDef
+---@subTypes: GenericMarkDef<"errorbar">
+---@subTypes: ColorMixins<any>
+---@subTypes: { opacity?: number; clip?: boolean; }
+---@subTypes: ErrorBarConfig
+---@subTypes: { orient?: Orientation; }
+---@type: ErrorBandDef
+---@subTypes: GenericMarkDef<"errorband">
+---@subTypes: ColorMixins<any>
+---@subTypes: { opacity?: number; clip?: boolean; }
+---@subTypes: ErrorBandConfig
+---@subTypes: { orient?: Orientation; }
+---@type: "arc"
+---@literal: arc
+---@type: "area"
+---@literal: area
+---@type: "bar"
+---@literal: bar
+---@type: "image"
+---@literal: image
+---@type: "line"
+---@literal: line
+---@type: "point"
+---@literal: point
+---@type: "rect"
+---@literal: rect
+---@type: "rule"
+---@literal: rule
+---@type: "text"
+---@literal: text
+---@type: "tick"
+---@literal: tick
+---@type: "trail"
+---@literal: trail
+---@type: "circle"
+---@literal: circle
+---@type: "square"
+---@literal: square
+---@type: "geoshape"
+---@literal: geoshape
+---@type: MarkDef<"arc" | "area" | "bar" | "image" | "line" | "point" | "rect" | "rule" | "text" | "tick" | "trail" | "circle" | "square" | "geoshape", any>
+---@@property startAngle
+---@@property endAngle
+---@@property width
+---@@property height
+---@@property type
+---@@property style
+---@@property clip
+---@@property xOffset
+---@@property yOffset
+---@@property x2Offset
+---@@property y2Offset
+---@@property thetaOffset
+---@@property theta2Offset
+---@@property radiusOffset
+---@@property radius2Offset
+---- MarkDef<"arc" | "area" | "bar" | "image" | "line" | "point" | "rect" | "rule" | "text" | "tick" | "trail" | "circle" | "square" | "geoshape", any>
+----@property: startAngle
+----@@propertyType: any
+----@property: endAngle
+----@@propertyType: any
+----@property: width
+----@@propertyType: any
+----@property: height
+----@@propertyType: any
+----@property: type
+----@@propertyType: "arc" | "area" | "bar" | "image" | "line" | "point" | "rect" | "rule" | "text" | "tick" | "trail" | "circle" | "square" | "geoshape"
+----@property: style
+----@@propertyType: string | string[]
+----@property: clip
+----@@propertyType: boolean
+----@property: xOffset
+----@@propertyType: any
+----@property: yOffset
+----@@propertyType: any
+----@property: x2Offset
+----@@propertyType: any
+----@property: y2Offset
+----@@propertyType: any
+----@property: thetaOffset
+----@@propertyType: any
+----@property: theta2Offset
+----@@propertyType: any
+----@property: radiusOffset
+----@@propertyType: any
+----@property: radius2Offset
+----@@propertyType: any
+--- P
+-@type: ResolveMixins
+-@@property resolve
+-@type: GenericCompositionLayout
+-@@property align
+-@@property center
+-@@property spacing
+-@@property bounds
+-@type: FrameMixins<any>
+-@@property view
+-@@property width
+-@@property height
+-- FrameMixins<any>
+--@property: view
+--@@propertyType: ViewBackground<any>
+--@property: width
+--@@propertyType: number | "container" | Step
+--@property: height
+--@@propertyType: number | "container" | Step
+-@type: TopLevelProperties<any>
+-@@property background
+-@@property padding
+-@@property autosize
+-@@property params
+-- TopLevelProperties<any>
+--@property: background
+--@@propertyType: any
+--@property: padding
+--@@propertyType: any
+--@property: autosize
+--@@propertyType: AutosizeType | AutoSizeParams
+--@property: params
+--@@propertyType: TopLevelParameter[]
+-@type: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-@@property $schema
+-@@property config
+-@@property datasets
+-@@property usermeta
+-@type: DataMixins
+-@@property data
+-- Field
+--@property: toString
+--@@propertyType: (() => string) | (() => string)
+--@property: valueOf
+--@@propertyType: (() => string) | (() => Object)
+--@property: repeat
+--@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+--@type: string
+--@type: RepeatRef
+--@@property repeat
+############### TopLevelFacetSpec ###############
+- TopLevelFacetSpec
+-@property: facet
+-@@propertyType: FacetFieldDef<Field, any> | FacetMapping<Field, FacetFieldDef<Field, any>>
+-@property: spec
+-@@propertyType: UnitSpecWithFrame<Field> | LayerSpec<Field>
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: align
+-@@propertyType: any
+-@property: center
+-@@propertyType: boolean | RowCol<boolean>
+-@property: spacing
+-@@propertyType: number | RowCol<number>
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: columns
+-@@propertyType: number
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-@type: GenericFacetSpec<UnitSpecWithFrame<Field>, LayerSpec<Field>, Field>
+-@@property facet
+-@@property spec
+-@@property title
+-@@property name
+-@@property description
+-@@property data
+-@@property transform
+-@@property align
+-@@property center
+-@@property spacing
+-@@property bounds
+-@@property columns
+-@@property resolve
+-- GenericFacetSpec<UnitSpecWithFrame<Field>, LayerSpec<Field>, Field>
+--@property: facet
+--@@propertyType: FacetFieldDef<Field, any> | FacetMapping<Field, FacetFieldDef<Field, any>>
+--@property: spec
+--@@propertyType: UnitSpecWithFrame<Field> | LayerSpec<Field>
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: align
+--@@propertyType: any
+--@property: center
+--@@propertyType: boolean | RowCol<boolean>
+--@property: spacing
+--@@propertyType: number | RowCol<number>
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: columns
+--@@propertyType: number
+--@property: resolve
+--@@propertyType: Resolve
+--- UnitSpecWithFrame<Field>
+---@property: mark
+---@@propertyType: AnyMark
+---@property: encoding
+---@@propertyType: CompositeEncoding<Field>
+---@property: projection
+---@@propertyType: Projection<ExprRef>
+---@property: params
+---@@propertyType: SelectionParameter<SelectionType>[]
+---@property: title
+---@@propertyType: any
+---@property: name
+---@@propertyType: string
+---@property: description
+---@@propertyType: string
+---@property: data
+---@@propertyType: Data
+---@property: transform
+---@@propertyType: Transform[]
+---@property: view
+---@@propertyType: ViewBackground<any>
+---@property: width
+---@@propertyType: number | "container" | Step
+---@property: height
+---@@propertyType: number | "container" | Step
+---@type: GenericUnitSpec<CompositeEncoding<Field>, AnyMark, SelectionParameter<SelectionType>>
+---@@property mark
+---@@property encoding
+---@@property projection
+---@@property params
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---- GenericUnitSpec<CompositeEncoding<F>, AnyMark, SelectionParameter<SelectionType>>
+----@property: mark
+----@@propertyType: AnyMark
+----@property: encoding
+----@@propertyType: CompositeEncoding<F>
+----@property: projection
+----@@propertyType: Projection<ExprRef>
+----@property: params
+----@@propertyType: SelectionParameter<SelectionType>[]
+----@property: title
+----@@propertyType: any
+----@property: name
+----@@propertyType: string
+----@property: description
+----@@propertyType: string
+----@property: data
+----@@propertyType: Data
+----@property: transform
+----@@propertyType: Transform[]
+----- CompositeEncoding<F>
+-----@property: x
+-----@@propertyType: PositionDef<F>
+-----@property: y
+-----@@propertyType: PositionDef<F>
+-----@property: xOffset
+-----@@propertyType: OffsetDef<F>
+-----@property: yOffset
+-----@@propertyType: OffsetDef<F>
+-----@property: x2
+-----@@propertyType: Position2Def<F>
+-----@property: y2
+-----@@propertyType: Position2Def<F>
+-----@property: longitude
+-----@@propertyType: LatLongDef<F>
+-----@property: latitude
+-----@@propertyType: LatLongDef<F>
+-----@property: longitude2
+-----@@propertyType: Position2Def<F>
+-----@property: latitude2
+-----@@propertyType: Position2Def<F>
+-----@property: theta
+-----@@propertyType: PolarDef<F>
+-----@property: theta2
+-----@@propertyType: Position2Def<F>
+-----@property: radius
+-----@@propertyType: PolarDef<F>
+-----@property: radius2
+-----@@propertyType: Position2Def<F>
+-----@property: color
+-----@@propertyType: ColorDef<F>
+-----@property: fill
+-----@@propertyType: ColorDef<F>
+-----@property: stroke
+-----@@propertyType: ColorDef<F>
+-----@property: opacity
+-----@@propertyType: NumericMarkPropDef<F>
+-----@property: fillOpacity
+-----@@propertyType: NumericMarkPropDef<F>
+-----@property: strokeOpacity
+-----@@propertyType: NumericMarkPropDef<F>
+-----@property: strokeWidth
+-----@@propertyType: NumericMarkPropDef<F>
+-----@property: strokeDash
+-----@@propertyType: NumericArrayMarkPropDef<F>
+-----@property: size
+-----@@propertyType: NumericMarkPropDef<F>
+-----@property: angle
+-----@@propertyType: NumericMarkPropDef<F>
+-----@property: shape
+-----@@propertyType: ShapeDef<F>
+-----@property: detail
+-----@@propertyType: FieldDefWithoutScale<F> | FieldDefWithoutScale<F>[]
+-----@property: key
+-----@@propertyType: FieldDefWithoutScale<F>
+-----@property: text
+-----@@propertyType: TextDef<F>
+-----@property: tooltip
+-----@@propertyType: StringFieldDefWithCondition<F> | StringValueDefWithCondition<F> | StringFieldDef<F>[]
+-----@property: href
+-----@@propertyType: StringFieldDefWithCondition<F> | StringValueDefWithCondition<F>
+-----@property: url
+-----@@propertyType: StringFieldDefWithCondition<F> | StringValueDefWithCondition<F>
+-----@property: description
+-----@@propertyType: StringFieldDefWithCondition<F> | StringValueDefWithCondition<F>
+-----@property: order
+-----@@propertyType: OrderOnlyDef | OrderValueDef | OrderFieldDef<F> | OrderFieldDef<F>[]
+-----@property: xError
+-----@@propertyType: ValueDef<number> | SecondaryFieldDef<F>
+-----@property: xError2
+-----@@propertyType: ValueDef<number> | SecondaryFieldDef<F>
+-----@property: yError
+-----@@propertyType: ValueDef<number> | SecondaryFieldDef<F>
+-----@property: yError2
+-----@@propertyType: ValueDef<number> | SecondaryFieldDef<F>
+-----@type: Encoding<F>
+-----@@property x
+-----@@property y
+-----@@property xOffset
+-----@@property yOffset
+-----@@property x2
+-----@@property y2
+-----@@property longitude
+-----@@property latitude
+-----@@property longitude2
+-----@@property latitude2
+-----@@property theta
+-----@@property theta2
+-----@@property radius
+-----@@property radius2
+-----@@property color
+-----@@property fill
+-----@@property stroke
+-----@@property opacity
+-----@@property fillOpacity
+-----@@property strokeOpacity
+-----@@property strokeWidth
+-----@@property strokeDash
+-----@@property size
+-----@@property angle
+-----@@property shape
+-----@@property detail
+-----@@property key
+-----@@property text
+-----@@property tooltip
+-----@@property href
+-----@@property url
+-----@@property description
+-----@@property order
+-----@type: ErrorExtraEncoding<F>
+-----@@property xError
+-----@@property xError2
+-----@@property yError
+-----@@property yError2
+------ F
+------@property: toString
+------@@propertyType: (() => string) | (() => string)
+------@property: valueOf
+------@@propertyType: (() => string) | (() => Object)
+------@property: repeat
+------@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+----- AnyMark
+-----@property: toString
+-----@@propertyType: (() => string) | (() => string)
+-----@property: valueOf
+-----@@propertyType: (() => string) | (() => Object)
+-----@type: "boxplot"
+-----@literal: boxplot
+-----@type: "errorbar"
+-----@literal: errorbar
+-----@type: "errorband"
+-----@literal: errorband
+-----@type: BoxPlotDef
+-----@subTypes: GenericMarkDef<"boxplot">
+-----@subTypes: ColorMixins<any>
+-----@subTypes: { opacity?: number; clip?: boolean; }
+-----@subTypes: BoxPlotConfig
+-----@subTypes: MarkInvalidMixins
+-----@subTypes: { type: "boxplot"; orient?: Orientation; }
+-----@type: ErrorBarDef
+-----@subTypes: GenericMarkDef<"errorbar">
+-----@subTypes: ColorMixins<any>
+-----@subTypes: { opacity?: number; clip?: boolean; }
+-----@subTypes: ErrorBarConfig
+-----@subTypes: { orient?: Orientation; }
+-----@type: ErrorBandDef
+-----@subTypes: GenericMarkDef<"errorband">
+-----@subTypes: ColorMixins<any>
+-----@subTypes: { opacity?: number; clip?: boolean; }
+-----@subTypes: ErrorBandConfig
+-----@subTypes: { orient?: Orientation; }
+-----@type: "arc"
+-----@literal: arc
+-----@type: "area"
+-----@literal: area
+-----@type: "bar"
+-----@literal: bar
+-----@type: "image"
+-----@literal: image
+-----@type: "line"
+-----@literal: line
+-----@type: "point"
+-----@literal: point
+-----@type: "rect"
+-----@literal: rect
+-----@type: "rule"
+-----@literal: rule
+-----@type: "text"
+-----@literal: text
+-----@type: "tick"
+-----@literal: tick
+-----@type: "trail"
+-----@literal: trail
+-----@type: "circle"
+-----@literal: circle
+-----@type: "square"
+-----@literal: square
+-----@type: "geoshape"
+-----@literal: geoshape
+-----@type: MarkDef<"arc" | "area" | "bar" | "image" | "line" | "point" | "rect" | "rule" | "text" | "tick" | "trail" | "circle" | "square" | "geoshape", any>
+-----@@property startAngle
+-----@@property endAngle
+-----@@property width
+-----@@property height
+-----@@property type
+-----@@property style
+-----@@property clip
+-----@@property xOffset
+-----@@property yOffset
+-----@@property x2Offset
+-----@@property y2Offset
+-----@@property thetaOffset
+-----@@property theta2Offset
+-----@@property radiusOffset
+-----@@property radius2Offset
+---@type: FrameMixins<any>
+---@@property view
+---@@property width
+---@@property height
+---- FrameMixins<any>
+----@property: view
+----@@propertyType: ViewBackground<any>
+----@property: width
+----@@propertyType: number | "container" | Step
+----@property: height
+----@@propertyType: number | "container" | Step
+---- Field
+----@property: toString
+----@@propertyType: (() => string) | (() => string)
+----@property: valueOf
+----@@propertyType: (() => string) | (() => Object)
+----@property: repeat
+----@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+----@type: string
+----@type: RepeatRef
+----@@property repeat
+--- LayerSpec<Field>
+---@property: layer
+---@@propertyType: (LayerSpec<Field> | UnitSpec<Field>)[]
+---@property: encoding
+---@@propertyType: SharedCompositeEncoding<Field>
+---@property: projection
+---@@propertyType: Projection<ExprRef>
+---@property: title
+---@@propertyType: any
+---@property: name
+---@@propertyType: string
+---@property: description
+---@@propertyType: string
+---@property: data
+---@@propertyType: Data
+---@property: transform
+---@@propertyType: Transform[]
+---@property: view
+---@@propertyType: ViewBackground<any>
+---@property: width
+---@@propertyType: number | "container" | Step
+---@property: height
+---@@propertyType: number | "container" | Step
+---@property: resolve
+---@@propertyType: Resolve
+---- Field
+----@property: toString
+----@@propertyType: (() => string) | (() => string)
+----@property: valueOf
+----@@propertyType: (() => string) | (() => Object)
+----@property: repeat
+----@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+----@type: string
+----@type: RepeatRef
+----@@property repeat
+--- Field
+---@property: toString
+---@@propertyType: (() => string) | (() => string)
+---@property: valueOf
+---@@propertyType: (() => string) | (() => Object)
+---@property: repeat
+---@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+---@type: string
+---@type: RepeatRef
+---@@property repeat
+-@type: TopLevelProperties<any>
+-@@property background
+-@@property padding
+-@@property autosize
+-@@property params
+-@type: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-@@property $schema
+-@@property config
+-@@property datasets
+-@@property usermeta
+-@type: DataMixins
+-@@property data
+############### TopLevel<LayerSpec<Field>> ###############
+- TopLevel<LayerSpec<Field>>
+-@property: layer
+-@@propertyType: (LayerSpec<Field> | UnitSpec<Field>)[]
+-@property: encoding
+-@@propertyType: SharedCompositeEncoding<Field>
+-@property: projection
+-@@propertyType: Projection<ExprRef>
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: view
+-@@propertyType: ViewBackground<any>
+-@property: width
+-@@propertyType: number | "container" | Step
+-@property: height
+-@@propertyType: number | "container" | Step
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-@type: LayerSpec<Field>
+-@@property layer
+-@@property encoding
+-@@property projection
+-@@property title
+-@@property name
+-@@property description
+-@@property data
+-@@property transform
+-@@property view
+-@@property width
+-@@property height
+-@@property resolve
+-- LayerSpec<Field>
+--@property: layer
+--@@propertyType: (LayerSpec<Field> | UnitSpec<Field>)[]
+--@property: encoding
+--@@propertyType: SharedCompositeEncoding<Field>
+--@property: projection
+--@@propertyType: Projection<ExprRef>
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: view
+--@@propertyType: ViewBackground<any>
+--@property: width
+--@@propertyType: number | "container" | Step
+--@property: height
+--@@propertyType: number | "container" | Step
+--@property: resolve
+--@@propertyType: Resolve
+--- Field
+---@property: toString
+---@@propertyType: (() => string) | (() => string)
+---@property: valueOf
+---@@propertyType: (() => string) | (() => Object)
+---@property: repeat
+---@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+---@type: string
+---@type: RepeatRef
+---@@property repeat
+-@type: TopLevelProperties<any>
+-@@property background
+-@@property padding
+-@@property autosize
+-@@property params
+-@type: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-@@property $schema
+-@@property config
+-@@property datasets
+-@@property usermeta
+-- LayerSpec<Field>
+--@property: layer
+--@@propertyType: (LayerSpec<Field> | UnitSpec<Field>)[]
+--@property: encoding
+--@@propertyType: SharedCompositeEncoding<Field>
+--@property: projection
+--@@propertyType: Projection<ExprRef>
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: view
+--@@propertyType: ViewBackground<any>
+--@property: width
+--@@propertyType: number | "container" | Step
+--@property: height
+--@@propertyType: number | "container" | Step
+--@property: resolve
+--@@propertyType: Resolve
+############### TopLevel<RepeatSpec> ###############
+- TopLevel<RepeatSpec>
+-@property: repeat
+-@@propertyType: string[] | RepeatMapping | LayerRepeatMapping
+-@property: spec
+-@@propertyType: UnitSpecWithFrame<Field> | LayerSpec<Field> | NonNormalizedSpec
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: align
+-@@propertyType: any
+-@property: center
+-@@propertyType: boolean | RowCol<boolean>
+-@property: spacing
+-@@propertyType: number | RowCol<number>
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: columns
+-@@propertyType: number
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-@type: NonLayerRepeatSpec & TopLevelProperties<any> & { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<...>; }
+-@subTypes: NonLayerRepeatSpec
+-@subTypes: TopLevelProperties<any>
+-@subTypes: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-@type: LayerRepeatSpec & TopLevelProperties<any> & { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-@subTypes: LayerRepeatSpec
+-@subTypes: TopLevelProperties<any>
+-@subTypes: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-- RepeatSpec
+--@property: repeat
+--@@propertyType: string[] | RepeatMapping | LayerRepeatMapping
+--@property: spec
+--@@propertyType: UnitSpecWithFrame<Field> | LayerSpec<Field> | NonNormalizedSpec
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: align
+--@@propertyType: any
+--@property: center
+--@@propertyType: boolean | RowCol<boolean>
+--@property: spacing
+--@@propertyType: number | RowCol<number>
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: columns
+--@@propertyType: number
+--@property: resolve
+--@@propertyType: Resolve
+--@type: NonLayerRepeatSpec
+--@@property repeat
+--@@property spec
+--@@property title
+--@@property name
+--@@property description
+--@@property data
+--@@property transform
+--@@property align
+--@@property center
+--@@property spacing
+--@@property bounds
+--@@property columns
+--@@property resolve
+--@type: LayerRepeatSpec
+--@@property repeat
+--@@property spec
+--@@property title
+--@@property name
+--@@property description
+--@@property data
+--@@property transform
+--@@property align
+--@@property center
+--@@property spacing
+--@@property bounds
+--@@property columns
+--@@property resolve
+############### TopLevel<GenericConcatSpec<NonNormalizedSpec>> ###############
+- TopLevel<GenericConcatSpec<NonNormalizedSpec>>
+-@property: concat
+-@@propertyType: NonNormalizedSpec[]
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: align
+-@@propertyType: any
+-@property: center
+-@@propertyType: boolean | RowCol<boolean>
+-@property: spacing
+-@@propertyType: number | RowCol<number>
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: columns
+-@@propertyType: number
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-@type: GenericConcatSpec<NonNormalizedSpec>
+-@@property concat
+-@@property title
+-@@property name
+-@@property description
+-@@property data
+-@@property transform
+-@@property align
+-@@property center
+-@@property spacing
+-@@property bounds
+-@@property columns
+-@@property resolve
+-- GenericConcatSpec<NonNormalizedSpec>
+--@property: concat
+--@@propertyType: NonNormalizedSpec[]
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: align
+--@@propertyType: any
+--@property: center
+--@@propertyType: boolean | RowCol<boolean>
+--@property: spacing
+--@@propertyType: number | RowCol<number>
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: columns
+--@@propertyType: number
+--@property: resolve
+--@@propertyType: Resolve
+--- NonNormalizedSpec
+---@property: title
+---@@propertyType: any
+---@property: name
+---@@propertyType: string
+---@property: description
+---@@propertyType: string
+---@property: data
+---@@propertyType: Data
+---@property: transform
+---@@propertyType: Transform[]
+---@property: resolve
+---@@propertyType: Resolve
+---@type: NonLayerRepeatSpec
+---@@property repeat
+---@@property spec
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---@type: LayerRepeatSpec
+---@@property repeat
+---@@property spec
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---@type: FacetedUnitSpec<Field>
+---@subTypes: GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, SelectionParameter<SelectionType>>
+---@subTypes: ResolveMixins
+---@subTypes: GenericCompositionLayout
+---@subTypes: FrameMixins<any>
+---@type: LayerSpec<Field>
+---@@property layer
+---@@property encoding
+---@@property projection
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property view
+---@@property width
+---@@property height
+---@@property resolve
+---- LayerSpec<Field>
+----@property: layer
+----@@propertyType: (LayerSpec<Field> | UnitSpec<Field>)[]
+----@property: encoding
+----@@propertyType: SharedCompositeEncoding<Field>
+----@property: projection
+----@@propertyType: Projection<ExprRef>
+----@property: title
+----@@propertyType: any
+----@property: name
+----@@propertyType: string
+----@property: description
+----@@propertyType: string
+----@property: data
+----@@propertyType: Data
+----@property: transform
+----@@propertyType: Transform[]
+----@property: view
+----@@propertyType: ViewBackground<any>
+----@property: width
+----@@propertyType: number | "container" | Step
+----@property: height
+----@@propertyType: number | "container" | Step
+----@property: resolve
+----@@propertyType: Resolve
+----- Field
+-----@property: toString
+-----@@propertyType: (() => string) | (() => string)
+-----@property: valueOf
+-----@@propertyType: (() => string) | (() => Object)
+-----@property: repeat
+-----@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+-----@type: string
+-----@type: RepeatRef
+-----@@property repeat
+---@type: GenericFacetSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, Field>
+---@@property facet
+---@@property spec
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---@type: GenericConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+---@@property concat
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---- GenericConcatSpec<GenericSpec<U, L, R, F>>
+----@property: concat
+----@@propertyType: GenericSpec<U, L, R, F>[]
+----@property: title
+----@@propertyType: any
+----@property: name
+----@@propertyType: string
+----@property: description
+----@@propertyType: string
+----@property: data
+----@@propertyType: Data
+----@property: transform
+----@@propertyType: Transform[]
+----@property: align
+----@@propertyType: any
+----@property: center
+----@@propertyType: boolean | RowCol<boolean>
+----@property: spacing
+----@@propertyType: number | RowCol<number>
+----@property: bounds
+----@@propertyType: "full" | "flush"
+----@property: columns
+----@@propertyType: number
+----@property: resolve
+----@@propertyType: Resolve
+----- GenericSpec<U, L, R, F>
+-----@property: title
+-----@@propertyType: any
+-----@property: name
+-----@@propertyType: string
+-----@property: description
+-----@@propertyType: string
+-----@property: data
+-----@@propertyType: Data
+-----@property: transform
+-----@@propertyType: Transform[]
+-----@type: U
+-----@typeParameter U
+-----@type: L
+-----@typeParameter L
+-----@type: R
+-----@typeParameter R
+-----@type: GenericFacetSpec<U, L, F>
+-----@@property facet
+-----@@property spec
+-----@@property title
+-----@@property name
+-----@@property description
+-----@@property data
+-----@@property transform
+-----@@property align
+-----@@property center
+-----@@property spacing
+-----@@property bounds
+-----@@property columns
+-----@@property resolve
+-----@type: GenericConcatSpec<GenericSpec<U, L, R, F>>
+-----@@property concat
+-----@@property title
+-----@@property name
+-----@@property description
+-----@@property data
+-----@@property transform
+-----@@property align
+-----@@property center
+-----@@property spacing
+-----@@property bounds
+-----@@property columns
+-----@@property resolve
+-----@type: GenericVConcatSpec<GenericSpec<U, L, R, F>>
+-----@@property vconcat
+-----@@property title
+-----@@property name
+-----@@property description
+-----@@property data
+-----@@property transform
+-----@@property center
+-----@@property spacing
+-----@@property bounds
+-----@@property resolve
+------ GenericVConcatSpec<GenericSpec<U, L, R, F>>
+------@property: vconcat
+------@@propertyType: GenericSpec<U, L, R, F>[]
+------@property: title
+------@@propertyType: any
+------@property: name
+------@@propertyType: string
+------@property: description
+------@@propertyType: string
+------@property: data
+------@@propertyType: Data
+------@property: transform
+------@@propertyType: Transform[]
+------@property: center
+------@@propertyType: boolean
+------@property: spacing
+------@@propertyType: number
+------@property: bounds
+------@@propertyType: "full" | "flush"
+------@property: resolve
+------@@propertyType: Resolve
+------- GenericSpec<U, L, R, F>
+-------@property: title
+-------@@propertyType: any
+-------@property: name
+-------@@propertyType: string
+-------@property: description
+-------@@propertyType: string
+-------@property: data
+-------@@propertyType: Data
+-------@property: transform
+-------@@propertyType: Transform[]
+-------@type: U
+-------@typeParameter U
+-------@type: L
+-------@typeParameter L
+-------@type: R
+-------@typeParameter R
+-------@type: GenericFacetSpec<U, L, F>
+-------@@property facet
+-------@@property spec
+-------@@property title
+-------@@property name
+-------@@property description
+-------@@property data
+-------@@property transform
+-------@@property align
+-------@@property center
+-------@@property spacing
+-------@@property bounds
+-------@@property columns
+-------@@property resolve
+-------@type: GenericConcatSpec<GenericSpec<U, L, R, F>>
+-------@@property concat
+-------@@property title
+-------@@property name
+-------@@property description
+-------@@property data
+-------@@property transform
+-------@@property align
+-------@@property center
+-------@@property spacing
+-------@@property bounds
+-------@@property columns
+-------@@property resolve
+-------@type: GenericVConcatSpec<GenericSpec<U, L, R, F>>
+-------@@property vconcat
+-------@@property title
+-------@@property name
+-------@@property description
+-------@@property data
+-------@@property transform
+-------@@property center
+-------@@property spacing
+-------@@property bounds
+-------@@property resolve
+-------@type: GenericHConcatSpec<GenericSpec<U, L, R, F>>
+-------@@property hconcat
+-------@@property title
+-------@@property name
+-------@@property description
+-------@@property data
+-------@@property transform
+-------@@property center
+-------@@property spacing
+-------@@property bounds
+-------@@property resolve
+-------- GenericHConcatSpec<GenericSpec<U, L, R, F>>
+--------@property: hconcat
+--------@@propertyType: GenericSpec<U, L, R, F>[]
+--------@property: title
+--------@@propertyType: any
+--------@property: name
+--------@@propertyType: string
+--------@property: description
+--------@@propertyType: string
+--------@property: data
+--------@@propertyType: Data
+--------@property: transform
+--------@@propertyType: Transform[]
+--------@property: center
+--------@@propertyType: boolean
+--------@property: spacing
+--------@@propertyType: number
+--------@property: bounds
+--------@@propertyType: "full" | "flush"
+--------@property: resolve
+--------@@propertyType: Resolve
+--------- GenericSpec<U, L, R, F>
+---------@property: title
+---------@@propertyType: any
+---------@property: name
+---------@@propertyType: string
+---------@property: description
+---------@@propertyType: string
+---------@property: data
+---------@@propertyType: Data
+---------@property: transform
+---------@@propertyType: Transform[]
+---------@type: U
+---------@typeParameter U
+---------@type: L
+---------@typeParameter L
+---------@type: R
+---------@typeParameter R
+---------@type: GenericFacetSpec<U, L, F>
+---------@@property facet
+---------@@property spec
+---------@@property title
+---------@@property name
+---------@@property description
+---------@@property data
+---------@@property transform
+---------@@property align
+---------@@property center
+---------@@property spacing
+---------@@property bounds
+---------@@property columns
+---------@@property resolve
+---------@type: GenericConcatSpec<GenericSpec<U, L, R, F>>
+---------@@property concat
+---------@@property title
+---------@@property name
+---------@@property description
+---------@@property data
+---------@@property transform
+---------@@property align
+---------@@property center
+---------@@property spacing
+---------@@property bounds
+---------@@property columns
+---------@@property resolve
+---------@type: GenericVConcatSpec<GenericSpec<U, L, R, F>>
+---------@@property vconcat
+---------@@property title
+---------@@property name
+---------@@property description
+---------@@property data
+---------@@property transform
+---------@@property center
+---------@@property spacing
+---------@@property bounds
+---------@@property resolve
+---------@type: GenericHConcatSpec<GenericSpec<U, L, R, F>>
+---------@@property hconcat
+---------@@property title
+---------@@property name
+---------@@property description
+---------@@property data
+---------@@property transform
+---------@@property center
+---------@@property spacing
+---------@@property bounds
+---------@@property resolve
+---------- U
+----------@property: mark
+----------@@propertyType: any
+----------@property: encoding
+----------@@propertyType: Encoding<F>
+----------@property: projection
+----------@@propertyType: Projection<ExprRef>
+----------@property: params
+----------@@propertyType: SelectionParameter<SelectionType>[]
+----------@property: title
+----------@@propertyType: any
+----------@property: name
+----------@@propertyType: string
+----------@property: description
+----------@@propertyType: string
+----------@property: data
+----------@@propertyType: Data
+----------@property: transform
+----------@@propertyType: Transform[]
+---------- L
+----------@property: layer
+----------@@propertyType: (U | GenericLayerSpec<U>)[]
+----------@property: title
+----------@@propertyType: any
+----------@property: name
+----------@@propertyType: string
+----------@property: description
+----------@@propertyType: string
+----------@property: data
+----------@@propertyType: Data
+----------@property: transform
+----------@@propertyType: Transform[]
+----------@property: view
+----------@@propertyType: ViewBackground<any>
+----------@property: width
+----------@@propertyType: number | "container" | Step
+----------@property: height
+----------@@propertyType: number | "container" | Step
+----------@property: resolve
+----------@@propertyType: Resolve
+---------- R
+----------@property: repeat
+----------@@propertyType: string[] | RepeatMapping | LayerRepeatMapping
+----------@property: spec
+----------@@propertyType: UnitSpecWithFrame<Field> | LayerSpec<Field> | NonNormalizedSpec
+----------@property: title
+----------@@propertyType: any
+----------@property: name
+----------@@propertyType: string
+----------@property: description
+----------@@propertyType: string
+----------@property: data
+----------@@propertyType: Data
+----------@property: transform
+----------@@propertyType: Transform[]
+----------@property: align
+----------@@propertyType: any
+----------@property: center
+----------@@propertyType: boolean | RowCol<boolean>
+----------@property: spacing
+----------@@propertyType: number | RowCol<number>
+----------@property: bounds
+----------@@propertyType: "full" | "flush"
+----------@property: columns
+----------@@propertyType: number
+----------@property: resolve
+----------@@propertyType: Resolve
+---------- F
+----------@property: toString
+----------@@propertyType: (() => string) | (() => string)
+----------@property: valueOf
+----------@@propertyType: (() => string) | (() => Object)
+----------@property: repeat
+----------@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+-------- U
+--------@property: mark
+--------@@propertyType: any
+--------@property: encoding
+--------@@propertyType: Encoding<F>
+--------@property: projection
+--------@@propertyType: Projection<ExprRef>
+--------@property: params
+--------@@propertyType: SelectionParameter<SelectionType>[]
+--------@property: title
+--------@@propertyType: any
+--------@property: name
+--------@@propertyType: string
+--------@property: description
+--------@@propertyType: string
+--------@property: data
+--------@@propertyType: Data
+--------@property: transform
+--------@@propertyType: Transform[]
+-------- L
+--------@property: layer
+--------@@propertyType: (U | GenericLayerSpec<U>)[]
+--------@property: title
+--------@@propertyType: any
+--------@property: name
+--------@@propertyType: string
+--------@property: description
+--------@@propertyType: string
+--------@property: data
+--------@@propertyType: Data
+--------@property: transform
+--------@@propertyType: Transform[]
+--------@property: view
+--------@@propertyType: ViewBackground<any>
+--------@property: width
+--------@@propertyType: number | "container" | Step
+--------@property: height
+--------@@propertyType: number | "container" | Step
+--------@property: resolve
+--------@@propertyType: Resolve
+-------- R
+--------@property: repeat
+--------@@propertyType: string[] | RepeatMapping | LayerRepeatMapping
+--------@property: spec
+--------@@propertyType: UnitSpecWithFrame<Field> | LayerSpec<Field> | NonNormalizedSpec
+--------@property: title
+--------@@propertyType: any
+--------@property: name
+--------@@propertyType: string
+--------@property: description
+--------@@propertyType: string
+--------@property: data
+--------@@propertyType: Data
+--------@property: transform
+--------@@propertyType: Transform[]
+--------@property: align
+--------@@propertyType: any
+--------@property: center
+--------@@propertyType: boolean | RowCol<boolean>
+--------@property: spacing
+--------@@propertyType: number | RowCol<number>
+--------@property: bounds
+--------@@propertyType: "full" | "flush"
+--------@property: columns
+--------@@propertyType: number
+--------@property: resolve
+--------@@propertyType: Resolve
+-------- F
+--------@property: toString
+--------@@propertyType: (() => string) | (() => string)
+--------@property: valueOf
+--------@@propertyType: (() => string) | (() => Object)
+--------@property: repeat
+--------@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+-----@type: GenericHConcatSpec<GenericSpec<U, L, R, F>>
+-----@@property hconcat
+-----@@property title
+-----@@property name
+-----@@property description
+-----@@property data
+-----@@property transform
+-----@@property center
+-----@@property spacing
+-----@@property bounds
+-----@@property resolve
+------ U
+------@property: mark
+------@@propertyType: any
+------@property: encoding
+------@@propertyType: Encoding<F>
+------@property: projection
+------@@propertyType: Projection<ExprRef>
+------@property: params
+------@@propertyType: SelectionParameter<SelectionType>[]
+------@property: title
+------@@propertyType: any
+------@property: name
+------@@propertyType: string
+------@property: description
+------@@propertyType: string
+------@property: data
+------@@propertyType: Data
+------@property: transform
+------@@propertyType: Transform[]
+------ L
+------@property: layer
+------@@propertyType: (U | GenericLayerSpec<U>)[]
+------@property: title
+------@@propertyType: any
+------@property: name
+------@@propertyType: string
+------@property: description
+------@@propertyType: string
+------@property: data
+------@@propertyType: Data
+------@property: transform
+------@@propertyType: Transform[]
+------@property: view
+------@@propertyType: ViewBackground<any>
+------@property: width
+------@@propertyType: number | "container" | Step
+------@property: height
+------@@propertyType: number | "container" | Step
+------@property: resolve
+------@@propertyType: Resolve
+------ R
+------@property: repeat
+------@@propertyType: string[] | RepeatMapping | LayerRepeatMapping
+------@property: spec
+------@@propertyType: UnitSpecWithFrame<Field> | LayerSpec<Field> | NonNormalizedSpec
+------@property: title
+------@@propertyType: any
+------@property: name
+------@@propertyType: string
+------@property: description
+------@@propertyType: string
+------@property: data
+------@@propertyType: Data
+------@property: transform
+------@@propertyType: Transform[]
+------@property: align
+------@@propertyType: any
+------@property: center
+------@@propertyType: boolean | RowCol<boolean>
+------@property: spacing
+------@@propertyType: number | RowCol<number>
+------@property: bounds
+------@@propertyType: "full" | "flush"
+------@property: columns
+------@@propertyType: number
+------@property: resolve
+------@@propertyType: Resolve
+------ F
+------@property: toString
+------@@propertyType: (() => string) | (() => string)
+------@property: valueOf
+------@@propertyType: (() => string) | (() => Object)
+------@property: repeat
+------@@propertyType: ((count: number) => string) | "row" | "column" | "repeat" | "layer"
+---@type: GenericVConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+---@@property vconcat
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property resolve
+---- GenericVConcatSpec<GenericSpec<U, L, R, F>>
+----@property: vconcat
+----@@propertyType: GenericSpec<U, L, R, F>[]
+----@property: title
+----@@propertyType: any
+----@property: name
+----@@propertyType: string
+----@property: description
+----@@propertyType: string
+----@property: data
+----@@propertyType: Data
+----@property: transform
+----@@propertyType: Transform[]
+----@property: center
+----@@propertyType: boolean
+----@property: spacing
+----@@propertyType: number
+----@property: bounds
+----@@propertyType: "full" | "flush"
+----@property: resolve
+----@@propertyType: Resolve
+---@type: GenericHConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+---@@property hconcat
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property resolve
+---- GenericHConcatSpec<GenericSpec<U, L, R, F>>
+----@property: hconcat
+----@@propertyType: GenericSpec<U, L, R, F>[]
+----@property: title
+----@@propertyType: any
+----@property: name
+----@@propertyType: string
+----@property: description
+----@@propertyType: string
+----@property: data
+----@@propertyType: Data
+----@property: transform
+----@@propertyType: Transform[]
+----@property: center
+----@@propertyType: boolean
+----@property: spacing
+----@@propertyType: number
+----@property: bounds
+----@@propertyType: "full" | "flush"
+----@property: resolve
+----@@propertyType: Resolve
+-@type: TopLevelProperties<any>
+-@@property background
+-@@property padding
+-@@property autosize
+-@@property params
+-@type: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-@@property $schema
+-@@property config
+-@@property datasets
+-@@property usermeta
+-- GenericConcatSpec<NonNormalizedSpec>
+--@property: concat
+--@@propertyType: NonNormalizedSpec[]
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: align
+--@@propertyType: any
+--@property: center
+--@@propertyType: boolean | RowCol<boolean>
+--@property: spacing
+--@@propertyType: number | RowCol<number>
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: columns
+--@@propertyType: number
+--@property: resolve
+--@@propertyType: Resolve
+############### TopLevel<GenericVConcatSpec<NonNormalizedSpec>> ###############
+- TopLevel<GenericVConcatSpec<NonNormalizedSpec>>
+-@property: vconcat
+-@@propertyType: NonNormalizedSpec[]
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: center
+-@@propertyType: boolean
+-@property: spacing
+-@@propertyType: number
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-@type: GenericVConcatSpec<NonNormalizedSpec>
+-@@property vconcat
+-@@property title
+-@@property name
+-@@property description
+-@@property data
+-@@property transform
+-@@property center
+-@@property spacing
+-@@property bounds
+-@@property resolve
+-- GenericVConcatSpec<NonNormalizedSpec>
+--@property: vconcat
+--@@propertyType: NonNormalizedSpec[]
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: center
+--@@propertyType: boolean
+--@property: spacing
+--@@propertyType: number
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: resolve
+--@@propertyType: Resolve
+--- NonNormalizedSpec
+---@property: title
+---@@propertyType: any
+---@property: name
+---@@propertyType: string
+---@property: description
+---@@propertyType: string
+---@property: data
+---@@propertyType: Data
+---@property: transform
+---@@propertyType: Transform[]
+---@property: resolve
+---@@propertyType: Resolve
+---@type: NonLayerRepeatSpec
+---@@property repeat
+---@@property spec
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---@type: LayerRepeatSpec
+---@@property repeat
+---@@property spec
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---@type: FacetedUnitSpec<Field>
+---@subTypes: GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, SelectionParameter<SelectionType>>
+---@subTypes: ResolveMixins
+---@subTypes: GenericCompositionLayout
+---@subTypes: FrameMixins<any>
+---@type: LayerSpec<Field>
+---@@property layer
+---@@property encoding
+---@@property projection
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property view
+---@@property width
+---@@property height
+---@@property resolve
+---@type: GenericFacetSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, Field>
+---@@property facet
+---@@property spec
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---@type: GenericConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+---@@property concat
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---@type: GenericVConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+---@@property vconcat
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property resolve
+---@type: GenericHConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+---@@property hconcat
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property resolve
+-@type: TopLevelProperties<any>
+-@@property background
+-@@property padding
+-@@property autosize
+-@@property params
+-@type: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-@@property $schema
+-@@property config
+-@@property datasets
+-@@property usermeta
+-- GenericVConcatSpec<NonNormalizedSpec>
+--@property: vconcat
+--@@propertyType: NonNormalizedSpec[]
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: center
+--@@propertyType: boolean
+--@property: spacing
+--@@propertyType: number
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: resolve
+--@@propertyType: Resolve
+############### TopLevel<GenericHConcatSpec<NonNormalizedSpec>> ###############
+- TopLevel<GenericHConcatSpec<NonNormalizedSpec>>
+-@property: hconcat
+-@@propertyType: NonNormalizedSpec[]
+-@property: title
+-@@propertyType: any
+-@property: name
+-@@propertyType: string
+-@property: description
+-@@propertyType: string
+-@property: data
+-@@propertyType: Data
+-@property: transform
+-@@propertyType: Transform[]
+-@property: center
+-@@propertyType: boolean
+-@property: spacing
+-@@propertyType: number
+-@property: bounds
+-@@propertyType: "full" | "flush"
+-@property: resolve
+-@@propertyType: Resolve
+-@property: background
+-@@propertyType: any
+-@property: padding
+-@@propertyType: any
+-@property: autosize
+-@@propertyType: AutosizeType | AutoSizeParams
+-@property: params
+-@@propertyType: TopLevelParameter[]
+-@property: $schema
+-@@propertyType: string
+-@property: config
+-@@propertyType: Config<any>
+-@property: datasets
+-@@propertyType: Datasets
+-@property: usermeta
+-@@propertyType: Dict<unknown>
+-@type: GenericHConcatSpec<NonNormalizedSpec>
+-@@property hconcat
+-@@property title
+-@@property name
+-@@property description
+-@@property data
+-@@property transform
+-@@property center
+-@@property spacing
+-@@property bounds
+-@@property resolve
+-- GenericHConcatSpec<NonNormalizedSpec>
+--@property: hconcat
+--@@propertyType: NonNormalizedSpec[]
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: center
+--@@propertyType: boolean
+--@property: spacing
+--@@propertyType: number
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: resolve
+--@@propertyType: Resolve
+--- NonNormalizedSpec
+---@property: title
+---@@propertyType: any
+---@property: name
+---@@propertyType: string
+---@property: description
+---@@propertyType: string
+---@property: data
+---@@propertyType: Data
+---@property: transform
+---@@propertyType: Transform[]
+---@property: resolve
+---@@propertyType: Resolve
+---@type: NonLayerRepeatSpec
+---@@property repeat
+---@@property spec
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---@type: LayerRepeatSpec
+---@@property repeat
+---@@property spec
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---@type: FacetedUnitSpec<Field>
+---@subTypes: GenericUnitSpec<FacetedCompositeEncoding<Field>, AnyMark, SelectionParameter<SelectionType>>
+---@subTypes: ResolveMixins
+---@subTypes: GenericCompositionLayout
+---@subTypes: FrameMixins<any>
+---@type: LayerSpec<Field>
+---@@property layer
+---@@property encoding
+---@@property projection
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property view
+---@@property width
+---@@property height
+---@@property resolve
+---@type: GenericFacetSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, Field>
+---@@property facet
+---@@property spec
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---@type: GenericConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+---@@property concat
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property align
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property columns
+---@@property resolve
+---@type: GenericVConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+---@@property vconcat
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property resolve
+---@type: GenericHConcatSpec<GenericSpec<FacetedUnitSpec<Field>, LayerSpec<Field>, RepeatSpec, Field>>
+---@@property hconcat
+---@@property title
+---@@property name
+---@@property description
+---@@property data
+---@@property transform
+---@@property center
+---@@property spacing
+---@@property bounds
+---@@property resolve
+-@type: TopLevelProperties<any>
+-@@property background
+-@@property padding
+-@@property autosize
+-@@property params
+-@type: { $schema?: string; config?: Config<any>; datasets?: Datasets; usermeta?: Dict<unknown>; }
+-@@property $schema
+-@@property config
+-@@property datasets
+-@@property usermeta
+-- GenericHConcatSpec<NonNormalizedSpec>
+--@property: hconcat
+--@@propertyType: NonNormalizedSpec[]
+--@property: title
+--@@propertyType: any
+--@property: name
+--@@propertyType: string
+--@property: description
+--@@propertyType: string
+--@property: data
+--@@propertyType: Data
+--@property: transform
+--@@propertyType: Transform[]
+--@property: center
+--@@propertyType: boolean
+--@property: spacing
+--@@propertyType: number
+--@property: bounds
+--@@propertyType: "full" | "flush"
+--@property: resolve
+--@@propertyType: Resolve
