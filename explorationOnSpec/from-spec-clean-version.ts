@@ -1,6 +1,6 @@
 import * as ts from "typescript";
+import fs from 'fs';
 import { emitter } from './generate-util';
-
 
 const sourceFiles = ["vega-lite-src/spec/index.ts"];
 let program = ts.createProgram(sourceFiles, {
@@ -49,47 +49,25 @@ function findType(node: ts.TypeNode, depth: number) {
                 visitedTypes.add(type);
             } 
 
-            switch (checker.typeToString(type)) {
-                case "TopLevelUnitSpec<Field>":
-                    emitTopLevelType(type, "mark");
-                    break;
-                case "TopLevelFacetSpec":
-                    emitTopLevelType(type, "facet");
-                    break;
-                case "TopLevel<LayerSpec<Field>>":
-                    emitTopLevelType(type, "layer");
-                    break;
-                case "TopLevel<GenericConcatSpec<NonNormalizedSpec>>":
-                    emitTopLevelType(type, "concat");
-                    break;
-                case "TopLevel<RepeatSpec>":
-                    emitTopLevelType(type, "repeat");
-                    break;
-                case "TopLevel<GenericVConcatSpec<NonNormalizedSpec>>":
-                    emitTopLevelType(type, "vconcat");
-                    break;
-                case "TopLevel<GenericHConcatSpec<NonNormalizedSpec>>":
-                    emitTopLevelType(type, "hconcat");
-                    break;
-            }
+            generateClass(type, node);
 
-            console.log(prefix, checker.typeToString(type));
-            const properties = type.getProperties();
-            for (const property of properties) {
-                const propertyType = checker.getTypeOfSymbolAtLocation(property, node);
-                // console.log(prefix+"@@propertyType:", checker.typeToString(propertyType));
-                console.log(prefix+"@property:", property.name, "type:", checker.typeToString(propertyType));
-                // findFromType(propertyType, depth+1);
-            }
+            // console.log(prefix, checker.typeToString(type));
+            // const properties = type.getProperties();
+            // for (const property of properties) {
+            //     const propertyType = checker.getTypeOfSymbolAtLocation(property, node);
+            //     // console.log(prefix+"@@propertyType:", checker.typeToString(propertyType));
+            //     console.log(prefix+"@property:", property.name, "type:", checker.typeToString(propertyType));
+            //     // findFromType(propertyType, depth+1);
+            // }
 
-            if(node.typeArguments) {
-                for(const typeArgument of node.typeArguments) {
-                    if (!visitedTypes.has(typeArgument)) {
-                        visitedTypes.add(typeArgument);
-                        findType(typeArgument, depth + 1);
-                    }
-                }
-            }
+            // if(node.typeArguments) {
+            //     for(const typeArgument of node.typeArguments) {
+            //         if (!visitedTypes.has(typeArgument)) {
+            //             visitedTypes.add(typeArgument);
+            //             findType(typeArgument, depth + 1);
+            //         }
+            //     }
+            // }
             
             // findFromType(type, depth);
         }
@@ -143,6 +121,40 @@ function findFromType(type: ts.Type, depth: number) {
     }
 }
 
+function generateClass (type:ts.Type, node: ts.TypeReferenceNode) {
+    switch (checker.typeToString(type)) {
+        case "TopLevelUnitSpec<Field>":
+            const properties = type.getProperties();
+            for (const property of properties) {
+                const propertyType = checker.getTypeOfSymbolAtLocation(property, node);
+                emitTopLevelType(propertyType, property.name);
+                // console.log(prefix+"@@propertyType:", checker.typeToString(propertyType));
+                // console.log(prefix+"@property:", property.name, "type:", checker.typeToString(propertyType));
+                // findFromType(propertyType, depth+1);
+            }
+            // emitTopLevelType(type, "mark");
+            break;
+        case "TopLevelFacetSpec":
+            emitTopLevelType(type, "facet");
+            break;
+        case "TopLevel<LayerSpec<Field>>":
+            emitTopLevelType(type, "layer");
+            break;
+        case "TopLevel<GenericConcatSpec<NonNormalizedSpec>>":
+            emitTopLevelType(type, "concat");
+            break;
+        case "TopLevel<RepeatSpec>":
+            emitTopLevelType(type, "repeat");
+            break;
+        case "TopLevel<GenericVConcatSpec<NonNormalizedSpec>>":
+            emitTopLevelType(type, "vconcat");
+            break;
+        case "TopLevel<GenericHConcatSpec<NonNormalizedSpec>>":
+            emitTopLevelType(type, "hconcat");
+            break;
+    }
+}
+
 function emitTopLevelType(type: ts.Type, methodName: string) {
     const className = capitalize(methodName);
 
@@ -152,6 +164,7 @@ function emitTopLevelType(type: ts.Type, methodName: string) {
     emit(`class ${className} extends BaseObject {`);
     emit().indent();
 
+    const argTypes = findArgTypes(type);
     // -- constructor --
     emit(`constructor(...args) {`).indent();
     emit(`super();`);
@@ -192,11 +205,27 @@ function emitTopLevelType(type: ts.Type, methodName: string) {
     emit(`  return new ${className}(...args);`);
     emit(`}`);
 
-    console.log(emit.code());
+    // console.log(emit.code());
+    const fileName = `./generated/${methodName}.ts`;
+    writeFile(fileName, emit.code());
 }
 
-function capitalize(str: string) {
+function findArgTypes(type: ts.Type) {
+
+}
+
+function capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function writeFile(fileName: string, content: string): void {
+    fs.writeFile(fileName, content, (err) => {
+        if (err) {
+          console.error('Error writing to file:', err);
+        } else {
+          console.log(`Successfully wrote to ${fileName}`);
+        }
+    });
 }
 
 function emitMark(type: ts.Type) {
