@@ -8,7 +8,7 @@ class Hconcat extends BaseObject {
     set(this, hconcat, merge(0, get(this, "hconcat"), args));
   }
 
-  autosize(value) {
+  autosize(value: AutosizeType | AutoSizeParams) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "autosize", value);
@@ -18,7 +18,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  background(value) {
+  background(value: any) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "background", value);
@@ -28,7 +28,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  bounds(value) {
+  bounds(value: "full" | "flush") {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "bounds", value);
@@ -38,7 +38,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  center(value) {
+  center(value: boolean) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "center", value);
@@ -48,7 +48,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  config(value) {
+  config(value: Config<any>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "config", value);
@@ -58,7 +58,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  data(value) {
+  data(value: Data) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "data", value);
@@ -68,7 +68,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  datasets(value) {
+  datasets(value: Datasets) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "datasets", value);
@@ -78,7 +78,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  description(value) {
+  description(value: string) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "description", value);
@@ -88,7 +88,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  hconcat(value) {
+  hconcat(value: NonNormalizedSpec[]) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "hconcat", value);
@@ -98,7 +98,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  name(value) {
+  name(value: string) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "name", value);
@@ -108,7 +108,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  padding(value) {
+  padding(value: any) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "padding", value);
@@ -118,7 +118,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  params(value) {
+  params(value: TopLevelParameter[]) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "params", value);
@@ -128,7 +128,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  resolve(value) {
+  resolve(value: Resolve) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "resolve", value);
@@ -138,7 +138,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  spacing(value) {
+  spacing(value: number) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "spacing", value);
@@ -148,7 +148,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  title(value) {
+  title(value: any) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "title", value);
@@ -158,7 +158,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  transform(value) {
+  transform(value: Transform[]) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "transform", value);
@@ -168,7 +168,7 @@ class Hconcat extends BaseObject {
     }
   }
 
-  usermeta(value) {
+  usermeta(value: Dict<unknown>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "usermeta", value);

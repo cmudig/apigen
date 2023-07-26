@@ -127,31 +127,43 @@ function findFromType(type: ts.Type, depth: number) {
 function generateClass (type:ts.Type, node: ts.TypeReferenceNode) {
     switch (checker.typeToString(type)) {
         case "TopLevelUnitSpec<Field>":
-            emitTopLevelType(type, "mark");
-            emitTopLevelType(type, "data");
+            emitTopLevelType(type, node, "mark");
+            emitTopLevelType(type, node, "data");
             break;
         case "TopLevelFacetSpec":
-            emitTopLevelType(type, "_facet");
+            emitTopLevelType(type, node, "_facet");
             break;
         case "TopLevel<LayerSpec<Field>>":
-            emitTopLevelType(type, "layer");
+            emitTopLevelType(type, node, "layer");
             break;
         case "TopLevel<GenericConcatSpec<NonNormalizedSpec>>":
-            emitTopLevelType(type, "concat");
+            emitTopLevelType(type, node, "concat");
             break;
         case "TopLevel<RepeatSpec>":
-            emitTopLevelType(type, "_repeat");
+            emitTopLevelType(type, node, "_repeat");
             break;
         case "TopLevel<GenericVConcatSpec<NonNormalizedSpec>>":
-            emitTopLevelType(type, "vconcat");
+            emitTopLevelType(type, node, "vconcat");
             break;
         case "TopLevel<GenericHConcatSpec<NonNormalizedSpec>>":
-            emitTopLevelType(type, "hconcat");
+            emitTopLevelType(type, node, "hconcat");
             break;
     }
 }
 
-function emitTopLevelType(type: ts.Type, methodName: string): void {
+
+function getBottomType(type: ts.Type): ts.Type {
+    const nonNullableType = checker.getNonNullableType(type);
+    if (nonNullableType.flags & ts.TypeFlags.Object & ts.ObjectFlags.Reference) {
+        const typeReference = nonNullableType as ts.TypeReference;
+        if (typeReference.target) {
+            return getBottomType(typeReference.target);
+        }
+    }
+    return nonNullableType;
+}
+
+function emitTopLevelType(type: ts.Type, node: ts.TypeReferenceNode, methodName: string): void {
     if (methodName.startsWith('$')) return;
     const className = capitalize(methodName);
 
@@ -180,9 +192,13 @@ function emitTopLevelType(type: ts.Type, methodName: string): void {
     for (const property of properties) {
         const prop = property.name;
         if (prop.startsWith("$")) continue;
-        emit.import(['copy', 'get', 'set']);
 
-        emit(`${prop}(${''}value) {`).indent();
+        // get type of properties
+        // const propertyType = checker.getTypeOfSymbolAtLocation(property, node);
+        const propertyType = getBottomType(checker.getTypeOfSymbolAtLocation(property, node));
+
+        emit.import(['copy', 'get', 'set']);
+        emit(`${prop}(${''}value: ${checker.typeToString(propertyType)}) {`).indent();
         emit(  `if (arguments.length) {`).indent();
         emit(    `const obj = copy(this);`);
         emit(    `set(obj, "${prop}", value);`);

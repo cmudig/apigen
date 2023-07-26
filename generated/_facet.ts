@@ -8,7 +8,7 @@ class _facet extends BaseObject {
     set(this, _facet, merge(0, get(this, "_facet"), args));
   }
 
-  align(value) {
+  align(value: any) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "align", value);
@@ -18,7 +18,7 @@ class _facet extends BaseObject {
     }
   }
 
-  autosize(value) {
+  autosize(value: AutosizeType | AutoSizeParams) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "autosize", value);
@@ -28,7 +28,7 @@ class _facet extends BaseObject {
     }
   }
 
-  background(value) {
+  background(value: any) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "background", value);
@@ -38,7 +38,7 @@ class _facet extends BaseObject {
     }
   }
 
-  bounds(value) {
+  bounds(value: "full" | "flush") {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "bounds", value);
@@ -48,7 +48,7 @@ class _facet extends BaseObject {
     }
   }
 
-  center(value) {
+  center(value: boolean | RowCol<boolean>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "center", value);
@@ -58,7 +58,7 @@ class _facet extends BaseObject {
     }
   }
 
-  columns(value) {
+  columns(value: number) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "columns", value);
@@ -68,7 +68,7 @@ class _facet extends BaseObject {
     }
   }
 
-  config(value) {
+  config(value: Config<any>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "config", value);
@@ -78,7 +78,7 @@ class _facet extends BaseObject {
     }
   }
 
-  data(value) {
+  data(value: Data) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "data", value);
@@ -88,7 +88,7 @@ class _facet extends BaseObject {
     }
   }
 
-  datasets(value) {
+  datasets(value: Datasets) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "datasets", value);
@@ -98,7 +98,7 @@ class _facet extends BaseObject {
     }
   }
 
-  description(value) {
+  description(value: string) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "description", value);
@@ -108,7 +108,7 @@ class _facet extends BaseObject {
     }
   }
 
-  facet(value) {
+  facet(value: FacetFieldDef<Field, any> | FacetMapping<Field, FacetFieldDef<Field, any>>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "facet", value);
@@ -118,7 +118,7 @@ class _facet extends BaseObject {
     }
   }
 
-  name(value) {
+  name(value: string) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "name", value);
@@ -128,7 +128,7 @@ class _facet extends BaseObject {
     }
   }
 
-  padding(value) {
+  padding(value: any) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "padding", value);
@@ -138,7 +138,7 @@ class _facet extends BaseObject {
     }
   }
 
-  params(value) {
+  params(value: TopLevelParameter[]) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "params", value);
@@ -148,7 +148,7 @@ class _facet extends BaseObject {
     }
   }
 
-  resolve(value) {
+  resolve(value: Resolve) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "resolve", value);
@@ -158,7 +158,7 @@ class _facet extends BaseObject {
     }
   }
 
-  spacing(value) {
+  spacing(value: number | RowCol<number>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "spacing", value);
@@ -168,7 +168,7 @@ class _facet extends BaseObject {
     }
   }
 
-  spec(value) {
+  spec(value: UnitSpecWithFrame<Field> | LayerSpec<Field>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "spec", value);
@@ -178,7 +178,7 @@ class _facet extends BaseObject {
     }
   }
 
-  title(value) {
+  title(value: any) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "title", value);
@@ -188,7 +188,7 @@ class _facet extends BaseObject {
     }
   }
 
-  transform(value) {
+  transform(value: Transform[]) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "transform", value);
@@ -198,7 +198,7 @@ class _facet extends BaseObject {
     }
   }
 
-  usermeta(value) {
+  usermeta(value: Dict<unknown>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "usermeta", value);

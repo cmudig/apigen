@@ -8,7 +8,7 @@ class Layer extends BaseObject {
     set(this, layer, merge(0, get(this, "layer"), args));
   }
 
-  autosize(value) {
+  autosize(value: AutosizeType | AutoSizeParams) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "autosize", value);
@@ -18,7 +18,7 @@ class Layer extends BaseObject {
     }
   }
 
-  background(value) {
+  background(value: any) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "background", value);
@@ -28,7 +28,7 @@ class Layer extends BaseObject {
     }
   }
 
-  config(value) {
+  config(value: Config<any>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "config", value);
@@ -38,7 +38,7 @@ class Layer extends BaseObject {
     }
   }
 
-  data(value) {
+  data(value: Data) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "data", value);
@@ -48,7 +48,7 @@ class Layer extends BaseObject {
     }
   }
 
-  datasets(value) {
+  datasets(value: Datasets) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "datasets", value);
@@ -58,7 +58,7 @@ class Layer extends BaseObject {
     }
   }
 
-  description(value) {
+  description(value: string) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "description", value);
@@ -68,7 +68,7 @@ class Layer extends BaseObject {
     }
   }
 
-  encoding(value) {
+  encoding(value: SharedCompositeEncoding<Field>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "encoding", value);
@@ -78,7 +78,7 @@ class Layer extends BaseObject {
     }
   }
 
-  height(value) {
+  height(value: number | "container" | Step) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "height", value);
@@ -88,7 +88,7 @@ class Layer extends BaseObject {
     }
   }
 
-  layer(value) {
+  layer(value: (LayerSpec<Field> | UnitSpec<Field>)[]) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "layer", value);
@@ -98,7 +98,7 @@ class Layer extends BaseObject {
     }
   }
 
-  name(value) {
+  name(value: string) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "name", value);
@@ -108,7 +108,7 @@ class Layer extends BaseObject {
     }
   }
 
-  padding(value) {
+  padding(value: any) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "padding", value);
@@ -118,7 +118,7 @@ class Layer extends BaseObject {
     }
   }
 
-  params(value) {
+  params(value: TopLevelParameter[]) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "params", value);
@@ -128,7 +128,7 @@ class Layer extends BaseObject {
     }
   }
 
-  projection(value) {
+  projection(value: Projection<ExprRef>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "projection", value);
@@ -138,7 +138,7 @@ class Layer extends BaseObject {
     }
   }
 
-  resolve(value) {
+  resolve(value: Resolve) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "resolve", value);
@@ -148,7 +148,7 @@ class Layer extends BaseObject {
     }
   }
 
-  title(value) {
+  title(value: any) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "title", value);
@@ -158,7 +158,7 @@ class Layer extends BaseObject {
     }
   }
 
-  transform(value) {
+  transform(value: Transform[]) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "transform", value);
@@ -168,7 +168,7 @@ class Layer extends BaseObject {
     }
   }
 
-  usermeta(value) {
+  usermeta(value: Dict<unknown>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "usermeta", value);
@@ -178,7 +178,7 @@ class Layer extends BaseObject {
     }
   }
 
-  view(value) {
+  view(value: ViewBackground<any>) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "view", value);
@@ -188,7 +188,7 @@ class Layer extends BaseObject {
     }
   }
 
-  width(value) {
+  width(value: number | "container" | Step) {
     if (arguments.length) {
       const obj = copy(this);
       set(obj, "width", value);
