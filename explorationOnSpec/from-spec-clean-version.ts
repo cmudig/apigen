@@ -13,6 +13,53 @@ const sourceFile = program.getSourceFile("vega-lite-src/spec/index.ts")!;
 
 const visitedTypes = new WeakSet<ts.Node|ts.Type>();
 
+// internal representation of a type
+class VegaLiteType {
+    name: string;
+    type: ts.Type;
+    kind: TypeKind;
+    children: VegaLiteType[];
+    oneLevelType: string;
+    properties?: ts.Type[];
+    description?: string;   //TODO: get descirption and generate documentation
+
+    constructor(name: string, type: ts.Type, kind: TypeKind, children: VegaLiteType[]) {
+        this.name = name;
+        this.type = type;
+        this.kind = kind;
+        this.children = children;
+        // this.oneLevelType = this.updateOneLevelType();
+        this.properties = (type as any).properties;
+    }
+
+    generateOneLevelType(): string {
+        switch (this.kind) {
+            case TypeKind.Union:
+                return this.children.map(child => child.generateOneLevelType()).join(" | ");
+            case TypeKind.Intersection:
+                return this.children.map(child => child.generateOneLevelType()).join(" & ");
+            case TypeKind.Literal:
+                return this.name;
+            case TypeKind.TypeParameter:
+                return this.name;
+            case TypeKind.Other:
+                return this.name;
+        }
+    }
+
+    updateOneLevelType(): void {
+        this.oneLevelType = this.generateOneLevelType();
+    }
+}
+
+enum TypeKind {
+    Union,
+    Intersection,
+    Literal,
+    TypeParameter,
+    Other
+}
+
 // main process
 const specNode = findTopLevelSpec(sourceFile);
 if (ts.isUnionTypeNode(specNode)) {
@@ -91,7 +138,7 @@ function findFromType(type: ts.Type, depth: number) {
             console.log(prefix+"@@property", tp_property.name, ":", checker.typeToString(tp_property));
         }
     }
-    
+        
     if (type.isUnion()) {
         const types = type.types;
         for (const tp of types) {
@@ -195,8 +242,8 @@ function emitTopLevelType(type: ts.Type, node: ts.TypeReferenceNode, methodName:
 
         // get type of properties
         // const propertyType = checker.getTypeOfSymbolAtLocation(property, node);
-        const propertyType = getBottomType(checker.getTypeOfSymbolAtLocation(property, node));
-
+        const propertyType = checker.getTypeOfSymbolAtLocation(property, node);
+        // TODO: get the bottom type of propertyType
         emit.import(['copy', 'get', 'set']);
         emit(`${prop}(${''}value: ${checker.typeToString(propertyType)}) {`).indent();
         emit(  `if (arguments.length) {`).indent();
