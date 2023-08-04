@@ -1,6 +1,6 @@
 import {BaseObject, copy, get, init, isString, merge, set} from './__util__';
 
-class _facet extends BaseObject {
+class _Facet extends BaseObject {
 
   constructor(...args) {
     super();

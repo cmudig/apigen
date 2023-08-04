@@ -2,7 +2,7 @@ import {BaseObject, copy, get, init, isString, merge, set} from './__util__';
 
 class Data extends BaseObject {
 
-  constructor(...args) {
+  constructor(...args: any[]) {
     super();
     init(this);
     set(this, data, merge(0, get(this, "data"), args));
@@ -240,6 +240,18 @@ class Data extends BaseObject {
 
 }
 
-export function data(...args) {
+export function data(...args: any) {
   return new Data(...args);
+}
+
+// export function spec(mark: Mark, data: string, encode: Encoding){
+//   return new Spec(mark, data, encode);
+// }
+
+export function toSpec(obj: any){
+    return obj;
+}
+
+export function toJSON(obj: any){
+    return JSON.stringify(obj);
 }

@@ -1,215 +1,194 @@
-import {BaseObject, copy, get, init, isString, merge, set} from './__util__';
+import {BaseObject, copy, get, init, set} from './__util__';
 
-class _repeat extends BaseObject {
+class _Repeat extends BaseObject {
 
   constructor(...args) {
     super();
     init(this);
-    set(this, _repeat, merge(0, get(this, "_repeat"), args));
   }
 
-  align(value: any) {
+  any(value: any) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "align", value);
+      set(obj, "any", value);
       return obj;
     } else {
-      return get(this, "align");
+      return get(this, "any");
     }
   }
 
-  autosize(value: AutosizeType | AutoSizeParams) {
+  string(value: string) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "autosize", value);
+      set(obj, "string", value);
       return obj;
     } else {
-      return get(this, "autosize");
+      return get(this, "string");
     }
   }
 
-  background(value: any) {
+  string(value: string) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "background", value);
+      set(obj, "string", value);
       return obj;
     } else {
-      return get(this, "background");
+      return get(this, "string");
     }
   }
 
-  bounds(value: "full" | "flush") {
+  Data(value: UrlData | InlineData | NamedData | SequenceGenerator | SphereGenerator | GraticuleGenerator) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "bounds", value);
+      set(obj, "Data", value);
       return obj;
     } else {
-      return get(this, "bounds");
+      return get(this, "Data");
     }
   }
 
-  center(value: boolean | RowCol<boolean>) {
+  Transform[](value: Transform[]) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "center", value);
+      set(obj, "Transform[]", value);
       return obj;
     } else {
-      return get(this, "center");
+      return get(this, "Transform[]");
     }
   }
 
-  columns(value: number) {
+  any(value: any) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "columns", value);
+      set(obj, "any", value);
       return obj;
     } else {
-      return get(this, "columns");
+      return get(this, "any");
     }
   }
 
-  config(value: Config<any>) {
+  boolean | RowCol<boolean>(value: false | true | RowCol<boolean>) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "config", value);
+      set(obj, "boolean | RowCol<boolean>", value);
       return obj;
     } else {
-      return get(this, "config");
+      return get(this, "boolean | RowCol<boolean>");
     }
   }
 
-  data(value: Data) {
+  number | RowCol<number>(value: number | RowCol<number>) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "data", value);
+      set(obj, "number | RowCol<number>", value);
       return obj;
     } else {
-      return get(this, "data");
+      return get(this, "number | RowCol<number>");
     }
   }
 
-  datasets(value: Datasets) {
+  "full" | "flush"(value: "full" | "flush") {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "datasets", value);
+      set(obj, ""full" | "flush"", value);
       return obj;
     } else {
-      return get(this, "datasets");
+      return get(this, ""full" | "flush"");
     }
   }
 
-  description(value: string) {
+  number(value: number) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "description", value);
+      set(obj, "number", value);
       return obj;
     } else {
-      return get(this, "description");
+      return get(this, "number");
     }
   }
 
-  name(value: string) {
+  Resolve(value: Resolve) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "name", value);
+      set(obj, "Resolve", value);
       return obj;
     } else {
-      return get(this, "name");
+      return get(this, "Resolve");
     }
   }
 
-  padding(value: any) {
+  any(value: any) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "padding", value);
+      set(obj, "any", value);
       return obj;
     } else {
-      return get(this, "padding");
+      return get(this, "any");
     }
   }
 
-  params(value: TopLevelParameter[]) {
+  any(value: any) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "params", value);
+      set(obj, "any", value);
       return obj;
     } else {
-      return get(this, "params");
+      return get(this, "any");
     }
   }
 
-  repeat(value: string[] | RepeatMapping | LayerRepeatMapping) {
+  AutosizeType | AutoSizeParams(value: "pad" | "none" | "fit" | "fit-x" | "fit-y" | AutoSizeParams) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "repeat", value);
+      set(obj, "AutosizeType | AutoSizeParams", value);
       return obj;
     } else {
-      return get(this, "repeat");
+      return get(this, "AutosizeType | AutoSizeParams");
     }
   }
 
-  resolve(value: Resolve) {
+  TopLevelParameter[](value: TopLevelParameter[]) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "resolve", value);
+      set(obj, "TopLevelParameter[]", value);
       return obj;
     } else {
-      return get(this, "resolve");
+      return get(this, "TopLevelParameter[]");
     }
   }
 
-  spacing(value: number | RowCol<number>) {
+  Config<any>(value: Config<any>) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "spacing", value);
+      set(obj, "Config<any>", value);
       return obj;
     } else {
-      return get(this, "spacing");
+      return get(this, "Config<any>");
     }
   }
 
-  spec(value: UnitSpecWithFrame<Field> | LayerSpec<Field> | NonNormalizedSpec) {
+  Datasets(value: Datasets) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "spec", value);
+      set(obj, "Datasets", value);
       return obj;
     } else {
-      return get(this, "spec");
+      return get(this, "Datasets");
     }
   }
 
-  title(value: any) {
+  Dict<unknown>(value: Dict<unknown>) {
     if (arguments.length) {
       const obj = copy(this);
-      set(obj, "title", value);
+      set(obj, "Dict<unknown>", value);
       return obj;
     } else {
-      return get(this, "title");
-    }
-  }
-
-  transform(value: Transform[]) {
-    if (arguments.length) {
-      const obj = copy(this);
-      set(obj, "transform", value);
-      return obj;
-    } else {
-      return get(this, "transform");
-    }
-  }
-
-  usermeta(value: Dict<unknown>) {
-    if (arguments.length) {
-      const obj = copy(this);
-      set(obj, "usermeta", value);
-      return obj;
-    } else {
-      return get(this, "usermeta");
+      return get(this, "Dict<unknown>");
     }
   }
 
 }
 
-export function _repeat(...args) {
-  return new _repeat(...args);
+export function _Repeat(...args) {
+  return new _Repeat(...args);
 }
