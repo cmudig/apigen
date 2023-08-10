@@ -1,211 +1,140 @@
-const DEBUG_MODE = false;
-const TYPE_MODE = true;
-// const TYPE_MODE = false;
-
 import * as ts from "typescript";
 import fs from 'fs';
 import { emitter } from './generate-util';
+const CHECK_DUPLICATE = false;
 
+/**********************************
+ *  Internal Representation 
+ * ********************************/
+interface baseType {
+    name: string;
+    type: ts.Type;
+    descirption?: string;
+}
+
+class Property implements baseType{
+    name: string;
+    type: ts.Type;
+    optional: boolean;
+    sourceFile: string = "";
+    constructor(name: string, type: ts.Type, optional: boolean, sourceFile?: string | undefined) {
+        this.name = name;
+        this.type = type;
+        this.optional = optional;
+        if(sourceFile !== undefined) { this.sourceFile = sourceFile; }
+    }
+}
+
+class vegaType implements baseType{
+    name: string;
+    type: ts.Type;
+    properties: Property[];
+    sourceFile: string = "";
+    constructor(name: string, type: ts.Type, properties: Property[], sourceFile?: string | undefined) {
+        this.name = name;
+        this.type = type;
+        this.properties = properties;
+        if(sourceFile !== undefined) { this.sourceFile = sourceFile; }
+    }
+}
+
+/**********************************
+ *  Generate Step 1: Traverse Types and Build Internal Representation
+ * ********************************/
+// create program and typechecker
 const sourceFiles = ["vega-lite-src/spec/index.ts"];
 let program = ts.createProgram(sourceFiles, {
     target: ts.ScriptTarget.ES5,
     module: ts.ModuleKind.CommonJS
 });
 let checker = program.getTypeChecker();
-
 const sourceFile = program.getSourceFile("vega-lite-src/spec/index.ts")!;
 
-// const visitedTypes = new WeakSet<ts.Node|ts.Type>();
-const vlTypes = new WeakSet<VegaLiteType>();
-const objectFlagSet = new Set();
+// check if type is visited
+const visitedTypes: ts.Type[] = [];
 const flagSet = new Set();
+const typeList: vegaType[] = [];
 
-// internal representation of a type
-class VegaLiteType {
-    name: string;
-    type: ts.Type;
-    // kind: TypeKind;
-    children: VegaLiteType[] = [];
-    oneLevelType: string = "";
-    properties: VegaLiteType[] = [];
-    description?: string;   //TODO: get descirption and generate documentation
-
-    constructor(name: string, type: ts.Type, children: VegaLiteType[]) {
-        this.name = name;
-        this.type = type;
-        // this.kind = kind;
-        this.children = children;
-        // this.oneLevelType = this.updateOneLevelType();
-        // this.properties = (type as any).properties;
-    }
-
-    generateOneLevelType(): string {
-        // switch (this.kind) {
-        //     case TypeKind.Union:
-        //         return this.children.map(child => child.generateOneLevelType()).join(" | ");
-        //     case TypeKind.Intersection:
-        //         return this.children.map(child => child.generateOneLevelType()).join(" & ");
-        //     case TypeKind.Literal:
-        //         return this.name;
-        //     case TypeKind.TypeParameter:
-        //         return this.name;
-        //     case TypeKind.Other:
-        //         return this.name;
-        // }
-        switch (this.type.flags) {
-            case ts.TypeFlags.Union:
-                return this.children.map(child => child.generateOneLevelType()).join(" | ");
-            case ts.TypeFlags.Intersection:
-                return this.children.map(child => child.generateOneLevelType()).join(" & ");
-            case ts.TypeFlags.Literal:
-                return this.name;
-            case ts.TypeFlags.TypeParameter:
-                return this.name;
-            default:
-                return this.name;          
-        }
-    }
-
-    updateOneLevelType(): void {
-        this.oneLevelType = this.generateOneLevelType();
-    }
-}
-
-enum TypeKind {
-    Union,
-    Intersection,
-    Literal,
-    TypeParameter,
-    Other
-}
-
-const VegaLiteTypeMap = new Map<string, VegaLiteType>();
-
-// main process
+// find TopLevelSpec and start from it
 const specNode = findTopLevelSpec(sourceFile);
 if (ts.isUnionTypeNode(specNode)) {
     const types = specNode.types;
     for(const type of types) {
         if(ts.isTypeReferenceNode(type)) {
-            if(DEBUG_MODE) console.log("###############", type.getText(),"###############");
-            // findType(type, 1);
-            findFromType(checker.getTypeAtLocation(type), 1);
+            findFromType(checker.getTypeAtLocation(type));
         }
     }
 }
 
-// find TopLevelSpec
-function findTopLevelSpec(sourceFile: ts.SourceFile): ts.UnionTypeNode {
-    for (const statement of sourceFile.statements) {
-        if (ts.isTypeAliasDeclaration(statement) && statement.name.getText() === "TopLevelSpec"){
-            if(DEBUG_MODE) console.log(statement.name.getText());
-            if(ts.isUnionTypeNode(statement.type)) {
-                return statement.type;
-            }  
-        }
-    }
-    throw new Error("TopLevelSpec not found");
-}
-
-// recursively get types and their properties
-function findFromType(type: ts.Type, depth: number): VegaLiteType {
+/**
+ * Traverse type and get Internal Representation
+ * @param type types in souce file
+ */
+function findFromType(type: ts.Type) {
     flagSet.add(type.flags);
-    const prefix:string = new Array(depth).fill("-").join("");
-    const typeName = checker.typeToString(type);
-    if(DEBUG_MODE) console.log(prefix+"findFromType:", typeName);
-
-    var curVegaLiteType = VegaLiteTypeMap.get(typeName);
-    if (curVegaLiteType !== undefined) {
-        return curVegaLiteType;
-    } else {
-        curVegaLiteType = new VegaLiteType(typeName, type, []);
-        VegaLiteTypeMap.set(typeName, curVegaLiteType);
+    if (visitedTypes.includes(type)) {
+        return;
     }
+    visitedTypes.push(type);
+    const name = checker.typeToString(type);
 
-    const objectFlags = (type as any).objectFlags;
-    if (objectFlags !== undefined){
-        objectFlagSet.add(objectFlags);
-        const tp_properties = type.getProperties();
-        if (tp_properties.length > 0) {
-            for (const tp_property of tp_properties) {
-                if (tp_property.name.startsWith("$")) {
-                    continue;
-                }
-                if (tp_property.name.startsWith("__")) {
-                    continue;
-                }
-                const dec = tp_property.valueDeclaration;
-                if (dec !== undefined) {
-                    const symbolType = checker.getTypeOfSymbolAtLocation(tp_property, dec);
-                    const symbolTypeText = checker.typeToString(symbolType);
-                    if(DEBUG_MODE) console.log(prefix+"@@property", tp_property.name, ":", symbolTypeText, "{");
-                    const objectFlags = (symbolType as any).objectFlags;
-                    if (objectFlags !== undefined){
-                        objectFlagSet.add(objectFlags);
-                        curVegaLiteType.properties.push(findFromType(symbolType, depth+1));
-                        // if (!!(objectFlags & ts.ObjectFlags.Reference)) {
-                        //     console.log(prefix+"objectFlags:", objectFlags);
-                        //     findFromType(symbolType, depth+1);
-                        // }
-                    }
-                    if(DEBUG_MODE) console.log(prefix+"}");
-                } else {
-                    if(DEBUG_MODE) console.log(prefix+"@@property(can't find type of it)", tp_property.name)
-                }
+    // deal with properties
+    const props = checker.getPropertiesOfType(type);
+    const propList: Property[] = [];
+    for (const prop of props) {
+        if (prop.name.startsWith("__") || prop.name.startsWith("$")) {
+            continue;
+        }
+        // if (prop.valueDeclaration && ts.isPropertySignature(prop.valueDeclaration) && prop.valueDeclaration.type && ts.isTypeReferenceNode(prop.valueDeclaration.type)) {
+        if (prop.valueDeclaration !== undefined) {
+            const propType = checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration!);
+            const propName = prop.getName();
+            const optional = prop.valueDeclaration && ts.isPropertySignature(prop.valueDeclaration) && prop.valueDeclaration.questionToken;
+            const srcFile = getSrcFile(propType);
+            propList.push(new Property(propName, propType, !!optional, srcFile));
+            if (!propType.isLiteral()) {
+                findFromType(propType);  //TODO: there are many repeated types such as () => string (set CHECK_DUPLICATE = true; and see)
             }
-            curVegaLiteType.updateOneLevelType();
+        } else {
+            // console.log("no value declaration for " + prop.getName());
         }
     }
-        
+    const sourceFile = getSrcFile(type);
+    const typeObj = new vegaType(name, type, propList, sourceFile);
+    typeList.push(typeObj);
+    UnionIntersectionHandler(type);
+    getSrcFile(type);
+}
+
+function UnionIntersectionHandler(type: ts.Type) {
     if (type.isUnion() || type.isIntersection()) {
         const types = type.types;
-        for (const tp of types) {
-            curVegaLiteType.children.push(findFromType(tp, depth+1));
+        for (const type of types) {
+            findFromType(type);
         }
-        curVegaLiteType.updateOneLevelType();
-    }
-    else if (type.isLiteral()) {
-        curVegaLiteType.oneLevelType = convertLiteralToString(type.value);
-        if(DEBUG_MODE) console.log(prefix+"@literal:", type.value);
-    } else {
-        curVegaLiteType.oneLevelType = checker.typeToString(type);
-    }
-    // else if (type.isTypeParameter()) {
-    //     const name = 
-    //     curVegaLiteType.oneLevelType = type.symbol.getEscapedName();
-    //     console.log(prefix+"@typeParameter", type.symbol.getEscapedName());
-    // }
-
-    const node = (type as any).node;
-    if (node !== undefined) {
-        generateClass(type, node);
-    }
-    if (TYPE_MODE) console.log(curVegaLiteType.name, typeName, curVegaLiteType.type.flags, prefix);
-    return curVegaLiteType;
-}
-
-function convertLiteralToString(value: string | number | ts.PseudoBigInt): string {
-    if (typeof value === 'string') {
-      return value;
-    } else {
-      return value.toString();
     }
 }
 
+console.log(flagSet);
 
+
+/**********************************
+ *  Generate Step 2: Generate Code from Internal Representation
+ * ********************************/
+// TODO: use the json-schema generator's logic to simplify type name
 const api_const = {
-    "TopLevelUnitSpec": ["mark", "data"], // TODO: specific mark
+    "TopLevelUnitSpec<Field>": ["mark", "data"], // TODO: specific mark
     "TolevelFacetSpec": ["_Facet"],
-    "TopLevel<LayerSpec>": ["layer"],
-    "TopLevel<GenericConcatSpec>": ["concat"],
+    "TopLevel<LayerSpec<Field>>": ["layer"],
+    "TopLevel<GenericConcatSpec<NonNormalizedSpec>>": ["concat"],
     "TopLevel<RepeatSpec>": ["_Repeat"],
-    "TopLevel<GenericVConcatSpec>": ["vconcat"],
-    "TopLevel<GenericHConcatSpec>": ["hconcat"],
+    "TopLevel<GenericVConcatSpec<NonNormalizedSpec>>": ["vconcat"],
+    "TopLevel<GenericHConcatSpec<NonNormalizedSpec>>": ["hconcat"],
     // "TopLevel<GenericSpec>": ["spec"],
     "UrlData": ["urlData"],
     "InlineData": ["inlineData"],
     "NamedData": ["namedData"],
-    "SequenceParams": ["sequence"],
+    // "SequenceParams": ["sequence"],
     "CsvDataFormat": ["csv"],
     "DsvDataFormat": ["dsv"],
     "JsonDataFormat": ["json"],
@@ -215,32 +144,47 @@ const api_const = {
     // ["GraticuleGenerator"]
 };
 
+// create type name map
+const typeNameMap = new Map<string, vegaType>();
+for (const type of typeList) {
+    typeNameMap.set(type.name, type);
+}
+generate();
+
+// traverse the const and generate code
 function generate() {
     const entries = Object.entries(api_const);
 
     for (const [key, value] of entries) {
-        const vegaLiteType = VegaLiteTypeMap.get(key);
+        const vegaLiteType = typeNameMap.get(key);
         if (vegaLiteType !== undefined) {
             for (const className of value) {
-                const classType = VegaLiteTypeMap.get(className)!;
-                generateForEach(vegaLiteType, className, classType);
+                const classType = typeNameMap.get(className)!;
+                generateForEach(className, classType, vegaLiteType);
             }
         }
     }
 }
 
-function generateForEach(propertyType: VegaLiteType, methodName: string, classType: VegaLiteType) {
+/**
+ * Generate code for each class.
+ * @param propertyType 
+ * @param methodName 
+ * @param classType 
+ * @returns 
+ */
+function generateForEach(methodName: string, classType: vegaType, propertyType: vegaType) {
     if (methodName.startsWith('$')) return;
     const className = capitalize(methodName);
 
     // generate class
-    const emit = emitter('__util__');
+    const emit = emitter('./__util__');
     emit.import(['BaseObject']);
     emit(`class ${className} extends BaseObject {`);
     emit().indent();
 
     // const argTypes = findArgTypes(type);
-    const argType = classType !== undefined && classType.oneLevelType.length > 0 ? `: ${classType.oneLevelType}` : '';
+    const argType = classType === undefined? "" : `: ${classType.name}`;
     // -- constructor --
     emit(`constructor(...args${argType}) {`).indent();
     emit(`super();`);
@@ -256,18 +200,24 @@ function generateForEach(propertyType: VegaLiteType, methodName: string, classTy
     const properties = propertyType.properties;
     // const compareByName = (a:ts.Symbol, b: ts.Symbol) => a.name < b.name ? -1 : 1;
     // properties.sort(compareByName);
-    for (const property of properties) {
-        const prop = property.name;
-        if (prop.startsWith("$")) continue;
+    for (const prop of properties) {
+        const propName: string = prop.name;
+        const valueType: string = checker.typeToString(prop.type);
+        // deal with import
+        importVegaLiteType(emit, prop.type);
+
+        // valueTypeObj === undefined ?  : undefined;
+        // emit.import([valueType], getSourceFile(prop.type));
+        // if (prop.startsWith("$")) continue;
 
         emit.import(['copy', 'get', 'set']);
-        emit(`${prop}(${''}value: ${property.oneLevelType}) {`).indent();
+        emit(`${propName}(${''}value: ${valueType}) {`).indent();
         emit(  `if (arguments.length) {`).indent();
         emit(    `const obj = copy(this);`);
-        emit(    `set(obj, "${prop}", value);`);
+        emit(    `set(obj, "${propName}", value);`);
         emit(    `return obj;`).outdent();
         emit(  `} else {`).indent();
-        emit(    `return get(this, "${prop}");`).outdent();
+        emit(    `return get(this, "${propName}");`).outdent();
         emit(  `}`).outdent();
         emit(`}`);
         emit();
@@ -286,229 +236,130 @@ function generateForEach(propertyType: VegaLiteType, methodName: string, classTy
     writeFile(fileName, emit.code());
 }
 
-
-function generateClass (type:ts.Type, node: ts.TypeReferenceNode) {
-    switch (checker.typeToString(type)) {
-        case "TopLevelUnitSpec<Field>":
-            emitTopLevelType(type, node, "mark");
-            emitTopLevelType(type, node, "data");
-            break;
-        case "TopLevelFacetSpec":
-            emitTopLevelType(type, node, "_Facet");
-            break;
-        case "TopLevel<LayerSpec<Field>>":
-            emitTopLevelType(type, node, "layer");
-            break;
-        case "TopLevel<GenericConcatSpec<NonNormalizedSpec>>":
-            emitTopLevelType(type, node, "concat");
-            break;
-        case "TopLevel<RepeatSpec>":
-            emitTopLevelType(type, node, "_Repeat");
-            break;
-        case "TopLevel<GenericVConcatSpec<NonNormalizedSpec>>":
-            emitTopLevelType(type, node, "vconcat");
-            break;
-        case "TopLevel<GenericHConcatSpec<NonNormalizedSpec>>":
-            emitTopLevelType(type, node, "hconcat");
-            break;
-    }
-}
-
-
-function getBottomType(type: ts.Type): ts.Type {
-    const nonNullableType = checker.getNonNullableType(type);
-    if (nonNullableType.flags & ts.TypeFlags.Object & ts.ObjectFlags.Reference) {
-        const typeReference = nonNullableType as ts.TypeReference;
-        if (typeReference.target) {
-            return getBottomType(typeReference.target);
-        }
-    }
-    return nonNullableType;
-}
-
-function emitTopLevelType(type: ts.Type, node: ts.TypeReferenceNode, methodName: string): void {
-    if (methodName.startsWith('$')) return;
-    const className = capitalize(methodName);
-
-    // generate class
-    const emit = emitter('__util__');
-    emit.import(['BaseObject']);
-    emit(`class ${className} extends BaseObject {`);
-    emit().indent();
-
-    // const argTypes = findArgTypes(type);
-    const argTypes = "";
-    // -- constructor --
-    emit(`constructor(...args) {`).indent();
-    emit(`super();`);
-    emit.import(['init']);
-    emit(`init(this);`);
-    emit.import(['get', 'set', 'merge', 'isString']);
-    emit(`set(this, ${methodName}, merge(0, get(this, "${methodName}"), args));`);
-    emit.outdent();
-    emit(`}`);
-    emit();
-    
-    // -- properties --
-    const properties = type.getProperties();
-    const compareByName = (a:ts.Symbol, b: ts.Symbol) => a.name < b.name ? -1 : 1;
-    properties.sort(compareByName);
-    for (const property of properties) {
-        const prop = property.name;
-        if (prop.startsWith("$")) continue;
-
-        // get type of properties
-        // const propertyType = checker.getTypeOfSymbolAtLocation(property, node);
-        const propertyType = checker.getTypeOfSymbolAtLocation(property, node);
-        // TODO: complete the convertion to bottom type
-        const visited = new Map<string, string>();
-        const propertyTypeName = getBottomPropertyType(propertyType, visited);
-        emit.import(['copy', 'get', 'set']);
-        // emit(`${prop}(${''}value: ${propertyTypeName}) {`).indent(); 
-        emit(`${prop}(${''}value: ${checker.typeToString(propertyType)}) {`).indent();
-        emit(  `if (arguments.length) {`).indent();
-        emit(    `const obj = copy(this);`);
-        emit(    `set(obj, "${prop}", value);`);
-        emit(    `return obj;`).outdent();
-        emit(  `} else {`).indent();
-        emit(    `return get(this, "${prop}");`).outdent();
-        emit(  `}`).outdent();
-        emit(`}`);
-        emit();
-    }
-    emit.outdent()
-    emit(`}`);
-    emit();
-
-    // -- exports --
-    emit(`export function ${methodName}(...args) {`);
-    emit(`  return new ${className}(...args);`);
-    emit(`}`);
-
-    // console.log(emit.code());
-    const fileName = `./generated/${methodName}.ts`;
-    writeFile(fileName, emit.code());
-}
-
-
-function getBottomPropertyType(type: ts.Type, visited: Map<string, string>): string {
-    // const typeName = type.symbol ? type.symbol.name : "";
-    const typeString = checker.typeToString(type);
-
-    var returnString = typeString;
-
-    if (visited.has(typeString)) {
-      return visited.get(typeString)!; // TODO: deal with recursion later e.g.LogicalNot<T>
-    }
-    visited.set(typeString, "");
-
+/**
+ * Import vega-lite type in the generated file.
+ * @param emit emitter to generate the code
+ * @param type type to import
+ */
+function importVegaLiteType(emit: any, type: ts.Type) {
+    const typeObj = typeNameMap.get(checker.typeToString(type));
     switch (type.flags) {
-        case ts.TypeFlags.Any:
+        case ts.TypeFlags.StringLiteral:
         case ts.TypeFlags.String:
         case ts.TypeFlags.Number:
         case ts.TypeFlags.Boolean:
-        case ts.TypeFlags.StringLiteral:
-        case ts.TypeFlags.NumberLiteral:
-        case ts.TypeFlags.BooleanLiteral:
-            returnString = typeString;
-            break;
+        case ts.TypeFlags.Null:
+            return;
         case ts.TypeFlags.Union:
-            const unionType = type as ts.UnionType;
-            const types = unionType.types;
-            const bottomTypes = types.map(t => getBottomPropertyType(t, visited));
-            returnString = bottomTypes.join(" | ");
-            break;
         case ts.TypeFlags.Intersection:
-            const intersectionType = type as ts.IntersectionType;
-            const intersectionTypes = intersectionType.types;
-            const bottomIntersectionTypes = intersectionTypes.map(t => getBottomPropertyType(t, visited));
-            returnString = bottomIntersectionTypes.join(" & ");
-            break;
+            if (typeObj !== undefined && typeObj.sourceFile !== "") break;
+            const types = (type as ts.UnionType).types;
+            for (const type of types) {
+                importVegaLiteType(emit, type);
+            }
+            return;
         case ts.TypeFlags.Object:
-            visited.delete(typeString);
-            returnString = getBottomObjectType(type as ts.ObjectType, visited);
+            const typeString: string = checker.typeToString(type);
+            if (typeString.startsWith("{") && typeString.endsWith("}")) return;
+            if (typeString.includes("<")){
+                // get typeParameter
+                const para = typeString.match(/<([^>]*)>/);
+                if (para) {
+                    const paraObj = typeNameMap.get(para[1]);
+                    if (paraObj !== undefined && paraObj.sourceFile !== "") {
+                        emit.import([paraObj.name], paraObj.sourceFile);
+                    }
+                }
+                console.log(typeString);
+            }
             break;
+        default:
+            console.log("undealt", type.flags, checker.typeToString(type));
     }
-    visited.set(typeString, returnString);
-    return returnString;
+    if (typeObj !== undefined && typeObj.sourceFile !== "") {
+        const importName = typeObj.name.replace(/<.*?>/g, '').replace(/\[\]$/, '');
+        emit.import([importName], typeObj.sourceFile);
+    }
 }
 
-function getBottomObjectType(type: ts.ObjectType, visited: Map<string, string>): string {
-    const typeString = checker.typeToString(type);
-
-    var returnString = typeString;
-
-    if (visited.has(typeString)) {
-      return visited.get(typeString)!; // TODO: deal with recursion later e.g.LogicalNot<T>
-    }
-
-    visited.set(typeString, "");
-    
-    const properties = type.getProperties();
-    const propertyTypes = properties.map(property => {
-        if (property.valueDeclaration !== undefined) {
-            // console.log(property.name);
-            const propertyType = checker.getTypeOfSymbolAtLocation(property, property.valueDeclaration);
-            //TODO: optional or not
-            const isOptional = false;
-            const propertyTypeString = getBottomPropertyType(propertyType, visited);
-            return `${property.name}${isOptional ? '?' : ''}: ${propertyTypeString}`;
+/**********************************
+ *  Generate Utils
+ * ********************************/
+/**
+ * Find TopLevelSpec in source file.
+ * @param sourceFile vega-lite src/index.ts
+ * @returns the union type node of TopLevelSpec
+ */
+function findTopLevelSpec(sourceFile: ts.SourceFile): ts.UnionTypeNode {
+    for (const statement of sourceFile.statements) {
+        if (ts.isTypeAliasDeclaration(statement) && statement.name.getText() === "TopLevelSpec"){
+            if(ts.isUnionTypeNode(statement.type)) {
+                return statement.type;
+            }  
         }
-        return property.name;
-    });
-    returnString = `{${propertyTypes.join(", ")}}`;
-
-
-    // switch (type.objectFlags) {
-    //     case ts.ObjectFlags.Class:
-    //     case ts.ObjectFlags.Interface:
-    //     case ts.ObjectFlags.ClassOrInterface:
-    //     case ts.ObjectFlags.Anonymous:
-    //         const properties = type.getProperties();
-    //         const propertyTypes = properties.map(property => {
-    //             if (property.valueDeclaration !== undefined) {
-    //                 // console.log(property.name);
-    //                 const propertyType = checker.getTypeOfSymbolAtLocation(property, property.valueDeclaration);
-    //                 //TODO: optional or not
-    //                 const isOptional = false;
-    //                 const propertyTypeString = getBottomPropertyType(propertyType, visited);
-    //                 return `${property.name}${isOptional ? '?' : ''}: ${propertyTypeString}`;
-    //             }
-    //             return property.name;
-    //         });
-    //         returnString = `{${propertyTypes.join(", ")}}`;
-    //         break;
-    //     case ts.ObjectFlags.Reference:
-    //         // TODO: deal with reference
-    //         returnString = typeString;
-    //         break;
-    //     default:
-    //         returnString = typeString;
-    //         console.log("!!!!!!!unknown object type", type.objectFlags);
-    // }
-
-    visited.set(typeString, returnString);
-    return returnString;
-}
-
-function isPropertyOptional(property: ts.Symbol): boolean {
-    const declarations = property.getDeclarations();
-  
-    if (declarations) {
-      for (const declaration of declarations) {
-        if (ts.isPropertySignature(declaration) || ts.isPropertyDeclaration(declaration)) {
-          return declaration.questionToken !== undefined;
-        }
-      }
     }
-
-    return false;
+    throw new Error("TopLevelSpec not found");
 }
 
+/**
+ * Get the source file path of a type.
+ * @param type vega-lite type
+ * @returns file path string if found, undefined otherwise
+ */
+function getSrcFile(type: ts.Type): string | undefined {
+    if (type.aliasSymbol !== undefined && type.aliasSymbol.declarations !== undefined) {
+        const filePath = type.aliasSymbol.declarations[0].getSourceFile().fileName;
+        return convertFilePath(filePath);
+    }
+    const symbol = type.getSymbol();
+    if (symbol) {
+        const declarations = symbol.getDeclarations();
+        if (declarations) {
+            const declaration = declarations[0];
+            const sourceFile = declaration.getSourceFile();
+            if (sourceFile) {
+                return convertFilePath(sourceFile.fileName);
+            }
+        }
+    }
+    return undefined;
+}
+
+/**
+ * Convert local file path to module file path so that it can be correctly imported in the generated file.
+ * @param filePath original local file path
+ * @returns e.g. "vega-lite/src/mark"
+ */
+function convertFilePath(filePath: string): string {
+    const vegaLiteKeyword = "vega-lite-src";
+    var startIndex = filePath.indexOf(vegaLiteKeyword);
+    if (startIndex !== -1) {
+        const file = filePath.substring(startIndex + vegaLiteKeyword.length + 1).slice(0, -3);
+        return `vega-lite/src/${file}`;
+    }
+    const vegaTypeKeyworkd = "vega-typings";
+    startIndex = filePath.indexOf(vegaTypeKeyworkd);
+    if (startIndex !== -1) {
+        const file = filePath.substring(startIndex + vegaTypeKeyworkd.length + 1).slice(0, -3);
+        return `vega-typings/${file}`;
+    }
+    return filePath;
+}
+
+/**
+ * Capitalize the first letter of a string.
+ * @param str 
+ * @returns capitalized string
+ */
 function capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+/**
+ * Write content to a file.
+ * @param fileName 
+ * @param content 
+ */
 function writeFile(fileName: string, content: string): void {
     fs.writeFile(fileName, content, (err) => {
         if (err) {
@@ -519,6 +370,29 @@ function writeFile(fileName: string, content: string): void {
     });
 }
 
-console.log(objectFlagSet);
-console.log(flagSet);
-generate();
+/**********************************
+ *  Test Usage: Find Duplicate Names in the Type List
+ * ********************************/
+function hasDuplicateNames(typeList: vegaType[]): vegaType[] {
+    const nameSet = new Set();
+    const duplicateTypes: vegaType[] = [];
+
+    for (const vegaType of typeList) {
+        if (nameSet.has(vegaType.name)) {
+            duplicateTypes.push(vegaType);
+        }
+        nameSet.add(vegaType.name);
+    }
+
+    return duplicateTypes;
+}
+
+if (CHECK_DUPLICATE) {
+    const duplicateNamesExist = hasDuplicateNames(typeList);
+    console.log('Type list length:', typeList.length);
+    console.log('Duplicate length:', duplicateNamesExist.length);
+    // console.log('Duplicate names exist:', duplicateNamesExist);
+    for (const type of duplicateNamesExist) {
+        console.log(type.name);
+    }
+}
